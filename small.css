@@ -1,0 +1,111 @@
+/* Typography and Base Layout */
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    background-color: #F4F6F6;
+    /* Warm Beige */
+    color: #2C3E50;
+    /* Soft Navy */
+    margin: 0;
+    padding: 10px;
+    line-height: 1.6;
+}
+
+/* Headings */
+h1,
+h2,
+h3 {
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+/* Optional light weight text */
+.light-text {
+    font-weight: 100;
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #BDC3C7;
+    /* Misty Blue */
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.hamburger {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin-bottom: 10px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #2C3E50;
+    font-weight: 400;
+}
+
+/* Main Container */
+.container {
+    width: 100%;
+}
+
+/* Section Styling */
+section {
+    background-color: #F4F6F6;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #BDC3C7;
+    border-radius: 8px;
+}
+
+/* Course Cards */
+.course-card {
+    background-color: #BDC3C7;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #7F8C8D;
+    /* Slate Gray */
+}
+
+/* Button Styling */
+.button {
+    background-color: #1ABC9C;
+    /* Accent Teal */
+    color: #F4F6F6;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #16A085;
+    /* Slightly darker teal */
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #BDC3C7;
+    padding: 20px;
+    border-top: 1px solid #7F8C8D;
+}
