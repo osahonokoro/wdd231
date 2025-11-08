@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="OKORO">
+    <meta name="description" content="Portfolio and Web Certificate Courses by Osahon Okoro">
+    <title>WDD 231 - Osahon Okoro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/small.css">
+    <link rel="stylesheet" href="styles/larger.css">
+    <script src="scripts/navigation.js" defer></script>
+    <script src="scripts/date.js" defer></script>
+    <script src="scripts/course.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <img src="images/logo.svg" alt="site logo" width="40" height="40">
+        <span>WDD-231 | Osahon Okoro</span>
+        <button id="ham-btn" class="hamburger"></button>
+    </header>
+
+    <nav id="nav-bar" class="navigation">
+        <ul>
+            <li class="current"><a href="#">Home</a></li>
+            <li><a href="#">Chamber</a></li>
+            <li><a href="#">Final</a></li>
+            <li><a href="#">Other</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-grid">
+        <!-- About Me -->
+        <section class="content about">
+            <h2>About Me</h2>
+            <p>Hello! My name is Osahon Okoro, a student of Brigham Young University–Idaho. I am studying Web and
+                Computing. This portfolio showcases my coursework and projects.</p>
+        </section>
+
+        <!-- Student Photo -->
+        <section class="content photo-section">
+            <h2>Student Photo</h2>
+            <img src="images/profile.png" alt="OKORO OSAHON" class="photo">
+        </section>
+
+        <!-- Courses -->
+        <section class="cert-courses">
+            <h2>Web Certificate Courses</h2>
+            <div class="filters">
+                <button id="allBtn">All Courses</button>
+                <button id="wddBtn">WDD Courses</button>
+                <button id="cseBtn">CSE Courses</button>
+            </div>
+            <p class="credits">Total Credits: 12</p>
+            <div class="certificate">
+                <div class="course-card completed">
+                    <h3>CSE 110: Introduction to Programming</h3>
+                    <p><strong>Credits:</strong> 2</p>
+                    <p><strong>Certificate:</strong> Web and Computer Programming</p>
+                    <p><strong>Technologies:</strong> Python</p>
+                    <p><strong>Status:</strong> ✅ Completed</p>
+                </div>
+                <div class="course-card completed">
+                    <h3>WDD 130: Web Fundamentals</h3>
+                    <p><strong>Credits:</strong> 2</p>
+                    <p><strong>Certificate:</strong> Web and Computer Programming</p>
+                    <p><strong>Technologies:</strong> HTML, CSS</p>
+                    <p><strong>Status:</strong> ✅ Completed</p>
+                </div>
+                <div class="course-card completed">
+                    <h3>CSE 111: Programming with Functions</h3>
+                    <p><strong>Credits:</strong> 2</p>
+                    <p><strong>Certificate:</strong> Web and Computer Programming</p>
+                    <p><strong>Technologies:</strong> Python</p>
+                    <p><strong>Status:</strong> ✅ Completed</p>
+                </div>
+                <div class="course-card completed">
+                    <h3>CSE 210: Programming with Classes</h3>
+                    <p><strong>Credits:</strong> 2</p>
+                    <p><strong>Certificate:</strong> Web and Computer Programming</p>
+                    <p><strong>Technologies:</strong> C#</p>
+                    <p><strong>Status:</strong> ✅ Completed</p>
+                </div>
+                <div class="course-card completed">
+                    <h3>WDD 131: Dynamic Web Fundamentals</h3>
+                    <p><strong>Credits:</strong> 2</p>
+                    <p><strong>Certificate:</strong> Web and Computer Programming</p>
+                    <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
+                    <p><strong>Status:</strong> ✅ Completed</p>
+                </div>
+                <div class="course-card incomplete">
+                    <h3>WDD 231: Frontend Web Development I</h3>
+                    <p><strong>Credits:</strong> 2</p>
+                    <p><strong>Certificate:</strong> Web and Computer Programming</p>
+                    <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
+                    <p><strong>Status:</strong> ❌ In Progress</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-media">
+            <a href="https://github.com/osahonokoro" target="_blank"><img src="images/github-icon.svg" alt="GitHub"></a>
+            <a href="https://www.linkedin.com/in/sydnet-osahon-b81ba8241" target="_blank"><img
+                    src="images/linkedin-icon.svg" alt="LinkedIn"></a>
+            <a href="https://www.facebook.com/osahonokoro" target="_blank"><img src="images/facebook-icon.svg"
+                    alt="Facebook"></a>
+        </div>
+        <p>&copy; <span id="currentyear"></span> OKORO — Cross River State, Nigeria</p>
+        <p id="lastModified"></p>
+    </footer>
+</body>
+
+</html>
