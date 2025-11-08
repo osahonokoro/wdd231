@@ -1,0 +1,58 @@
+/* Larger screen styles */
+@media screen and (min-width: 768px) {
+
+    /* Header */
+    header {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+
+    /* Navigation */
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        background-color: #004080;
+    }
+
+    nav ul li {
+        border: none;
+    }
+
+    nav ul li a {
+        padding: 1rem 2rem;
+        font-weight: bold;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    /* Main Grid */
+    .main-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 0 2rem;
+    }
+
+    /* Course Cards */
+    .certificate {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .course-card {
+        margin: 0;
+    }
+
+    /* Footer */
+    footer {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+
+    footer .social-media a img {
+        width: 32px;
+    }
+}
