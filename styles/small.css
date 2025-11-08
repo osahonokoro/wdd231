@@ -1,0 +1,36 @@
+/* smaller.css */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #222;
+}
+
+header {
+  padding: 15px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+}
+
+nav ul {
+  display: block;
+  padding: 0;
+  margin: 10px 0;
+  list-style: none;
+}
+
+nav li {
+  margin: 10px 0;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+main {
+  padding: 15px;
+}
