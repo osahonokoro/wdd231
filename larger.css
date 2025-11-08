@@ -1,62 +1,58 @@
+/* Larger screen styles */
 @media screen and (min-width: 768px) {
-    body {
-        font-family: 'Roboto', sans-serif;
-        font-weight: 400;
-        padding: 40px;
-        line-height: 1.6;
-        background-color: #F4F6F6;
-        color: #2C3E50;
+
+    /* Header */
+    header {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
     }
 
-    /* Navigation layout */
-    .nav-menu {
+    /* Navigation */
+    nav ul {
         display: flex;
-        gap: 20px;
+        flex-direction: row;
         justify-content: center;
+        background-color: #004080;
     }
 
-    .nav-menu li {
-        margin-bottom: 0;
+    nav ul li {
+        border: none;
+    }
+
+    nav ul li a {
+        padding: 1rem 2rem;
+        font-weight: bold;
     }
 
     .hamburger {
         display: none;
-        /* Hide hamburger on large screens */
     }
 
-    /* Container layout */
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-        justify-content: space-around;
-    }
-
-    /* Headings */
-    h1,
-    h2 {
-        font-weight: 400;
-        font-size: 2rem;
-        margin-bottom: 20px;
-    }
-
-    .light-text {
-        font-weight: 100;
+    /* Main Grid */
+    .main-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 0 2rem;
     }
 
     /* Course Cards */
-    .course-card {
-        width: 45%;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        border: 1px solid #BDC3C7;
+    .certificate {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
     }
 
-    /* Buttons */
-    .button {
-        font-size: 18px;
-        padding: 12px 24px;
+    .course-card {
+        margin: 0;
+    }
+
+    /* Footer */
+    footer {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+
+    footer .social-media a img {
+        width: 32px;
     }
 }

@@ -1,111 +1,114 @@
-/* Typography and Base Layout */
+/* Base Typography and Layout */
 body {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    background-color: #F4F6F6;
-    /* Warm Beige */
-    color: #2C3E50;
-    /* Soft Navy */
-    margin: 0;
-    padding: 10px;
-    line-height: 1.6;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 1rem;
+  line-height: 1.6;
 }
 
-/* Headings */
-h1,
-h2,
-h3 {
-    font-weight: 400;
-    margin-bottom: 10px;
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #002147;
+  color: #fff;
+  padding: 0.5rem 1rem;
 }
 
-/* Optional light weight text */
-.light-text {
-    font-weight: 100;
+header img {
+  border-radius: 50%;
 }
 
-/* Navigation Styles */
+header span {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Navigation */
 nav {
-    background-color: #BDC3C7;
-    /* Misty Blue */
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 20px;
+  background-color: #004080;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  flex-direction: column;
+}
+
+nav ul li {
+  border-bottom: 1px solid #ccc;
+}
+
+nav ul li a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  background-color: #0059b3;
 }
 
 .hamburger {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    display: block;
-    margin-bottom: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #fff;
 }
 
-.nav-menu {
-    list-style: none;
-    padding: 0;
+/* Main Grid */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.nav-menu li {
-    margin-bottom: 10px;
-}
-
-.nav-menu a {
-    text-decoration: none;
-    color: #2C3E50;
-    font-weight: 400;
-}
-
-/* Main Container */
-.container {
-    width: 100%;
-}
-
-/* Section Styling */
+/* Sections */
 section {
-    background-color: #F4F6F6;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #BDC3C7;
-    border-radius: 8px;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Course Cards */
-.course-card {
-    background-color: #BDC3C7;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    border: 1px solid #7F8C8D;
-    /* Slate Gray */
+/.photo {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
 }
 
-/* Button Styling */
-.button {
-    background-color: #1ABC9C;
-    /* Accent Teal */
-    color: #F4F6F6;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/.course-card {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f0f8ff;
 }
 
-.button:hover {
-    background-color: #16A085;
-    /* Slightly darker teal */
+.course-card.completed {
+  border-left: 6px solid green;
 }
 
-/* Footer Styling */
+.course-card.incomplete {
+  border-left: 6px solid red;
+}
+
+/* Footer */
 footer {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 14px;
-    background-color: #BDC3C7;
-    padding: 20px;
-    border-top: 1px solid #7F8C8D;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+footer .social-media a img {
+  width: 24px;
+  margin: 0 0.5rem;
 }
