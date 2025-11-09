@@ -1,16 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const courseContainer = document.querySelector("#course-container");
+    const allBtn = document.getElementById("allBtn");
+    const wddBtn = document.getElementById("wddBtn");
+    const cseBtn = document.getElementById("cseBtn");
+    const cards = document.querySelectorAll(".course-card");
 
-    const courses = [
-        { name: "HTML Basics", level: "Beginner" },
-        { name: "JavaScript Mastery", level: "Advanced" },
-        { name: "CSS Design", level: "Intermediate" },
-    ];
+    allBtn.addEventListener("click", () => {
+        cards.forEach(card => card.style.display = "block");
+    });
 
-    courses.forEach(course => {
-        const card = document.createElement("div");
-        card.className = "course-card";
-        card.innerHTML = `<h3>${course.name}</h3><p>Level: ${course.level}</p>`;
-        courseContainer.appendChild(card);
+    wddBtn.addEventListener("click", () => {
+        cards.forEach(card => {
+            card.classList.contains("wdd")
+                ? card.style.display = "block"
+                : card.style.display = "none";
+        });
+    });
+
+    cseBtn.addEventListener("click", () => {
+        cards.forEach(card => {
+            card.classList.contains("cse")
+                ? card.style.display = "block"
+                : card.style.display = "none";
+        });
     });
 });
