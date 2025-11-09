@@ -3,16 +3,16 @@
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
-        color: #ad8181;
+        background-color: #f3f2f2;
+        color: #050000;
     }
 
     header {
-        background-color: #222;
-        color: white;
+        background-color: white;
+        color: #222;
         padding: 1.5rem 2rem;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
     }
 
@@ -28,6 +28,14 @@
         color: white;
         text-decoration: none;
         font-weight: bold;
+        padding: 0.5rem 1rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav a:hover {
+        background-color: #005fa3;
+        color: #fff;
+        border-radius: 4px;
     }
 
     main {
@@ -38,15 +46,20 @@
 
     .about-photo {
         display: grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
         margin-bottom: 2rem;
     }
 
     .about-me {
+        grid-column: span 2;
         background-color: white;
         padding: 1.5rem;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .student-photo {
+        grid-column: span 1;
     }
 
     .student-photo img {
@@ -71,17 +84,19 @@
         border-radius: 4px;
     }
 
-    .course-cards {
+    .certificate {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
+        margin-top: 2rem;
     }
 
     .course-card {
         background-color: white;
-        padding: 1rem;
+        padding: 1.5rem;
         border: 1px solid #ccc;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
         text-align: center;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
     }
 }
