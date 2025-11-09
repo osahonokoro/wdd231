@@ -29,7 +29,7 @@
     }
 
     nav a {
-        color: white;
+        color: rgb(32, 3, 3);
         text-decoration: none;
         font-weight: bold;
         padding: 0.5rem 1rem;
@@ -37,8 +37,8 @@
     }
 
     nav a:hover {
-        background-color: #003366;
-        color: #fff;
+        background-color: #9399a0;
+        color: #2a147a;
         border-radius: 4px;
     }
 
