@@ -1,36 +1,43 @@
-/* smaller.css */
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #fff;
-  color: #222;
+  background-color: #f4f4f4;
+  color: #333;
 }
 
 header {
-  padding: 15px;
-  background-color: #333;
+  background-color: #222;
   color: white;
   text-align: center;
+  padding: 1rem;
 }
 
 nav ul {
-  display: block;
-  padding: 0;
-  margin: 10px 0;
   list-style: none;
+  padding: 0;
 }
 
 nav li {
-  margin: 10px 0;
+  margin: 0.5rem 0;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  font-size: 18px;
 }
 
 main {
-  padding: 15px;
+  padding: 1rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
