@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     wddBtn.addEventListener("click", () => {
         cards.forEach(card => {
-            card.classList.contains("wdd")
+            card.classList.contains("WDD")
                 ? card.style.display = "block"
                 : card.style.display = "none";
         });
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cseBtn.addEventListener("click", () => {
         cards.forEach(card => {
-            card.classList.contains("cse")
+            card.classList.contains("CSE")
                 ? card.style.display = "block"
                 : card.style.display = "none";
         });
