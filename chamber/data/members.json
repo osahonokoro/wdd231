@@ -1,0 +1,65 @@
+[
+    {
+        "name": "AquaGrow Hatchery Ltd.",
+        "address": "12 Riverbank Lane, Calabar",
+        "phone": "+234-803-123-4567",
+        "website": "https://aquagrowhatchery.com",
+        "image": "aquagrow.png",
+        "membership": 3,
+        "description": "Premium supplier of fingerlings and juvenile fish for commercial aquaculture in Calabar."
+    },
+    {
+        "name": "Bluefin Logistics",
+        "address": "45 Marina Road, Calabar",
+        "phone": "+234-809-456-7890",
+        "website": "https://bluefinlogistics.com",
+        "image": "bluefinlogistics.png",
+        "membership": 2,
+        "description": "Cold chain transport solutions for live and fresh fish delivery across Cross River State."
+    },
+    {
+        "name": "SecureEscrow Nigeria",
+        "address": "88 Finance Street, Calabar",
+        "phone": "+234-701-234-5678",
+        "website": "https://secureescrow.ng",
+        "image": "secureescrow.png",
+        "membership": 3,
+        "description": "Escrow platform for managing aquaculture investments and profit-sharing agreements in Calabar."
+    },
+    {
+        "name": "FarmGuard Security",
+        "address": "27 Surveillance Blvd, Calabar",
+        "phone": "+234-805-678-1234",
+        "website": "https://farmguardsecurity.com",
+        "image": "farmguard.png",
+        "membership": 1,
+        "description": "Remote monitoring and drone surveillance services for fish farms in Cross River State."
+    },
+    {
+        "name": "FeedPro Industries",
+        "address": "101 Feed Mill Road, Calabar",
+        "phone": "+234-802-345-6789",
+        "website": "https://feedproindustries.com",
+        "image": "feedpro.png",
+        "membership": 2,
+        "description": "High-quality fish feed manufacturer supporting sustainable aquaculture growth in Calabar."
+    },
+    {
+        "name": "AgroReach Media",
+        "address": "33 Creative Hub, Calabar",
+        "phone": "+234-806-789-0123",
+        "website": "https://agroreachmedia.com",
+        "image": "agroreach.png",
+        "membership": 1,
+        "description": "Marketing and branding agency for agribusinesses and aquaculture startups in Calabar."
+    },
+    {
+        "name": "SmartTank Solutions",
+        "address": "59 Innovation Park, Calabar",
+        "phone": "+234-807-890-1234",
+        "website": "https://smarttanksolutions.com",
+        "image": "smarttank.png",
+        "membership": 3,
+        "description": "Supplier of smart aquaculture tanks, aerators, and water quality systems for Calabar farms."
+    }
+]
