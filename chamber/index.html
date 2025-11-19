@@ -14,24 +14,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Facebook Open Graph Meta Tags -->
-    <meta property="og:title" content="Bluefin Chamber Home" />
-    <meta property="og:description"
-        content="Engage with the Bluefin Chamber of Commerce through events, weather, and member highlights." />
-    <meta property="og:image" content="https://osahonokoro.github.io/wdd231/chamber/images/og-image.jpg" />
-    <meta property="og:url" content="https://osahonokoro.github.io/wdd231/chamber/index.html" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Bluefin Chamber" />
-
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Bluefin Chamber Home" />
-    <meta name="twitter:description"
-        content="Engage with the Bluefin Chamber of Commerce through events, weather, and member highlights." />
-    <meta name="twitter:image" content="https://osahonokoro.github.io/wdd231/chamber/images/og-image.jpg" />
-    <meta name="twitter:url" content="https://osahonokoro.github.io/wdd231/chamber/index.html" />
-
     <!-- CSS Links -->
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/normalize.css">
@@ -69,16 +51,15 @@
         </section>
 
         <!-- Weather Section -->
-        <section class="weather">
-            <h2>Local Weather</h2>
-            <div id="current-weather"></div>
-            <div id="forecast"></div>
+        <section class="weather grid-layout">
+            <div id="current-weather" class="card"></div>
+            <div id="forecast" class="card"></div>
         </section>
 
         <!-- Company Spotlights -->
         <section class="spotlights">
             <h2>Member Spotlights</h2>
-            <div id="spotlight-container"></div>
+            <div id="spotlight-container" class="spotlight-row"></div>
         </section>
     </main>
 
