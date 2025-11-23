@@ -36,93 +36,44 @@ nav ul li a {
 
 nav ul li a.active {
   text-decoration: underline;
-  color: #ffd700; /* gold highlight for wayfinding */
+  color: #ffd700; /* gold highlight */
 }
 
-/* Hero Section */
-.hero {
-  position: relative;
-  text-align: center;
-}
-
-.hero img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.cta {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #ffd700;
-  color: #004080;
-  padding: 1rem 2rem;
-  font-weight: bold;
-  border-radius: 8px;
-  text-decoration: none;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-}
-
-/* Events Section */
-.events {
-  padding: 2rem;
-  background: white;
+/* Membership Form */
+.membership-form {
+  max-width: 600px;
   margin: 2rem auto;
-  max-width: 900px;
+  background: #fff;
+  padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-
-.events h2 {
-  margin-top: 0;
+.membership-form h2 {
   color: #004080;
 }
-
-/* Grid Layout (Weather + Events) */
-.grid-layout {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  padding: 2rem;
+.membership-form label {
+  display: block;
+  margin: 1rem 0;
 }
-
-@media (max-width: 600px) {
-  .grid-layout {
-    grid-template-columns: 1fr; /* stack vertically on mobile */
-  }
+.membership-form input,
+.membership-form select,
+.membership-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
-
-/* Cards */
-.card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.membership-form input[type="submit"] {
+  background: #004080;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 1rem;
 }
-
-/* Spotlights */
-.spotlights {
-  padding: 2rem;
-  text-align: center;
-}
-
-.spotlight-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.spotlight-row .card {
-  flex: 1 1 250px;
-  max-width: 300px;
-}
-
-.spotlight-row .card img {
-  max-width: 180px; /* enlarged logos */
-  margin-bottom: 1rem;
+.membership-form input[type="submit"]:hover {
+  background: #003060;
 }
 
 /* Membership Cards */
@@ -160,10 +111,9 @@ nav ul li a.active {
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.6);
 }
-
 .modal-content {
-  background: #004080;
-  color: #fff;
+  background: #fff;
+  color: #333;
   margin: 10% auto;
   padding: 2rem;
   border-radius: 8px;
@@ -204,4 +154,54 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem;
+}
+
+/* ========================= */
+/* Responsive Media Queries  */
+/* ========================= */
+
+/* Small screens (phones) */
+@media (max-width: 600px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .membership-cards {
+    flex-direction: column;
+  }
+
+  .membership-form {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    margin: 30% auto;
+  }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .membership-cards {
+    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+  }
+
+  .membership-form {
+    max-width: 80%;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1025px) {
+  .membership-cards {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .membership-form {
+    max-width: 600px;
+  }
 }
