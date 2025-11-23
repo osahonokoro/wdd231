@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Thank you for joining the Bluefin Chamber of Commerce.">
+  <meta name="author" content="OKORO OSAHON">
+  <title>Bluefin Chamber of Commerce | Thank You</title>
+  <link rel="icon" href="images/bluefin.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles/normalize.css">
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Bluefin Chamber of Commerce</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="directory.html">Directory</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="join.html">Join</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="thankyou">
+      <h2>Thank You for Joining!</h2>
+      <p>We received your application with the following details:</p>
+      <ul>
+        <li>First Name: <span id="fname"></span></li>
+        <li>Last Name: <span id="lname"></span></li>
+        <li>Email: <span id="email"></span></li>
+        <li>Mobile: <span id="phone"></span></li>
+        <li>Organization: <span id="org"></span></li>
+        <li>Timestamp: <span id="ts"></span></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="year"></span> OKORO OSAHON | WDD 231</p>
+    <p>Last Modified: <span id="lastModified"></span></p>
+  </footer>
+
+  <script>
+    // Footer year and last modified
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("lastModified").textContent = document.lastModified;
+
+    // Parse query string and display submitted values
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      document.getElementById("fname").textContent = params.get("firstname");
+      document.getElementById("lname").textContent = params.get("lastname");
+      document.getElementById("email").textContent = params.get("email");
+      document.getElementById("phone").textContent = params.get("phone");
+      document.getElementById("org").textContent = params.get("organization");
+      document.getElementById("ts").textContent = params.get("timestamp");
+    });
+  </script>
+</body>
+</html>

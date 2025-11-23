@@ -125,6 +125,77 @@ nav ul li a.active {
   margin-bottom: 1rem;
 }
 
+/* Membership Cards */
+.membership-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 2rem;
+}
+.membership-cards .card {
+  flex: 1 1 200px;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards;
+}
+.membership-cards .card:nth-child(1) { animation-delay: 0.2s; }
+.membership-cards .card:nth-child(2) { animation-delay: 0.4s; }
+.membership-cards .card:nth-child(3) { animation-delay: 0.6s; }
+.membership-cards .card:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modals */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+.modal-content {
+  background: #fff;
+  margin: 10% auto;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  position: relative;
+}
+.modal .close {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Thank You Page */
+.thankyou {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.thankyou h2 {
+  color: #004080;
+}
+.thankyou ul {
+  list-style: none;
+  padding: 0;
+}
+.thankyou li {
+  margin: 0.5rem 0;
+  font-weight: bold;
+}
+
 /* Footer */
 footer {
   background-color: #004080;
