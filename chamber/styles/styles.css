@@ -160,8 +160,10 @@ nav ul li a.active {
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.6);
 }
+
 .modal-content {
-  background: #fff;
+  background: #004080;
+  color: #fff;
   margin: 10% auto;
   padding: 2rem;
   border-radius: 8px;
