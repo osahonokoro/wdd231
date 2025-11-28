@@ -55,6 +55,15 @@ footer {
     font-family: Arial, sans-serif;
 }
 
+/* CTA accessible combo */
+.cta {
+    background-color: #78247C;
+    color: #003838;
+    font-weight: bold;
+    border: 2px solid #003838;
+}
+
+/* Responsive row layout */
 .row {
     display: flex;
     gap: 1rem;
@@ -83,4 +92,17 @@ footer {
 .footer {
     background-color: #4CAF50;
     color: white;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .row {
+        flex-direction: column;
+    }
+}
+
+/* Accessibility focus styles */
+.box:focus {
+    outline: 2px dashed #004080;
+    background-color: #d0f0ff;
 }
