@@ -1,3 +1,4 @@
+/* Base styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -6,24 +7,36 @@ body {
     padding: 0;
 }
 
+/* Header and footer with strong contrast */
 header,
 footer {
-    background-color: #004080;
-    color: white;
+    background-color: #000080;
+    /* Navy blue for header/footer */
+    color: #FFFFFF;
+    /* White text for contrast */
     text-align: center;
     padding: 1rem;
 }
 
-h1,
-h2 {
+/* Headings inside header/footer */
+header h1,
+footer h1 {
+    font-family: 'Roboto', sans-serif;
+    color: #FFFFFF;
+}
+
+/* Headings inside sections */
+section h1,
+section h2 {
     font-family: 'Roboto', sans-serif;
     color: #004080;
+
 }
 
 section {
     padding: 1rem 2rem;
     margin-bottom: 1rem;
-    background-color: white;
+    background-color: #FFFFFF;
     border-radius: 8px;
 }
 
@@ -58,7 +71,9 @@ footer {
 /* CTA accessible combo */
 .cta {
     background-color: #78247C;
+    /* Purple background */
     color: #003838;
+    /* Teal text */
     font-weight: bold;
     border: 2px solid #003838;
 }
@@ -73,15 +88,15 @@ footer {
     flex: 1;
 }
 
-/* Differentiate sections visually */
+/* Section differentiation */
 .header {
-    background-color: #004080;
-    color: white;
+    background-color: #000080;
+    color: #FFFFFF;
 }
 
 .hero {
     background-color: #00b3b3;
-    color: white;
+    color: #FFFFFF;
 }
 
 .content {
@@ -91,7 +106,7 @@ footer {
 
 .footer {
     background-color: #4CAF50;
-    color: white;
+    color: #FFFFFF;
 }
 
 /* Mobile responsiveness */
