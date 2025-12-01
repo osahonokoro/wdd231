@@ -1,0 +1,174 @@
+{
+    "sensorReadings": [
+        {
+            "id": 1,
+            "temperature": 25.3,
+            "ph": 7.2,
+            "ammonia": 0.12,
+            "dissolved_oxygen": 6.8,
+            "timestamp": "2024-01-15T08:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_01",
+            "location": "Tank A"
+        },
+        {
+            "id": 2,
+            "temperature": 26.1,
+            "ph": 7.1,
+            "ammonia": 0.15,
+            "dissolved_oxygen": 6.5,
+            "timestamp": "2024-01-15T09:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_01",
+            "location": "Tank A"
+        },
+        {
+            "id": 3,
+            "temperature": 27.8,
+            "ph": 7.0,
+            "ammonia": 0.18,
+            "dissolved_oxygen": 6.2,
+            "timestamp": "2024-01-15T10:00:00Z",
+            "status": "warning",
+            "sensor_id": "temp_sensor_01",
+            "location": "Tank A"
+        },
+        {
+            "id": 4,
+            "temperature": 24.9,
+            "ph": 7.3,
+            "ammonia": 0.11,
+            "dissolved_oxygen": 7.1,
+            "timestamp": "2024-01-15T11:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_02",
+            "location": "Tank B"
+        },
+        {
+            "id": 5,
+            "temperature": 25.5,
+            "ph": 7.2,
+            "ammonia": 0.13,
+            "dissolved_oxygen": 6.9,
+            "timestamp": "2024-01-15T12:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_02",
+            "location": "Tank B"
+        },
+        {
+            "id": 6,
+            "temperature": 29.2,
+            "ph": 6.9,
+            "ammonia": 0.25,
+            "dissolved_oxygen": 5.8,
+            "timestamp": "2024-01-15T13:00:00Z",
+            "status": "danger",
+            "sensor_id": "temp_sensor_01",
+            "location": "Tank A"
+        },
+        {
+            "id": 7,
+            "temperature": 25.1,
+            "ph": 7.4,
+            "ammonia": 0.10,
+            "dissolved_oxygen": 7.2,
+            "timestamp": "2024-01-15T14:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_02",
+            "location": "Tank B"
+        },
+        {
+            "id": 8,
+            "temperature": 26.3,
+            "ph": 7.1,
+            "ammonia": 0.16,
+            "dissolved_oxygen": 6.4,
+            "timestamp": "2024-01-15T15:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_01",
+            "location": "Tank A"
+        },
+        {
+            "id": 9,
+            "temperature": 24.8,
+            "ph": 7.3,
+            "ammonia": 0.12,
+            "dissolved_oxygen": 7.0,
+            "timestamp": "2024-01-15T16:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_02",
+            "location": "Tank B"
+        },
+        {
+            "id": 10,
+            "temperature": 27.5,
+            "ph": 7.0,
+            "ammonia": 0.20,
+            "dissolved_oxygen": 6.1,
+            "timestamp": "2024-01-15T17:00:00Z",
+            "status": "warning",
+            "sensor_id": "temp_sensor_01",
+            "location": "Tank A"
+        },
+        {
+            "id": 11,
+            "temperature": 25.7,
+            "ph": 7.2,
+            "ammonia": 0.14,
+            "dissolved_oxygen": 6.7,
+            "timestamp": "2024-01-15T18:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_02",
+            "location": "Tank B"
+        },
+        {
+            "id": 12,
+            "temperature": 26.8,
+            "ph": 7.1,
+            "ammonia": 0.17,
+            "dissolved_oxygen": 6.3,
+            "timestamp": "2024-01-15T19:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_01",
+            "location": "Tank A"
+        },
+        {
+            "id": 13,
+            "temperature": 25.2,
+            "ph": 7.3,
+            "ammonia": 0.13,
+            "dissolved_oxygen": 6.9,
+            "timestamp": "2024-01-15T20:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_02",
+            "location": "Tank B"
+        },
+        {
+            "id": 14,
+            "temperature": 28.1,
+            "ph": 6.9,
+            "ammonia": 0.22,
+            "dissolved_oxygen": 5.9,
+            "timestamp": "2024-01-15T21:00:00Z",
+            "status": "warning",
+            "sensor_id": "temp_sensor_01",
+            "location": "Tank A"
+        },
+        {
+            "id": 15,
+            "temperature": 25.9,
+            "ph": 7.2,
+            "ammonia": 0.15,
+            "dissolved_oxygen": 6.6,
+            "timestamp": "2024-01-15T22:00:00Z",
+            "status": "normal",
+            "sensor_id": "temp_sensor_02",
+            "location": "Tank B"
+        }
+    ],
+    "systemInfo": {
+        "totalSensors": 4,
+        "lastUpdated": "2024-01-15T22:00:00Z",
+        "dataPoints": 15
+    }
+}

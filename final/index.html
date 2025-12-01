@@ -4,46 +4,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Web Lab Start File">
-  <meta name="author" content="Paul Cheney">
+  <meta name="author" content="Okoro Osahon">
+  <meta name="description"
+    content="Smart Aquaculture Monitoring - Energy-efficient fish farming using IoT and machine learning">
+  
+  <title>Smart Aquaculture Monitoring | Home</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles/styles.css">
 
-  <link rel="stylesheet" href="styles/small.css">
-  <link rel="stylesheet" href="styles/large.css">
 
-  <title>Web Lab Start File</title>
+  <!-- Open Graph tags -->
+  <meta property="og:title" content="Smart Aquaculture Monitoring">
+  <meta property="og:description" content="Energy-efficient fish farming using IoT and machine learning">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/aquaculture-hero.avif">
 </head>
 
 <body>
   <header>
-    <span>Company Name Here</span>
+    <div class="header-content">
+      <h1 style="color: white;">Smart Aquaculture </h1>
+      <button class="hamburger" aria-label="Toggle navigation">☰</button>
+      <nav class="navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard.html">Live Dashboard</a></li>
+          <li><a href="methodology.html">Methodology</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <nav>
-    <ul>
-      <li><a href="#">About Us</a></li>
-      <li><a href="#">Menu Item</a></li>
-      <li><a href="#">Menu Item</a></li>
-    </ul>
-  </nav>
-
   <main>
-    <h1>Reuse one dialog over and over</h1>
-    <button id="openButton1">Apples</button>
-    <button id="openButton2">Oranges</button>
-    <button id="openButton3">Bananas</button>
-    <dialog id="dialogBox">
-      <div></div>
-      <button id="closeButton">Close</button>
-    </dialog>
+    <section class="hero">
+      <h2>Intelligent Aquaculture Monitoring</h2>
+      <p>Reducing energy consumption by 49% through IoT and machine learning</p>
+      <a href="dashboard.html" class="cta-button">View Live Data</a>
+    </section>
 
+    <section class="featured-data">
+      <h2>Recent Sensor Readings</h2>
+      <div id="featuredReadings" class="readings-container">
+        <!-- Dynamically loaded by JavaScript -->
+      </div>
+    </section>
 
-
+    <section class="research-overview">
+      <h2>Research Impact</h2>
+      <div class="cards-container">
+        <div class="card">
+          <h3>Energy Efficiency</h3>
+          <p>49% reduction in filtration energy usage through predictive control</p>
+        </div>
+        <div class="card">
+          <h3>Real-time Monitoring</h3>
+          <p>Continuous water quality tracking with IoT sensors</p>
+        </div>
+        <div class="card">
+          <h3>Machine Learning</h3>
+          <p>Predictive analytics for proactive water management</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; Web Labs</p>
+    <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
+    <p>
+      <a href="attributions.html">Attributions</a> |
+      <a href="contact.html">Contact</a> |
+      <a href="https://youtube.com/your-video-demo">Video Demo</a>
+    </p>
   </footer>
 
-  <script src="js/scripts.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
+
 </html>

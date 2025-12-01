@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Okoro Osahon">
+    <meta name="description" content="Technical implementation details of smart aquaculture system">
+    <title>Methodology | Smart Aquaculture</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1 style="color: white;">Smart Aquaculture </h1>
+            <button class="hamburger" aria-label="Toggle navigation">☰</button>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="dashboard.html">Live Dashboard</a></li>
+                    <li><a href="methodology.html">Methodology</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="methodology-intro">
+            <h2>System Architecture & Methodology</h2>
+            <p>Technical implementation of IoT-enabled aquaculture monitoring system</p>
+        
+            <!-- Circuit Diagram Section : Side-by-side -->
+            <div class="circuit-diagram-section">
+                <h3>System Circuit Architecture</h3>
+                <div class="circuit-container">
+                    <div class="circuit-image">
+                        <img src="images/aquaculture-circuit-diagram.png"
+                            alt="Smart Aquaculture System Circuit Diagram showing ESP32 connected to multiple sensors (temperature, ammonia, pH, dissolved oxygen) and Raspberry Pi controlling relays for pump and UV sterilization"
+                            loading="lazy" width="800" height="600">
+                        <p class="circuit-caption">Figure 1: Complete circuit diagram of the smart aquaculture monitoring system
+                        </p>
+                    </div>
+                    <div class="circuit-explanation">
+                        <h4>Circuit Components Overview</h4>
+                        <div class="circuit-components">
+                            <div class="circuit-component">
+                                <h5>🖥️ Central Processing Unit</h5>
+                                <ul>
+                                    <li><strong>Raspberry Pi 4</strong> - Main controller running ML models and dashboard</li>
+                                    <li><strong>ESP32 Microcontroller</strong> - Sensor data acquisition and preprocessing</li>
+                                    <li><strong>Modbus TCP/IP</strong> - Communication protocol between units</li>
+                                </ul>
+                            </div>
+                            <div class="circuit-component">
+                                <h5>📡 Sensor Network</h5>
+                                <ul>
+                                    <li><strong>DS18B20</strong> - Digital temperature sensor (GPIO 14 with 4.7kΩ pull-up)</li>
+                                    <li><strong>DS495 Ammonia Sensor</strong> - UART communication (TX to GPIO 2)</li>
+                                    <li><strong>pH Sensor</strong> - Analog voltage output (ESP32 A0 pin)</li>
+                                    <li><strong>DO Sensor</strong> - Electrochemical probe (ESP32 A1 pin)</li>
+                                </ul>
+                            </div>
+                            <div class="circuit-component">
+                                <h5>🔌 Control & Actuation</h5>
+                                <ul>
+                                    <li><strong>4-Channel Relay Module</strong> - GPIO-controlled switching</li>
+                                    <li><strong>Channel 1</strong> - Water pump control (GPIO 17)</li>
+                                    <li><strong>Channel 2</strong> - UV sterilizer control (GPIO 18)</li>
+                                    <li><strong>Channel 3/4</strong> - Backup/emergency controls</li>
+                                </ul>
+                            </div>
+                            <div class="circuit-component">
+                                <h5>🔋 Power Management</h5>
+                                <ul>
+                                    <li><strong>3.3V Regulated Supply</strong> - ESP32 and sensor power</li>
+                                    <li><strong>5V Supply</strong> - Relay module coil voltage</li>
+                                    <li><strong>Flyback Diodes</strong> - Protection against relay coil spikes</li>
+                                    <li><strong>Pull-up Resistors</strong> - Digital signal conditioning</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Research Approach Section -->
+            <div class="methodology-content">
+                <h3>Research Approach</h3>
+                <p>This study employed a comprehensive methodology integrating hardware design, machine learning, and energy
+                    optimization strategies to develop an intelligent aquaculture monitoring system.</p>
+        
+                <div class="architecture-grid">
+                    <div class="arch-layer">
+                        <h4>🏗️ Three-Layer System Architecture</h4>
+                        <div class="layer-details">
+                            <div class="layer-item">
+                                <h5>Sensor Layer</h5>
+                                <ul>
+                                    <li><strong>DS18B20</strong> - Temperature monitoring</li>
+                                    <li><strong>DS495 Ammonia Sensor</strong> - UART communication</li>
+                                    <li><strong>pH Probe</strong> - Acidity/alkalinity measurement</li>
+                                    <li><strong>DO Sensor</strong> - Dissolved oxygen tracking</li>
+                                </ul>
+                            </div>
+                            <div class="layer-item">
+                                <h5>Processing Layer</h5>
+                                <ul>
+                                    <li><strong>ESP32 Microcontroller</strong> - Data acquisition & preprocessing</li>
+                                    <li><strong>Raspberry Pi 4</strong> - ML model execution & central control</li>
+                                    <li><strong>Modbus TCP/IP</strong> - Communication protocol</li>
+                                </ul>
+                            </div>
+                            <div class="layer-item">
+                                <h5>Decision & Visualization Layer</h5>
+                                <ul>
+                                    <li><strong>Python Tkinter Dashboard</strong> - Real-time monitoring</li>
+                                    <li><strong>Automated Control System</strong> - Filtration/UV activation</li>
+                                    <li><strong>Data Logging</strong> - Performance analytics</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="ml-methodology">
+                        <h4>🤖 Machine Learning Implementation</h4>
+                        <div class="ml-comparison">
+                            <div class="model-card">
+                                <h5>Support Vector Machine (SVM)</h5>
+                                <p><strong>96.5% Accuracy</strong><br>RBF kernel for non-linear relationships</p>
+                            </div>
+                            <div class="model-card">
+                                <h5>Decision Tree Classifier</h5>
+                                <p><strong>95.2% Accuracy</strong><br>High interpretability with Gini impurity</p>
+                            </div>
+                            <div class="model-card">
+                                <h5>Artificial Neural Network (ANN)</h5>
+                                <p><strong>97.1% Accuracy</strong><br>Selected as optimal model with 0.955 F1-score</p>
+                            </div>
+                        </div>
+                        <p><strong>Training Data:</strong> 7,556 water quality measurements (80/20 train-test split)</p>
+                    </div>
+        
+                    <div class="energy-optimization">
+                        <h4>⚡ Energy Optimization Strategy</h4>
+                        <div class="energy-formula">
+                            <p><strong>Energy Calculation:</strong> E = P × D × t</p>
+                            <ul>
+                                <li>E: Energy consumed (kWh/day)</li>
+                                <li>P: Power rating (kW)</li>
+                                <li>D: Duty cycle (fraction of active time)</li>
+                                <li>t: Total operational time (24 hours)</li>
+                            </ul>
+                        </div>
+                        <div class="energy-scenarios">
+                            <div class="scenario">
+                                <h5>Continuous Operation</h5>
+                                <p>100% duty cycle = 10.0 kWh/day</p>
+                            </div>
+                            <div class="scenario optimized">
+                                <h5>Predictive Control</h5>
+                                <p>50% duty cycle = 5.1 kWh/day <strong>(49% reduction)</strong></p>
+                            </div>
+                            <div class="scenario aggressive">
+                                <h5>Aggressive Optimization</h5>
+                                <p>30% pump + 50% UV duty = 3.3 kWh/day <strong>(67% reduction)</strong></p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="validation-framework">
+                        <h4>🔬 Validation Framework</h4>
+                        <div class="validation-methods">
+                            <div class="validation-item">
+                                <h5>Electrical Validation</h5>
+                                <p>Digital kWh meter logging across operational scenarios</p>
+                            </div>
+                            <div class="validation-item">
+                                <h5>Hydraulic Validation</h5>
+                                <p>Flowmeters and float switch responsiveness testing</p>
+                            </div>
+                            <div class="validation-item">
+                                <h5>Water Quality Validation</h5>
+                                <p>Pre/post-filtration sampling and multiparameter analysis</p>
+                            </div>
+                            <div class="validation-item">
+                                <h5>System Responsiveness</h5>
+                                <p>End-to-end latency &lt; 2 seconds, dashboard refresh &lt; 1 second</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="system-components">
+            <h3>Hardware Components</h3>
+            <div id="hardwareList" class="components-list">
+                <!-- Dynamically loaded -->
+            </div>
+        </section>
+
+        <section class="contact-form">
+            <h3>Request More Information</h3>
+            <form id="contactForm" action="form-action.html" method="get">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="interest">Area of Interest:</label>
+                    <select id="interest" name="interest">
+                        <option value="research">Research Collaboration</option>
+                        <option value="implementation">System Implementation</option>
+                        <option value="learning">Educational Purpose</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Request</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
+        <p><a href="https://youtube.com/youtube_demo_video">Video Demo</a></p>
+    </footer>
+
+    <script type="module" src="js/methodology.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Okoro Osahon">
+    <meta name="description" content="Live aquaculture monitoring dashboard with real-time sensor data">
+    <title>Live Dashboard | Smart Aquaculture</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1 style="color: white;">Smart Aquaculture </h1>
+            <button class="hamburger" aria-label="Toggle navigation">☰</button>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="dashboard.html">Live Dashboard</a></li>
+                    <li><a href="methodology.html">Methodology</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="dashboard-header">
+            <h2>Live Monitoring Dashboard</h2>
+            <div class="controls">
+                <button id="themeToggle" class="control-btn">Toggle Theme</button>
+                <button id="refreshData" class="control-btn">Refresh Data</button>
+            </div>
+        </section>
+
+        <section class="current-readings">
+            <h3>Current Sensor Values</h3>
+            <div id="currentValues" class="current-values">
+                <!-- Dynamically updated -->
+            </div>
+        </section>
+
+        <section class="sensor-data">
+            <h3>Sensor Readings History</h3>
+            <div class="filters">
+                <form id="filterForm">
+                    <select id="parameterFilter">
+                        <option value="all">All Parameters</option>
+                        <option value="temperature">Temperature</option>
+                        <option value="ph">pH</option>
+                        <option value="ammonia">Ammonia</option>
+                        <option value="dissolved_oxygen">Dissolved Oxygen</option>
+                    </select>
+                    <button type="submit">Apply Filter</button>
+                </form>
+            </div>
+
+            <div id="sensorReadings" class="readings-grid">
+                <!-- 15+ items dynamically loaded -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Dialog -->
+    <div id="readingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
+        <p><a href="https://youtube.com/myvideo-demo">Video Demo</a></p>
+    </footer>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+
+</html>
