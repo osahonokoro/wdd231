@@ -205,3 +205,56 @@ footer {
     max-width: 600px;
   }
 }
+
+/* Discover Page Grid */
+.discover-grid {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.discover-grid .card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discover-grid .card h2 {
+  color: #004080;
+  margin-top: 0;
+}
+
+.discover-grid .card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Hover effect (desktop only) */
+@media (min-width: 641px) {
+  .discover-grid .card img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Responsive Layouts */
+@media (max-width: 640px) {
+  .discover-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .discover-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1025px) {
+  .discover-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
