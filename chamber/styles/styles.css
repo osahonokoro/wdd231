@@ -258,3 +258,18 @@ footer {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+/* Visitor Message Banner */
+.visitor-message {
+  background-color: #ffd700;
+  /* gold background */
+  color: #004080;
+  /* dark blue text */
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 6px;
+  max-width: 900px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
