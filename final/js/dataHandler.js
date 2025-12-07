@@ -9,7 +9,7 @@ export class DataHandler {
     async fetchSensorData() {
         try {
             console.log('Fetching sensor data...');
-            const response = await fetch('../data/sensor-data.json');
+            const response = await fetch('./data/sensor-data.json');
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -20,10 +20,24 @@ export class DataHandler {
             this.filteredData = [...this.sensorData];
 
             console.log(`Successfully loaded ${this.sensorData.length} sensor readings`);
+           
+            // Store in localStorage for persistence
+            localStorage.setItem('sensorDataCache', JSON.stringify(data));
+            localStorage.setItem('sensorDataTimestamp', new Date().toISOString());
+           
             return this.sensorData;
 
         } catch (error) {
             console.error('Error fetching sensor data:', error);
+
+            //Getting cached data
+            if (cached) {
+                console.log('Using cached data');
+                const data = JSON.parse(cached);
+                this.sensorData = data.sensorReadings;
+                this.filteredData = [...this.sensorData];
+                return this.sensorData;
+            }
             throw new Error('Failed to load sensor data. Please try again later.');
         }
     }
