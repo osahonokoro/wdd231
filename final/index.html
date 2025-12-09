@@ -2,68 +2,81 @@
 <html lang="en">
 
 <head>
+  <!-- Meta Information -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Okoro Osahon">
+  <meta name="author" content="Osahon Okoro">
   <meta name="description"
     content="Smart Aquaculture Monitoring - Energy-efficient fish farming using IoT and machine learning">
-  
+
+  <!-- SEO & Social Sharing -->
   <title>Smart Aquaculture Monitoring | Home</title>
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="styles/styles.css">
-
-
-  <!-- Open Graph tags -->
   <meta property="og:title" content="Smart Aquaculture Monitoring">
   <meta property="og:description" content="Energy-efficient fish farming using IoT and machine learning">
   <meta property="og:type" content="website">
   <meta property="og:image" content="images/aquaculture-hero.avif">
+  <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/index.html">
+
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/small.css">
+  <link rel="stylesheet" href="styles/larger.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <header>
     <div class="header-content">
-      <h1 style="color: white;">Smart Aquaculture </h1>
+      <h1 class="site-title">Smart Aquaculture</h1>
       <button class="hamburger" aria-label="Toggle navigation">☰</button>
-      <nav class="navigation">
+      <nav class="navigation" aria-label="Main navigation">
         <ul>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html" aria-current="page">Home</a></li>
           <li><a href="dashboard.html">Live Dashboard</a></li>
           <li><a href="methodology.html">Methodology</a></li>
+          <li><a href="attributions.html">Attributions</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main>
+    <!-- Hero Section -->
     <section class="hero">
       <h2>Intelligent Aquaculture Monitoring</h2>
       <p>Reducing energy consumption by 49% through IoT and machine learning</p>
       <a href="dashboard.html" class="cta-button">View Live Data</a>
     </section>
 
+    <!-- Featured Data Section -->
     <section class="featured-data">
       <h2>Recent Sensor Readings</h2>
-      <div id="featuredReadings" class="readings-container">
+      <div id="featuredReadings" class="readings-container" aria-live="polite">
         <!-- Dynamically loaded by JavaScript -->
       </div>
     </section>
 
+    <!-- Research Overview Section -->
     <section class="research-overview">
       <h2>Research Impact</h2>
       <div class="cards-container">
-        <div class="card">
+        <article class="card">
           <h3>Energy Efficiency</h3>
           <p>49% reduction in filtration energy usage through predictive control</p>
-        </div>
-        <div class="card">
+        </article>
+        <article class="card">
           <h3>Real-time Monitoring</h3>
           <p>Continuous water quality tracking with IoT sensors</p>
-        </div>
-        <div class="card">
+        </article>
+        <article class="card">
           <h3>Machine Learning</h3>
           <p>Predictive analytics for proactive water management</p>
-        </div>
+        </article>
       </div>
     </section>
   </main>
@@ -73,14 +86,15 @@
     <p>
       <a href="attributions.html">Attributions</a> |
       <a href="contact.html">Contact</a> |
-      <a href="https://youtube.com/your-video-demo">Video Demo</a>
+      <a href="https://youtube.com/your-video-demo" target="_blank" rel="noopener">Video Demo</a>
     </p>
   </footer>
 
-<script type="module" src="js/storage.js"></script>
-<script type="module" src="js/dataHandler.js"></script>
-<script type="module" src="js/homepage.js"></script>
-<script type="module" src="js/main.js"></script>
+  <!-- JavaScript Modules -->
+  <script type="module" src="js/storage.js"></script>
+  <script type="module" src="js/dataHandler.js"></script>
+  <script type="module" src="js/homepage.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 
 </html>

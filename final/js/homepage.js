@@ -3,18 +3,24 @@ import { DataHandler } from './dataHandler.js';
 class Homepage {
     constructor() {
         this.dataHandler = new DataHandler();
+        this.readings = [];
         this.init();
     }
 
     async init() {
         await this.loadFeaturedReadings();
         this.setupModal();
+
+        // Auto-refresh every 5 seconds to simulate live updates
+        setInterval(() => {
+            this.displayFeaturedReadings(this.dataHandler.getReadings(6, true));
+        }, 5000);
     }
 
     async loadFeaturedReadings() {
         try {
-            const readings = await this.dataHandler.fetchSensorData();
-            this.displayFeaturedReadings(readings.slice(0, 6)); // Show 6 on homepage
+            this.readings = await this.dataHandler.fetchSensorData();
+            this.displayFeaturedReadings(this.dataHandler.getReadings(6, true));
         } catch (error) {
             console.error('Error loading featured readings:', error);
             this.showError('Unable to load sensor data. Please try again later.');
@@ -25,21 +31,19 @@ class Homepage {
         const container = document.getElementById('featuredReadings');
         if (!container) return;
 
-        // Using array map method and template literals
         const html = readings.map(reading => `
-            <div class="sensor-reading featured">
+            <article class="sensor-reading featured" aria-label="Sensor reading for ${reading.location}">
                 <h4>${reading.location}</h4>
                 <p><strong>Temp:</strong> <span class="value">${reading.temperature}°C</span></p>
                 <p><strong>pH:</strong> <span class="value">${reading.ph}</span></p>
                 <p><strong>Oxygen:</strong> <span class="value">${reading.dissolved_oxygen} mg/L</span></p>
                 <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status}</span></p>
-                <button class="details-btn" data-id="${reading.id}">Details</button>
-            </div>
+                <p><strong>Time:</strong> ${reading.formattedTime}</p>
+                <button class="details-btn" data-id="${reading.id}" aria-label="View details for ${reading.location}">Details</button>
+            </article>
         `).join('');
 
         container.innerHTML = html;
-
-        // Add event listeners to buttons
         this.setupDetailButtons();
     }
 
@@ -53,21 +57,23 @@ class Homepage {
     }
 
     setupModal() {
-        // Create modal element if it doesn't exist
         if (!document.getElementById('detailsModal')) {
             const modal = document.createElement('div');
             modal.id = 'detailsModal';
             modal.className = 'modal';
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+            modal.setAttribute('aria-labelledby', 'modalBody');
+
             modal.innerHTML = `
                 <div class="modal-content">
-                    <button class="close-btn">&times;</button>
+                    <button class="close-btn" aria-label="Close details modal">&times;</button>
                     <div id="modalBody"></div>
                 </div>
             `;
             document.body.appendChild(modal);
         }
 
-        // Setup modal close functionality
         const modal = document.getElementById('detailsModal');
         const closeBtn = modal.querySelector('.close-btn');
 
@@ -82,13 +88,10 @@ class Homepage {
         });
     }
 
-    async showReadingDetails(readingId) {
+    showReadingDetails(readingId) {
         const modal = document.getElementById('detailsModal');
         const modalBody = document.getElementById('modalBody');
-
-        // Get reading data (you might need to store it locally or fetch again)
-        const readings = await this.dataHandler.fetchSensorData();
-        const reading = readings.find(r => r.id === readingId);
+        const reading = this.readings.find(r => r.id === readingId);
 
         if (reading) {
             modalBody.innerHTML = `
@@ -100,7 +103,7 @@ class Homepage {
                     <p><strong>Ammonia:</strong> ${reading.ammonia} mg/L</p>
                     <p><strong>Dissolved Oxygen:</strong> ${reading.dissolved_oxygen} mg/L</p>
                     <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
-                    <p><strong>Time:</strong> ${new Date(reading.timestamp).toLocaleString()}</p>
+                    <p><strong>Time:</strong> ${reading.formattedTime}</p>
                 </div>
             `;
             modal.style.display = 'block';
@@ -111,7 +114,7 @@ class Homepage {
         const container = document.getElementById('featuredReadings');
         if (container) {
             container.innerHTML = `
-                <div class="error-message">
+                <div class="error-message" role="alert">
                     <p>${message}</p>
                     <button onclick="location.reload()">Retry</button>
                 </div>
@@ -120,7 +123,6 @@ class Homepage {
     }
 }
 
-// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new Homepage();
 });

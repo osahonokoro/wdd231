@@ -2,30 +2,51 @@
 <html lang="en">
 
 <head>
+    <!-- Meta Information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Okoro Osahon">
+    <meta name="author" content="Osahon Okoro">
     <meta name="description" content="Live aquaculture monitoring dashboard with real-time sensor data">
+
+    <!-- SEO & Social Sharing -->
     <title>Live Dashboard | Smart Aquaculture</title>
+    <meta property="og:title" content="Smart Aquaculture Live Dashboard">
+    <meta property="og:description"
+        content="Real-time aquaculture monitoring with IoT sensors and predictive analytics.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/dashboard-preview.webp">
+    <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/dashboard.html">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/small.css">
+    <link rel="stylesheet" href="styles/larger.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
         <div class="header-content">
-            <h1 style="color: white;">Smart Aquaculture </h1>
+            <h1 class="site-title">Smart Aquaculture</h1>
             <button class="hamburger" aria-label="Toggle navigation">☰</button>
-            <nav class="navigation">
+            <nav class="navigation" aria-label="Main navigation">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="dashboard.html">Live Dashboard</a></li>
+                    <li><a href="dashboard.html" aria-current="page">Live Dashboard</a></li>
                     <li><a href="methodology.html">Methodology</a></li>
+                    <li><a href="attributions.html">Attributions</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main>
+        <!-- Dashboard Header -->
         <section class="dashboard-header">
             <h2>Live Monitoring Dashboard</h2>
             <div class="controls">
@@ -34,17 +55,20 @@
             </div>
         </section>
 
+        <!-- Current Readings -->
         <section class="current-readings">
             <h3>Current Sensor Values</h3>
-            <div id="currentValues" class="current-values">
+            <div id="currentValues" class="current-values" aria-live="polite">
                 <!-- Dynamically updated -->
             </div>
         </section>
 
+        <!-- Sensor Data History -->
         <section class="sensor-data">
             <h3>Sensor Readings History</h3>
             <div class="filters">
                 <form id="filterForm">
+                    <label for="parameterFilter" class="visually-hidden">Filter by parameter</label>
                     <select id="parameterFilter">
                         <option value="all">All Parameters</option>
                         <option value="temperature">Temperature</option>
@@ -63,9 +87,9 @@
     </main>
 
     <!-- Modal Dialog -->
-    <div id="readingModal" class="modal">
+    <div id="readingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalBody">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <button class="close-btn" aria-label="Close modal">&times;</button>
             <div id="modalBody">
                 <!-- Dynamic content -->
             </div>
@@ -74,9 +98,12 @@
 
     <footer>
         <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
-        <p><a href="https://youtube.com/myvideo-demo">Video Demo</a></p>
+        <p>
+            <a href="https://youtube.com/myvideo-demo" target="_blank" rel="noopener">Video Demo</a>
+        </p>
     </footer>
 
+    <!-- JavaScript Modules -->
     <script type="module" src="js/dashboard.js"></script>
 </body>
 

@@ -12,23 +12,30 @@ class Dashboard {
         this.setupEventListeners();
         this.applyTheme();
         this.displayReadings();
+
+        // Auto-refresh every 5 seconds to simulate live updates
+        setInterval(() => {
+            this.updateCurrentReadings(true);
+            this.displayReadings(true);
+            this.updateLastUpdated();
+        }, 5000);
     }
 
     async loadData() {
         try {
             await this.dataHandler.fetchSensorData();
-            this.updateCurrentReadings();
+            this.updateCurrentReadings(true);
+            this.updateLastUpdated();
         } catch (error) {
             this.showError(error.message);
         }
     }
 
     // Display 15+ items with 4+ properties each
-    displayReadings() {
+    displayReadings(simulate = false) {
         const container = document.getElementById('sensorReadings');
-        const readings = this.dataHandler.getReadings(15);
+        const readings = this.dataHandler.getReadings(15, simulate);
 
-        // Using array map method and template literals
         const readingsHTML = readings.map(reading => `
             <div class="sensor-reading" data-id="${reading.id}">
                 <h4>Reading #${reading.id}</h4>
@@ -37,14 +44,12 @@ class Dashboard {
                 <p><strong>Ammonia:</strong> <span class="value">${reading.ammonia} mg/L</span></p>
                 <p><strong>Dissolved Oxygen:</strong> <span class="value">${reading.dissolved_oxygen} mg/L</span></p>
                 <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
-                <p><strong>Time:</strong> ${new Date(reading.timestamp).toLocaleTimeString()}</p>
-                <button class="details-btn" data-id="${reading.id}">View Details</button>
+                <p><strong>Time:</strong> ${reading.formattedTime || new Date(reading.timestamp).toLocaleTimeString()}</p>
+                <button class="details-btn" data-id="${reading.id}" aria-label="View details for reading ${reading.id}">View Details</button>
             </div>
         `).join('');
 
         container.innerHTML = readingsHTML;
-
-        // Add event listeners to detail buttons
         this.setupDetailButtons();
     }
 
@@ -59,13 +64,12 @@ class Dashboard {
 
     // Modal dialog implementation
     showReadingDetails(readingId) {
-        const reading = this.dataHandler.sensorData.find(r => r.id === readingId);
+        const reading = this.dataHandler.processReadings(true).find(r => r.id === readingId);
         const modal = document.getElementById('readingModal');
         const modalBody = document.getElementById('modalBody');
 
-        // Using template literals for dynamic content
         modalBody.innerHTML = `
-            <h3>Detailed Sensor Reading #${reading.id}</h3>
+            <h3 id="modalTitle">Detailed Sensor Reading #${reading.id}</h3>
             <div class="modal-details">
                 <p><strong>Sensor ID:</strong> ${reading.sensor_id}</p>
                 <p><strong>Location:</strong> ${reading.location}</p>
@@ -74,18 +78,16 @@ class Dashboard {
                 <p><strong>Ammonia Concentration:</strong> ${reading.ammonia} mg/L</p>
                 <p><strong>Dissolved Oxygen:</strong> ${reading.dissolved_oxygen} mg/L</p>
                 <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
-                <p><strong>Timestamp:</strong> ${new Date(reading.timestamp).toLocaleString()}</p>
+                <p><strong>Timestamp:</strong> ${reading.formattedTime}</p>
             </div>
         `;
 
         modal.style.display = 'block';
 
-        // Close modal event
         modal.querySelector('.close-btn').onclick = () => {
             modal.style.display = 'none';
         };
 
-        // Close when clicking outside
         modal.onclick = (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
@@ -93,8 +95,8 @@ class Dashboard {
         };
     }
 
-    updateCurrentReadings() {
-        const current = this.dataHandler.getLatestReading();
+    updateCurrentReadings(simulate = false) {
+        const current = this.dataHandler.getLatestReading(simulate);
         const container = document.getElementById('currentValues');
 
         if (current) {
@@ -119,25 +121,36 @@ class Dashboard {
                     <span class="label">Status:</span>
                     <span class="value status-${current.status}">${current.status.toUpperCase()}</span>
                 </div>
+                <div class="current-value">
+                    <span class="label">Time:</span>
+                    <span class="value">${new Date(current.timestamp).toLocaleTimeString()}</span>
+                </div>
             `;
         }
     }
 
+    // NEW: Update "Last Updated" timestamp
+    updateLastUpdated() {
+        const container = document.getElementById('lastUpdated');
+        if (container) {
+            container.textContent = `Last Updated: ${new Date().toLocaleTimeString()}`;
+        }
+    }
+
     setupEventListeners() {
-        // Theme toggle with local storage
         document.getElementById('themeToggle').addEventListener('click', () => {
             this.toggleTheme();
         });
 
-        // Refresh data
         document.getElementById('refreshData').addEventListener('click', () => {
             this.loadData();
+            this.updateLastUpdated();
         });
 
-        // Filter form
         document.getElementById('filterForm').addEventListener('submit', (e) => {
             e.preventDefault();
             this.applyFilter();
+            this.updateLastUpdated();
         });
     }
 
@@ -153,8 +166,12 @@ class Dashboard {
 
     applyFilter() {
         const filterValue = document.getElementById('parameterFilter').value;
-        this.dataHandler.filterData('status', filterValue);
-        this.displayReadings();
+        if (filterValue === 'all') {
+            this.dataHandler.filterData('all');
+        } else {
+            this.dataHandler.filterData(filterValue, filterValue);
+        }
+        this.displayReadings(true);
     }
 
     showError(message) {
@@ -167,7 +184,6 @@ class Dashboard {
     }
 }
 
-// Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new Dashboard();
 });

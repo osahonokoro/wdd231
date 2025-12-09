@@ -1,4 +1,67 @@
-@media only screen and (min-width: 38rem) {
+@media screen and (min-width: 768px) {
+    body {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        padding: 40px;
+        line-height: 1.6;
+        background-color: #F4F6F6;
+        color: #2C3E50;
+    }
 
+    /* Navigation layout */
+    .navigation {
+        display: flex;
+        /* visible on large screens */
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+        background: none;
+        position: static;
+        padding: 0;
+    }
 
-} /*end media query*/
+    .hamburger {
+        display: none;
+        /* hide hamburger on large screens */
+    }
+
+    /* Layout */
+    .main-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .top-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .cert-courses {
+        grid-column: 1 / -1;
+    }
+
+    .certificate {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .course-card {
+        margin-bottom: 0;
+    }
+
+    h1,
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .button {
+        font-size: 18px;
+        padding: 12px 24px;
+    }
+}
