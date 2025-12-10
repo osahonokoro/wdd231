@@ -5,6 +5,7 @@
   <!-- Meta Information -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#004080">
   <meta name="author" content="Osahon Okoro">
   <meta name="description"
     content="Smart Aquaculture Monitoring - Energy-efficient fish farming using IoT and machine learning">
@@ -15,66 +16,74 @@
   <meta property="og:description" content="Energy-efficient fish farming using IoT and machine learning">
   <meta property="og:type" content="website">
   <meta property="og:image" content="images/aquaculture-hero.avif">
-  <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/index.html">
+  <meta property="og:url" content="index.html">
 
   <!-- Favicon -->
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="images/favicon.ico">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/small.css">
-  <link rel="stylesheet" href="styles/larger.css">
+  <!-- Stylesheets - Consolidated to one file -->
+  <link rel="stylesheet" href="styles/styles.css">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts with preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <header>
     <div class="header-content">
       <h1 class="site-title">Smart Aquaculture</h1>
-      <button class="hamburger" aria-label="Toggle navigation">☰</button>
-      <nav class="navigation" aria-label="Main navigation">
+      <!-- Hamburger button with proper ARIA attributes -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
+        aria-controls="main-nav">☰</button>
+      <nav class="navigation" id="main-nav" aria-label="Main navigation">
         <ul>
           <li><a href="index.html" aria-current="page">Home</a></li>
           <li><a href="dashboard.html">Live Dashboard</a></li>
           <li><a href="methodology.html">Methodology</a></li>
           <li><a href="attributions.html">Attributions</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero">
-      <h2>Intelligent Aquaculture Monitoring</h2>
+    <section class="hero" aria-labelledby="hero-title">
+      <h2 id="hero-title">Intelligent Aquaculture Monitoring</h2>
       <p>Reducing energy consumption by 49% through IoT and machine learning</p>
       <a href="dashboard.html" class="cta-button">View Live Data</a>
     </section>
 
     <!-- Featured Data Section -->
-    <section class="featured-data">
-      <h2>Recent Sensor Readings</h2>
-      <div id="featuredReadings" class="readings-container" aria-live="polite">
-        <!-- Dynamically loaded by JavaScript -->
+    <section class="featured-data" aria-labelledby="featured-data-title">
+      <h2 id="featured-data-title">Recent Sensor Readings</h2>
+      <div id="featuredReadings" class="readings-container" aria-live="polite" aria-busy="true">
+        <!-- Loading state - will be replaced by JavaScript -->
+        <div class="loading-message">Loading sensor data...</div>
       </div>
     </section>
 
     <!-- Research Overview Section -->
-    <section class="research-overview">
-      <h2>Research Impact</h2>
+    <section class="research-overview" aria-labelledby="research-title">
+      <h2 id="research-title">Research Impact</h2>
       <div class="cards-container">
-        <article class="card">
-          <h3>Energy Efficiency</h3>
+        <article class="card" aria-labelledby="energy-efficiency">
+          <h3 id="energy-efficiency">Energy Efficiency</h3>
           <p>49% reduction in filtration energy usage through predictive control</p>
         </article>
-        <article class="card">
-          <h3>Real-time Monitoring</h3>
+        <article class="card" aria-labelledby="real-time-monitoring">
+          <h3 id="real-time-monitoring">Real-time Monitoring</h3>
           <p>Continuous water quality tracking with IoT sensors</p>
         </article>
-        <article class="card">
-          <h3>Machine Learning</h3>
+        <article class="card" aria-labelledby="machine-learning">
+          <h3 id="machine-learning">Machine Learning</h3>
           <p>Predictive analytics for proactive water management</p>
         </article>
       </div>
@@ -82,19 +91,21 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
+    <p>&copy; <span id="current-year">2025</span> Smart Aquaculture Monitoring | WDD 231 Project | Osahon Okoro</p>
     <p>
       <a href="attributions.html">Attributions</a> |
-      <a href="contact.html">Contact</a> |
-      <a href="https://youtube.com/your-video-demo" target="_blank" rel="noopener">Video Demo</a>
+      <a href="contact.html">Contact Form</a> |
+      <a href="form-action.html">Form Submission</a> |
+      <!-- Update this with your actual video URL -->
+      <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
+        Demonstration</a>
     </p>
+    <p class="last-updated">Last Updated: <span id="last-modified">Loading...</span></p>
   </footer>
 
-  <!-- JavaScript Modules -->
-  <script type="module" src="js/storage.js"></script>
-  <script type="module" src="js/dataHandler.js"></script>
+  <!-- JavaScript Modules - Only need homepage.js -->
   <script type="module" src="js/homepage.js"></script>
-  <script type="module" src="js/main.js"></script>
+
 </body>
 
 </html>

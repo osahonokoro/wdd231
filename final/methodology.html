@@ -5,6 +5,7 @@
     <!-- Meta Information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#004080">
     <meta name="author" content="Osahon Okoro">
     <meta name="description" content="Technical implementation details of smart aquaculture system">
 
@@ -15,206 +16,252 @@
         content="Technical implementation details of IoT-enabled aquaculture monitoring system.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="images/aquaculture-circuit-diagram.png">
-    <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/methodology.html">
+    <meta property="og:url" content="methodology.html">
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/favicon.ico">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/small.css">
-    <link rel="stylesheet" href="styles/larger.css">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts with preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
         <div class="header-content">
             <h1 class="site-title">Smart Aquaculture</h1>
-            <button class="hamburger" aria-label="Toggle navigation">☰</button>
-            <nav class="navigation" aria-label="Main navigation">
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
+                aria-controls="main-nav">☰</button>
+            <nav class="navigation" id="main-nav" aria-label="Main navigation">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="dashboard.html">Live Dashboard</a></li>
                     <li><a href="methodology.html" aria-current="page">Methodology</a></li>
                     <li><a href="attributions.html">Attributions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <!-- Intro -->
-        <section class="methodology-intro">
-            <h2>System Architecture & Methodology</h2>
-            <p>Technical implementation of an IoT-enabled aquaculture monitoring system that integrates sensor networks,
+        <section class="methodology-intro" aria-labelledby="intro-title">
+            <h2 id="intro-title">System Architecture & Methodology</h2>
+            <p class="intro-description">Technical implementation of an IoT-enabled aquaculture monitoring system that
+                integrates sensor networks,
                 control automation, and data-driven decision-making.</p>
+            <div class="key-metrics">
+                <div class="metric">
+                    <span class="metric-value">49%</span>
+                    <span class="metric-label">Energy Reduction</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">97.1%</span>
+                    <span class="metric-label">Model Accuracy</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">&lt;2s</span>
+                    <span class="metric-label">Response Time</span>
+                </div>
+            </div>
         </section>
 
         <!-- Circuit Diagram Section -->
-        <section class="circuit-diagram-section">
-            <h3>System Circuit Architecture</h3>
+        <section class="circuit-diagram-section" aria-labelledby="circuit-title">
+            <h3 id="circuit-title">System Circuit Architecture</h3>
             <div class="circuit-container">
                 <figure class="circuit-image">
                     <img src="images/aquaculture-circuit-diagram.png"
-                        alt="Circuit diagram of an ESP32 sensor network and Raspberry Pi controller with relays for pump and UV"
+                        alt="Circuit diagram of an ESP32 sensor network and Raspberry Pi controller with relays for pump and UV sterilization"
                         loading="lazy" width="800" height="600">
-                    <figcaption>Figure 1: Circuit diagram of the smart aquaculture monitoring and control system.
-                    </figcaption>
+                    <figcaption class="circuit-caption">Figure 1: Circuit diagram of the smart aquaculture monitoring
+                        and control system.</figcaption>
                 </figure>
 
                 <div class="circuit-explanation">
-                    <h4>Circuit components overview</h4>
-                    <section class="circuit-components">
-                        <article class="circuit-component">
-                            <h5>🖥️ Central processing</h5>
+                    <h4>Circuit Components Overview</h4>
+                    <div class="circuit-components">
+                        <article class="circuit-component" aria-labelledby="processing-heading">
+                            <h5 id="processing-heading">🖥️ Central Processing</h5>
                             <ul>
-                                <li><strong>Raspberry Pi 4</strong> — Runs the dashboard and ML models.</li>
-                                <li><strong>ESP32 microcontroller</strong> — Sensor acquisition and preprocessing.</li>
-                                <li><strong>Modbus TCP/IP</strong> — Network communication between units.</li>
+                                <li><strong>Raspberry Pi 4</strong> — Runs the dashboard and ML models</li>
+                                <li><strong>ESP32 Microcontroller</strong> — Sensor acquisition and preprocessing</li>
+                                <li><strong>Modbus TCP/IP</strong> — Network communication between units</li>
+                                <li><strong>Python Dashboard</strong> — Real-time data visualization</li>
                             </ul>
                         </article>
 
-                        <article class="circuit-component">
-                            <h5>📡 Sensor network</h5>
+                        <article class="circuit-component" aria-labelledby="sensors-heading">
+                            <h5 id="sensors-heading">📡 Sensor Network</h5>
                             <ul>
-                                <li><strong>DS18B20</strong> — Digital temperature sensor.</li>
-                                <li><strong>DS495 ammonia sensor</strong> — UART communication.</li>
-                                <li><strong>pH probe</strong> — Analog voltage input.</li>
-                                <li><strong>DO sensor</strong> — Electrochemical probe.</li>
+                                <li><strong>DS18B20</strong> — Digital temperature sensor (±0.5°C accuracy)</li>
+                                <li><strong>DS495 Ammonia Sensor</strong> — UART communication, RS-485 compatible</li>
+                                <li><strong>pH Probe</strong> — Analog voltage input, continuous monitoring</li>
+                                <li><strong>DO Sensor</strong> — Electrochemical probe, galvanic membrane</li>
                             </ul>
                         </article>
 
-                        <article class="circuit-component">
-                            <h5>🔌 Control & actuation</h5>
+                        <article class="circuit-component" aria-labelledby="control-heading">
+                            <h5 id="control-heading">🔌 Control & Actuation</h5>
                             <ul>
-                                <li><strong>4-channel relay module</strong> — GPIO-controlled switching.</li>
-                                <li><strong>Channel 1</strong> — Water pump control.</li>
-                                <li><strong>Channel 2</strong> — UV sterilizer control.</li>
-                                <li><strong>Channel 3/4</strong> — Backup/emergency controls.</li>
+                                <li><strong>4-Channel Relay Module</strong> — GPIO-controlled switching</li>
+                                <li><strong>Channel 1</strong> — Water pump control (0.37 kW, 2200 L/h)</li>
+                                <li><strong>Channel 2</strong> — UV sterilizer control (40W, 99.9% sterilization)</li>
+                                <li><strong>Channel 3/4</strong> — Backup/emergency controls</li>
                             </ul>
                         </article>
 
-                        <article class="circuit-component">
-                            <h5>🔋 Power management</h5>
+                        <article class="circuit-component" aria-labelledby="power-heading">
+                            <h5 id="power-heading">🔋 Power Management</h5>
                             <ul>
-                                <li><strong>3.3V regulated supply</strong> — ESP32 and sensors.</li>
-                                <li><strong>5V supply</strong> — Relay coil voltage.</li>
-                                <li><strong>Flyback diodes</strong> — Relay spike protection.</li>
-                                <li><strong>Pull-up resistors</strong> — Signal conditioning.</li>
+                                <li><strong>3.3V Regulated Supply</strong> — ESP32 and sensors</li>
+                                <li><strong>5V Supply</strong> — Relay coil voltage</li>
+                                <li><strong>Flyback Diodes</strong> — Relay spike protection</li>
+                                <li><strong>Pull-up Resistors</strong> — Signal conditioning</li>
                             </ul>
                         </article>
-                    </section>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Research Approach -->
-        <section class="methodology-content">
-            <h3>Research approach</h3>
-            <p>This study integrates hardware design, machine learning, and energy optimization to deliver an
-                intelligent aquaculture monitoring system.</p>
+        <section class="methodology-content" aria-labelledby="research-title">
+            <h3 id="research-title">Research Approach</h3>
+            <p class="approach-description">This study integrates hardware design, machine learning, and energy
+                optimization to deliver an
+                intelligent aquaculture monitoring system with predictive capabilities.</p>
 
             <div class="architecture-grid">
                 <!-- Three-Layer Architecture -->
-                <article class="arch-layer">
-                    <h4>🏗️ Three-layer system architecture</h4>
+                <article class="arch-layer" aria-labelledby="architecture-heading">
+                    <h4 id="architecture-heading">🏗️ Three-Layer System Architecture</h4>
                     <div class="layer-details">
-                        <div class="layer-item">
-                            <h5>Sensor layer</h5>
+                        <div class="layer-item" aria-labelledby="sensor-layer-heading">
+                            <h5 id="sensor-layer-heading">Sensor Layer</h5>
                             <ul>
-                                <li>DS18B20 — Temperature monitoring</li>
-                                <li>DS495 ammonia — UART communication</li>
-                                <li>pH probe — Acidity/alkalinity measurement</li>
-                                <li>DO sensor — Dissolved oxygen tracking</li>
+                                <li><strong>DS18B20</strong> — Temperature monitoring (-55°C to +125°C)</li>
+                                <li><strong>DS495 Ammonia</strong> — UART communication, 0-100ppm range</li>
+                                <li><strong>pH Probe</strong> — Acidity/alkalinity measurement (0-14 pH)</li>
+                                <li><strong>DO Sensor</strong> — Dissolved oxygen tracking (0-20 mg/L)</li>
                             </ul>
                         </div>
-                        <div class="layer-item">
-                            <h5>Processing layer</h5>
+                        <div class="layer-item" aria-labelledby="processing-layer-heading">
+                            <h5 id="processing-layer-heading">Processing Layer</h5>
                             <ul>
-                                <li>ESP32 — Data acquisition & preprocessing</li>
-                                <li>Raspberry Pi 4 — ML execution & central control</li>
-                                <li>Modbus TCP/IP — Communication protocol</li>
+                                <li><strong>ESP32</strong> — Data acquisition & preprocessing (dual-core)</li>
+                                <li><strong>Raspberry Pi 4</strong> — ML execution & central control (4GB RAM)</li>
+                                <li><strong>Modbus TCP/IP</strong> — Industrial communication protocol</li>
+                                <li><strong>Real-time Clock</strong> — Time synchronization across sensors</li>
                             </ul>
                         </div>
-                        <div class="layer-item">
-                            <h5>Decision & visualization layer</h5>
+                        <div class="layer-item" aria-labelledby="decision-layer-heading">
+                            <h5 id="decision-layer-heading">Decision & Visualization Layer</h5>
                             <ul>
-                                <li>Python Tkinter dashboard — Real-time monitoring</li>
-                                <li>Automated control — Filtration/UV activation</li>
-                                <li>Data logging — Performance analytics</li>
+                                <li><strong>Web Dashboard</strong> — Real-time monitoring (HTML/CSS/JavaScript)</li>
+                                <li><strong>Automated Control</strong> — Filtration/UV activation based on ML
+                                    predictions</li>
+                                <li><strong>Data Logging</strong> — Performance analytics and historical trends</li>
+                                <li><strong>Alert System</strong> — Email/SMS notifications for critical conditions</li>
                             </ul>
                         </div>
                     </div>
                 </article>
 
                 <!-- Machine Learning -->
-                <article class="ml-methodology">
-                    <h4>🤖 Machine learning implementation</h4>
+                <article class="ml-methodology" aria-labelledby="ml-heading">
+                    <h4 id="ml-heading">🤖 Machine Learning Implementation</h4>
                     <div class="ml-comparison">
-                        <div class="model-card">
-                            <h5>Support Vector Machine (SVM)</h5>
-                            <p><strong>96.5% accuracy</strong><br>RBF kernel for non-linear relationships.</p>
+                        <div class="model-card" aria-labelledby="svm-model">
+                            <h5 id="svm-model">Support Vector Machine (SVM)</h5>
+                            <p><strong>96.5% Accuracy</strong><br>RBF kernel for non-linear relationships</p>
+                            <p class="model-detail">C=1.0, gamma='scale'</p>
                         </div>
-                        <div class="model-card">
-                            <h5>Decision Tree Classifier</h5>
-                            <p><strong>95.2% accuracy</strong><br>High interpretability with Gini impurity.</p>
+                        <div class="model-card" aria-labelledby="dt-model">
+                            <h5 id="dt-model">Decision Tree Classifier</h5>
+                            <p><strong>95.2% Accuracy</strong><br>High interpretability with Gini impurity</p>
+                            <p class="model-detail">max_depth=10, min_samples_split=5</p>
                         </div>
-                        <div class="model-card">
-                            <h5>Artificial Neural Network (ANN)</h5>
-                            <p><strong>97.1% accuracy</strong><br>Optimal model with 0.955 F1-score.</p>
+                        <div class="model-card" aria-labelledby="ann-model">
+                            <h5 id="ann-model">Artificial Neural Network (ANN)</h5>
+                            <p><strong>97.1% Accuracy</strong><br>Optimal model with 0.955 F1-score</p>
+                            <p class="model-detail">3 layers, 64 neurons, ReLU activation</p>
                         </div>
                     </div>
-                    <p><strong>Training data:</strong> 7,556 water quality measurements (80/20 train–test split).</p>
+                    <div class="training-data">
+                        <p><strong>Training Dataset:</strong> 7,556 water quality measurements (80/20 train–test split)
+                        </p>
+                        <p><strong>Features:</strong> Temperature, pH, Ammonia, Dissolved Oxygen, Time of Day</p>
+                        <p><strong>Target:</strong> Optimal filtration schedule (binary classification)</p>
+                    </div>
                 </article>
 
                 <!-- Energy Optimization -->
-                <article class="energy-optimization">
-                    <h4>⚡ Energy optimization strategy</h4>
-                    <p><strong>Energy calculation:</strong> E = P × D × t</p>
-                    <ul>
-                        <li>E: Energy consumed (kWh/day)</li>
-                        <li>P: Power rating (kW)</li>
-                        <li>D: Duty cycle (fraction of active time)</li>
-                        <li>t: Total operational time (24 hours)</li>
-                    </ul>
+                <article class="energy-optimization" aria-labelledby="energy-heading">
+                    <h4 id="energy-heading">⚡ Energy Optimization Strategy</h4>
+                    <div class="energy-formula">
+                        <p><strong>Energy Calculation Formula:</strong> E = P × D × t</p>
+                        <ul>
+                            <li><strong>E:</strong> Energy consumed (kWh/day)</li>
+                            <li><strong>P:</strong> Power rating (kW)</li>
+                            <li><strong>D:</strong> Duty cycle (fraction of active time)</li>
+                            <li><strong>t:</strong> Total operational time (24 hours)</li>
+                        </ul>
+                    </div>
                     <div class="energy-scenarios">
-                        <div class="scenario">
-                            <h5>Continuous operation</h5>
-                            <p>100% duty cycle = 10.0 kWh/day</p>
+                        <div class="scenario baseline" aria-labelledby="baseline-scenario">
+                            <h5 id="baseline-scenario">Continuous Operation</h5>
+                            <p class="scenario-value">100% Duty Cycle</p>
+                            <p class="energy-consumption">10.0 kWh/day</p>
+                            <p class="scenario-note">Baseline energy consumption</p>
                         </div>
-                        <div class="scenario optimized">
-                            <h5>Predictive control</h5>
-                            <p>50% duty cycle = 5.1 kWh/day <strong>(49% reduction)</strong></p>
+                        <div class="scenario optimized" aria-labelledby="optimized-scenario">
+                            <h5 id="optimized-scenario">Predictive Control</h5>
+                            <p class="scenario-value">50% Duty Cycle</p>
+                            <p class="energy-consumption">5.1 kWh/day</p>
+                            <p class="scenario-note"><strong>49% Energy Reduction</strong></p>
                         </div>
-                        <div class="scenario aggressive">
-                            <h5>Aggressive optimization</h5>
-                            <p>30% pump + 50% UV duty = 3.3 kWh/day <strong>(67% reduction)</strong></p>
+                        <div class="scenario aggressive" aria-labelledby="aggressive-scenario">
+                            <h5 id="aggressive-scenario">Aggressive Optimization</h5>
+                            <p class="scenario-value">30% Pump + 50% UV Duty</p>
+                            <p class="energy-consumption">3.3 kWh/day</p>
+                            <p class="scenario-note"><strong>67% Energy Reduction</strong></p>
                         </div>
                     </div>
                 </article>
 
                 <!-- Validation Framework -->
-                <article class="validation-framework">
-                    <h4>🔬 Validation framework</h4>
+                <article class="validation-framework" aria-labelledby="validation-heading">
+                    <h4 id="validation-heading">🔬 Validation Framework</h4>
                     <div class="validation-methods">
-                        <div class="validation-item">
-                            <h5>Electrical validation</h5>
-                            <p>Digital kWh meter logging across operational scenarios.</p>
+                        <div class="validation-item" aria-labelledby="electrical-validation">
+                            <h5 id="electrical-validation">Electrical Validation</h5>
+                            <p>Digital kWh meter logging across operational scenarios</p>
+                            <p class="validation-metric">±0.5% measurement accuracy</p>
                         </div>
-                        <div class="validation-item">
-                            <h5>Hydraulic validation</h5>
-                            <p>Flowmeter readings and float switch responsiveness testing.</p>
+                        <div class="validation-item" aria-labelledby="hydraulic-validation">
+                            <h5 id="hydraulic-validation">Hydraulic Validation</h5>
+                            <p>Flowmeter readings and float switch responsiveness testing</p>
+                            <p class="validation-metric">2200 L/h ± 2% flow rate</p>
                         </div>
-                        <div class="validation-item">
-                            <h5>Water quality validation</h5>
-                            <p>Pre/post-filtration sampling and multiparameter analysis.</p>
+                        <div class="validation-item" aria-labelledby="quality-validation">
+                            <h5 id="quality-validation">Water Quality Validation</h5>
+                            <p>Pre/post-filtration sampling and multiparameter analysis</p>
+                            <p class="validation-metric">99.9% pathogen reduction</p>
                         </div>
-                        <div class="validation-item">
-                            <h5>System responsiveness</h5>
-                            <p>End-to-end latency &lt; 2 seconds; dashboard refresh &lt; 1 second.</p>
+                        <div class="validation-item" aria-labelledby="response-validation">
+                            <h5 id="response-validation">System Responsiveness</h5>
+                            <p>End-to-end latency testing and dashboard refresh rates</p>
+                            <p class="validation-metric">&lt; 2s latency, &lt; 1s refresh</p>
                         </div>
                     </div>
                 </article>
@@ -222,55 +269,134 @@
         </section>
 
         <!-- System Components (Dynamic) -->
-        <section class="system-components">
-            <h3>Hardware components</h3>
-            <div id="hardwareList" class="components-list" aria-live="polite">
-                <!-- Dynamically loaded -->
+        <section class="system-components" aria-labelledby="components-title">
+            <h3 id="components-title">Hardware Components</h3>
+            <div class="component-filters">
+                <h4>Filter by Category:</h4>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Components</button>
+                    <button class="filter-btn" data-filter="processing">Processing</button>
+                    <button class="filter-btn" data-filter="sensors">Sensors</button>
+                    <button class="filter-btn" data-filter="actuation">Actuation</button>
+                    <button class="filter-btn" data-filter="filtration">Filtration</button>
+                </div>
+            </div>
+            <div id="hardwareList" class="components-list" aria-live="polite" aria-busy="true">
+                <!-- Loading state will be replaced by JavaScript -->
+                <div class="loading-message">Loading hardware components...</div>
+            </div>
+            <div class="components-summary" id="componentsSummary" aria-live="polite">
+                <!-- Summary will be updated by JavaScript -->
             </div>
         </section>
 
         <!-- Contact Form -->
-        <section class="contact-form">
-            <h3>Request more information</h3>
+        <section class="contact-form" aria-labelledby="contact-title">
+            <h3 id="contact-title">Request More Information</h3>
+            <p>Interested in implementing this system or collaborating on research? Please fill out the form below.</p>
+
             <form id="contactForm" action="form-action.html" method="get" novalidate>
                 <div class="form-group">
-                    <label for="name">Name<span aria-hidden="true">*</span>:</label>
-                    <input type="text" id="name" name="name" required autocomplete="name">
+                    <label for="name">Full Name<span class="required" aria-hidden="true">*</span>:</label>
+                    <input type="text" id="name" name="name" required autocomplete="name" minlength="2" maxlength="100">
+                    <div class="field-error" id="nameError" role="alert" aria-live="polite"></div>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email<span aria-hidden="true">*</span>:</label>
+                    <label for="email">Email Address<span class="required" aria-hidden="true">*</span>:</label>
                     <input type="email" id="email" name="email" required autocomplete="email">
+                    <div class="field-error" id="emailError" role="alert" aria-live="polite"></div>
                 </div>
 
                 <div class="form-group">
-                    <label for="interest">Area of interest:</label>
+                    <label for="organization">Organization:</label>
+                    <input type="text" id="organization" name="organization" autocomplete="organization">
+                </div>
+
+                <div class="form-group">
+                    <label for="interest">Area of Interest:</label>
                     <select id="interest" name="interest">
-                        <option value="research">Research collaboration</option>
-                        <option value="implementation">System implementation</option>
-                        <option value="learning">Educational purpose</option>
+                        <option value="">Select an option</option>
+                        <option value="research">Research Collaboration</option>
+                        <option value="implementation">System Implementation</option>
+                        <option value="education">Educational Purpose</option>
+                        <option value="commercial">Commercial Application</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="budget">Project Budget Range:</label>
+                    <select id="budget" name="budget">
+                        <option value="">Select budget range</option>
+                        <option value="under_1k">Under $1,000</option>
+                        <option value="1k_5k">$1,000 - $5,000</option>
+                        <option value="5k_10k">$5,000 - $10,000</option>
+                        <option value="over_10k">Over $10,000</option>
+                        <option value="not_sure">Not sure / Planning phase</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="message">Message:</label>
-                    <textarea id="message" name="message" rows="4"></textarea>
+                    <textarea id="message" name="message" rows="6"
+                        placeholder="Please provide details about your project or research interests..." minlength="10"
+                        maxlength="1000"></textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span> / 1000 characters
+                    </div>
                 </div>
 
-                <button type="submit" class="submit-btn">Send request</button>
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="newsletter" name="newsletter">
+                    <label for="newsletter">Subscribe to our research newsletter for updates</label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Send Request</button>
+                    <button type="reset" class="control-btn secondary">Clear Form</button>
+                </div>
             </form>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
+        <p>&copy; <span id="current-year">2025</span> Smart Aquaculture Monitoring | WDD 231 Project | Osahon Okoro</p>
         <p>
-            <a href="https://youtube.com/youtube_demo_video" target="_blank" rel="noopener">Video Demo</a>
+            <a href="attributions.html">Attributions</a> |
+            <a href="contact.html">Contact Form</a> |
+            <a href="form-action.html">Form Submission</a> |
+            <!-- Update with your actual video URL -->
+            <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
+                Demonstration</a>
         </p>
+        <p class="last-updated">Documentation last updated: <span id="last-modified">Loading...</span></p>
     </footer>
 
     <!-- JavaScript Module -->
     <script type="module" src="js/methodology.js"></script>
+
+    <!-- Inline script for footer updates -->
+    <script>
+        // Update footer dates
+        document.addEventListener('DOMContentLoaded', function () {
+            // Update current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Update last modified date
+            document.getElementById('last-modified').textContent = new Date().toLocaleString();
+
+            // Character counter for message textarea
+            const messageTextarea = document.getElementById('message');
+            const charCount = document.getElementById('charCount');
+
+            if (messageTextarea && charCount) {
+                messageTextarea.addEventListener('input', function () {
+                    charCount.textContent = this.value.length;
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

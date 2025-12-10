@@ -5,6 +5,7 @@
     <!-- Meta Information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#004080">
     <meta name="author" content="Osahon Okoro">
     <meta name="description" content="Live aquaculture monitoring dashboard with real-time sensor data">
 
@@ -15,96 +16,166 @@
         content="Real-time aquaculture monitoring with IoT sensors and predictive analytics.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="images/dashboard-preview.webp">
-    <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/dashboard.html">
+    <meta property="og:url" content="dashboard.html">
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/favicon.ico">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/small.css">
-    <link rel="stylesheet" href="styles/larger.css">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts with preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
         <div class="header-content">
             <h1 class="site-title">Smart Aquaculture</h1>
-            <button class="hamburger" aria-label="Toggle navigation">☰</button>
-            <nav class="navigation" aria-label="Main navigation">
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
+                aria-controls="main-nav">☰</button>
+            <nav class="navigation" id="main-nav" aria-label="Main navigation">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="dashboard.html" aria-current="page">Live Dashboard</a></li>
                     <li><a href="methodology.html">Methodology</a></li>
                     <li><a href="attributions.html">Attributions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <!-- Dashboard Header -->
-        <section class="dashboard-header">
-            <h2>Live Monitoring Dashboard</h2>
+        <section class="dashboard-header" aria-labelledby="dashboard-title">
+            <h2 id="dashboard-title">Live Monitoring Dashboard</h2>
             <div class="controls">
-                <button id="themeToggle" class="control-btn">Toggle Theme</button>
-                <button id="refreshData" class="control-btn">Refresh Data</button>
-            </div>
+                <button id="themeToggle" class="control-btn" aria-label="Toggle dark/light theme">
+                    <span class="theme-icon">🌙</span> Toggle Theme
+                </button>
+                <button id="refreshData" class="control-btn" aria-label="Refresh sensor data">
+                    <span class="refresh-icon">🔄</span> Refresh Data
+                </button>
+                            </div>
         </section>
 
         <!-- Current Readings -->
-        <section class="current-readings">
-            <h3>Current Sensor Values</h3>
-            <div id="currentValues" class="current-values" aria-live="polite">
-                <!-- Dynamically updated -->
+        <section class="current-readings" aria-labelledby="current-readings-title">
+            <h3 id="current-readings-title">Current Sensor Values</h3>
+            <p class="last-updated" id="lastUpdated">Last updated: <span>Loading...</span></p>
+
+            <div id="currentValues" class="current-values" aria-live="polite" aria-busy="true">
+                <!-- Loading state will be replaced by JavaScript -->
+                <div class="loading-message">Loading current sensor data...</div>
+            </div>
+
+            <div class="status-summary" id="statusSummary" aria-live="polite">
+                <!-- Status summary will be updated by JavaScript -->
             </div>
         </section>
 
         <!-- Sensor Data History -->
-        <section class="sensor-data">
-            <h3>Sensor Readings History</h3>
+        <section class="sensor-data" aria-labelledby="sensor-history-title">
+            <h3 id="sensor-history-title">Sensor Readings History</h3>
+
+            <!-- Statistics Summary -->
+            <div class="stats-summary" id="statsSummary" aria-live="polite">
+                <!-- Statistics will be updated by JavaScript -->
+            </div>
+
             <div class="filters">
                 <form id="filterForm">
-                    <label for="parameterFilter" class="visually-hidden">Filter by parameter</label>
-                    <select id="parameterFilter">
-                        <option value="all">All Parameters</option>
-                        <option value="temperature">Temperature</option>
-                        <option value="ph">pH</option>
-                        <option value="ammonia">Ammonia</option>
-                        <option value="dissolved_oxygen">Dissolved Oxygen</option>
-                    </select>
-                    <button type="submit">Apply Filter</button>
+                    <label for="parameterFilter" class="filter-label">Filter by parameter:</label>
+                    <div class="filter-controls">
+                        <select id="parameterFilter" name="parameter">
+                            <option value="all">All Parameters</option>
+                            <option value="temperature">Temperature</option>
+                            <option value="ph">pH Level</option>
+                            <option value="ammonia">Ammonia</option>
+                            <option value="dissolved_oxygen">Dissolved Oxygen</option>
+                        </select>
+
+                        <select id="statusFilter" name="status">
+                            <option value="all">All Status</option>
+                            <option value="normal">Normal</option>
+                            <option value="warning">Warning</option>
+                            <option value="danger">Danger</option>
+                        </select>
+
+                        <select id="sortFilter" name="sort">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="parameter">By Parameter</option>
+                        </select>
+
+                        <button type="submit" class="submit-btn">Apply Filters</button>
+                        <button type="button" id="resetFilters" class="control-btn secondary">Reset</button>
+                    </div>
                 </form>
             </div>
 
-            <div id="sensorReadings" class="readings-grid">
-                <!-- 15+ items dynamically loaded -->
+            <div id="sensorReadings" class="readings-grid" aria-live="polite" aria-busy="true">
+                <!-- Loading state will be replaced by JavaScript -->
+                <div class="loading-message">Loading sensor readings...</div>
+            </div>
+
+            <div class="data-info">
+                <p>Showing <span id="showingCount">0</span> of <span id="totalCount">0</span> readings</p>
+                <button id="loadMore" class="control-btn secondary" style="display: none;">Load More Readings</button>
             </div>
         </section>
     </main>
 
     <!-- Modal Dialog -->
-    <div id="readingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalBody">
+    <div id="readingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
+        aria-describedby="modalDescription">
         <div class="modal-content">
             <button class="close-btn" aria-label="Close modal">&times;</button>
-            <div id="modalBody">
-                <!-- Dynamic content -->
+            <h3 id="modalTitle" class="modal-title">Sensor Reading Details</h3>
+            <div id="modalBody" class="modal-body">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <div class="modal-actions">
+                <button id="modalExport" class="control-btn secondary">Export This Reading</button>
+                <button id="modalClose" class="control-btn">Close</button>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
+        <p>&copy; <span id="current-year">2025</span> Smart Aquaculture Monitoring | WDD 231 Project | Osahon Okoro</p>
         <p>
-            <a href="https://youtube.com/myvideo-demo" target="_blank" rel="noopener">Video Demo</a>
+            <a href="attributions.html">Attributions</a> |
+            <a href="contact.html">Contact Form</a> |
+            <a href="form-action.html">Form Submission</a> |
+            <!-- Update with your actual video URL -->
+            <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
+                Demonstration</a>
         </p>
+        <p class="last-updated">Page loaded: <span id="pageLoaded">Loading...</span></p>
     </footer>
 
     <!-- JavaScript Modules -->
     <script type="module" src="js/dashboard.js"></script>
+
+    <!-- Inline script for footer updates -->
+    <script>
+        // Update footer dates
+        document.addEventListener('DOMContentLoaded', function () {
+            // Update current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Update page loaded time
+            document.getElementById('pageLoaded').textContent = new Date().toLocaleString();
+        });
+    </script>
 </body>
 
 </html>

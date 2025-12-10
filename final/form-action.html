@@ -5,21 +5,24 @@
     <!-- Meta Information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#004080">
     <meta name="author" content="Osahon Okoro">
     <meta name="description" content="Form submission results for Smart Aquaculture Monitoring project">
 
-    <title>Form Submission | Smart Aquaculture</title>
+    <title>Form Submission Confirmation | Smart Aquaculture</title>
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/favicon.ico">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/small.css">
-    <link rel="stylesheet" href="styles/larger.css">
 </head>
 
 <body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
         <div class="header-content">
             <h1 class="site-title">Smart Aquaculture</h1>
@@ -29,38 +32,155 @@
                     <li><a href="dashboard.html">Live Dashboard</a></li>
                     <li><a href="methodology.html">Methodology</a></li>
                     <li><a href="attributions.html">Attributions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <section class="form-results">
-            <h2>Form Submission Results</h2>
-            <p>Thank you for your request. Below are the details you submitted:</p>
+    <main id="main-content">
+        <section class="form-results" aria-labelledby="results-title">
+            <h2 id="results-title">Form Submission Confirmation</h2>
+            <p class="success-message">✅ Thank you for contacting us! Your message has been received successfully.</p>
 
-            <ul>
-                <li><strong>Name:</strong> <span id="resultName"></span></li>
-                <li><strong>Email:</strong> <span id="resultEmail"></span></li>
-                <li><strong>Area of Interest:</strong> <span id="resultInterest"></span></li>
-                <li><strong>Message:</strong> <span id="resultMessage"></span></li>
-            </ul>
+            <div class="submission-details">
+                <h3>Your Submission Details</h3>
+                <div class="details-grid" id="formResults">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h3>What Happens Next?</h3>
+                <ul>
+                    <li>You will receive a confirmation email within 24 hours</li>
+                    <li>Our team will review your inquiry and respond within 2-3 business days</li>
+                    <li>For urgent matters, please call our support line</li>
+                </ul>
+            </div>
+
+            <div class="action-buttons">
+                <a href="index.html" class="cta-button">Return to Home</a>
+                <a href="contact.html" class="cta-button secondary">Send Another Message</a>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
-        <p><a href="https://youtube.com/youtube_demo_video" target="_blank" rel="noopener">Video Demo</a></p>
+        <p>&copy; <span id="current-year">2025</span> Smart Aquaculture Monitoring | WDD 231 Project | Osahon Okoro</p>
+        <p>
+            <a href="attributions.html">Attributions</a> |
+            <a href="contact.html">Contact Form</a> |
+            <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
+                Demonstration</a>
+        </p>
     </footer>
 
     <!-- JavaScript to display query string values -->
     <script>
-        const params = new URLSearchParams(window.location.search);
-        document.getElementById("resultName").textContent = params.get("name");
-        document.getElementById("resultEmail").textContent = params.get("email");
-        document.getElementById("resultInterest").textContent = params.get("interest");
-        document.getElementById("resultMessage").textContent = params.get("message");
+        // Function to safely decode URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(window.location.search);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Function to format field names for display
+        function formatFieldName(field) {
+            return field.replace(/_/g, ' ')
+                .replace(/\b\w/g, l => l.toUpperCase())
+                .replace('Ph', 'pH');
+        }
+
+        // Display all form data dynamically
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const resultsContainer = document.getElementById('formResults');
+
+            if (params.toString()) {
+                let html = '';
+
+                // Create a display order for common fields
+                const fieldOrder = ['name', 'email', 'interest', 'subject', 'message'];
+
+                // First show fields in our preferred order
+                fieldOrder.forEach(field => {
+                    const value = getUrlParameter(field);
+                    if (value) {
+                        html += `
+                            <div class="detail-item">
+                                <span class="detail-label">${formatFieldName(field)}:</span>
+                                <span class="detail-value">${value}</span>
+                            </div>
+                        `;
+                    }
+                });
+
+                // Then show any other fields not in our preferred order
+                for (const [key, value] of params) {
+                    if (!fieldOrder.includes(key)) {
+                        html += `
+                            <div class="detail-item">
+                                <span class="detail-label">${formatFieldName(key)}:</span>
+                                <span class="detail-value">${decodeURIComponent(value)}</span>
+                            </div>
+                        `;
+                    }
+                }
+
+                resultsContainer.innerHTML = html;
+
+                // If no form data found, show a message
+                if (!html) {
+                    resultsContainer.innerHTML = `
+                        <div class="no-data">
+                            <p>No form data was submitted. Please use the <a href="contact.html">contact form</a> to send a message.</p>
+                        </div>
+                    `;
+                }
+            } else {
+                // No query parameters found
+                resultsContainer.innerHTML = `
+                    <div class="no-data">
+                        <p>No form data was found. Please use the <a href="contact.html">contact form</a> to send a message.</p>
+                        <a href="contact.html" class="cta-button">Go to Contact Form</a>
+                    </div>
+                `;
+            }
+
+            // Update current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Store submission in localStorage for demo purposes
+            if (params.toString()) {
+                try {
+                    const formData = {};
+                    for (const [key, value] of params) {
+                        formData[key] = value;
+                    }
+
+                    // Add timestamp
+                    formData.submittedAt = new Date().toISOString();
+
+                    // Get existing submissions or create new array
+                    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+                    existingSubmissions.push(formData);
+
+                    // Keep only last 5 submissions
+                    const recentSubmissions = existingSubmissions.slice(-5);
+                    localStorage.setItem('formSubmissions', JSON.stringify(recentSubmissions));
+
+                    console.log('Form submission stored in localStorage');
+                } catch (error) {
+                    console.error('Error storing form data:', error);
+                }
+            }
+        });
     </script>
+
 </body>
 
 </html>
