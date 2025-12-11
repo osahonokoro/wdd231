@@ -7,23 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#004080">
     <meta name="author" content="Osahon Okoro">
-   
+    <meta name="description"
+        content="Contact form for Smart Aquaculture Monitoring project inquiries, research collaboration, and system implementation">
+
     <!-- SEO & Social Sharing -->
-    <title>Contact Us | Smart Aquaculture</title>
+    <title>Contact Us | Smart Aquaculture Monitoring</title>
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Contact Us | Smart Aquaculture">
-    <meta property="og:description" content="Get in touch for research collaboration or system implementation inquiries.">
+    <meta property="og:title" content="Contact Smart Aquaculture Monitoring | Research & Implementation Inquiries">
+    <meta property="og:description"
+        content="Get in touch for research collaboration, system implementation inquiries, or technical support for smart aquaculture solutions.">
     <meta property="og:image" content="https://osahonokoro.github.io/wdd231/final/images/aquaculture-hero.avif">
     <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/contact.html">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Smart Aquaculture Monitoring">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Contact Smart Aquaculture Monitoring">
+    <meta name="twitter:description"
+        content="Get in touch for research collaboration or system implementation inquiries">
+    <meta name="twitter:image" content="https://osahonokoro.github.io/wdd231/final/images/aquaculture-hero.avif">
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/favicon.ico">
 
-    <!-- Stylesheets -->
+    <!-- Stylesheets - Use only styles.css -->
     <link rel="stylesheet" href="styles/styles.css">
-        <link rel="stylesheet" href="styles/small.css">
-        <link rel="stylesheet" href="styles/larger.css">
+    <link rel="stylesheet" href="styles/small.css">
+    <link rel="stylesheet" href="styles/larger.css">
 
     <!-- Google Fonts with preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,23 +68,22 @@
         <!-- Contact Intro -->
         <section class="contact-intro" aria-labelledby="contact-title">
             <h2 id="contact-title">Contact Us</h2>
-            <p class="contact-description">Do you have questions about our smart aquaculture monitoring system? Or are you interested in
-                research collaboration or implementation? I would love to hear from you.</p>
+            <p class="contact-description">Do you have questions about our smart aquaculture monitoring system? Or are
+                you interested in research collaboration or implementation? I would love to hear from you.</p>
 
             <div class="contact-info">
                 <div class="info-card">
-                    <h3>📧 Email</h3>
-                    <p><a href="mailto:osahonokoro@gmail.com">osahonokoro@gmail.com</a>
-                    </p>
+                    <h3><span aria-hidden="true">📧</span> Email</h3>
+                    <p><a href="mailto:osahonokoro@gmail.com">osahonokoro@gmail.com</a></p>
                     <p class="info-note">Response within 24 hours</p>
                 </div>
                 <div class="info-card">
-                    <h3>📞 Phone</h3>
+                    <h3><span aria-hidden="true">📞</span> Phone</h3>
                     <p><a href="tel:+2348069006291">+234-806-900-6291</a></p>
-                    <p class="info-note">Mon-Fri, 9AM-5PM </p>
+                    <p class="info-note">Mon-Fri, 9AM-5PM</p>
                 </div>
                 <div class="info-card">
-                    <h3>📍 Location</h3>
+                    <h3><span aria-hidden="true">📍</span> Location</h3>
                     <p>Information Science Department, Faculty of Computing, University of Calabar</p>
                     <p class="info-note">Calabar, Cross River State</p>
                 </div>
@@ -83,7 +94,7 @@
         <section class="contact-form-section" aria-labelledby="form-title">
             <h3 id="form-title">Send Us a Message</h3>
             <p class="form-instructions">Please fill out the form below. Fields marked with <span class="required"
-                    aria-hidden="true">*</span> are required.</p>
+                    aria-label="required">*</span> are required.</p>
 
             <form id="contactForm" action="form-action.html" method="get" novalidate>
                 <!-- Personal Information -->
@@ -92,29 +103,32 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="firstName">First Name<span class="required" aria-hidden="true">*</span>:</label>
+                            <label for="firstName">First Name<span class="required"
+                                    aria-label="required">*</span>:</label>
                             <input type="text" id="firstName" name="firstName" required autocomplete="given-name"
-                                minlength="2" maxlength="50">
+                                minlength="2" maxlength="50" aria-describedby="firstNameError">
                             <div class="field-error" id="firstNameError" role="alert" aria-live="polite"></div>
                         </div>
 
                         <div class="form-group">
-                            <label for="lastName">Last Name<span class="required" aria-hidden="true">*</span>:</label>
+                            <label for="lastName">Last Name<span class="required"
+                                    aria-label="required">*</span>:</label>
                             <input type="text" id="lastName" name="lastName" required autocomplete="family-name"
-                                minlength="2" maxlength="50">
+                                minlength="2" maxlength="50" aria-describedby="lastNameError">
                             <div class="field-error" id="lastNameError" role="alert" aria-live="polite"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email Address<span class="required" aria-hidden="true">*</span>:</label>
-                        <input type="email" id="email" name="email" required autocomplete="email">
+                        <label for="email">Email Address<span class="required" aria-label="required">*</span>:</label>
+                        <input type="email" id="email" name="email" required autocomplete="email"
+                            aria-describedby="emailError">
                         <div class="field-error" id="emailError" role="alert" aria-live="polite"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone" autocomplete="tel">
+                        <input type="tel" id="phone" name="phone" autocomplete="tel" aria-describedby="phoneError">
                         <div class="field-error" id="phoneError" role="alert" aria-live="polite"></div>
                     </div>
 
@@ -130,8 +144,8 @@
 
                     <div class="form-group">
                         <label for="inquiryType">Type of Inquiry<span class="required"
-                                aria-hidden="true">*</span>:</label>
-                        <select id="inquiryType" name="inquiryType" required>
+                                aria-label="required">*</span>:</label>
+                        <select id="inquiryType" name="inquiryType" required aria-describedby="inquiryTypeError">
                             <option value="">Select an option</option>
                             <option value="research">Research Collaboration</option>
                             <option value="implementation">System Implementation</option>
@@ -168,8 +182,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="priority">Priority Level:</label>
-                        <div class="priority-options">
+                        <legend class="visually-hidden">Priority Level</legend>
+                        <label for="priority-group">Priority Level:</label>
+                        <div class="priority-options" id="priority-group" role="radiogroup">
                             <label class="priority-option">
                                 <input type="radio" name="priority" value="low">
                                 <span>Low Priority (General inquiry)</span>
@@ -191,15 +206,17 @@
                     <legend>Your Message</legend>
 
                     <div class="form-group">
-                        <label for="subject">Subject<span class="required" aria-hidden="true">*</span>:</label>
-                        <input type="text" id="subject" name="subject" required maxlength="100">
+                        <label for="subject">Subject<span class="required" aria-label="required">*</span>:</label>
+                        <input type="text" id="subject" name="subject" required maxlength="100"
+                            aria-describedby="subjectError">
                         <div class="field-error" id="subjectError" role="alert" aria-live="polite"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="message">Message<span class="required" aria-hidden="true">*</span>:</label>
+                        <label for="message">Message<span class="required" aria-label="required">*</span>:</label>
                         <textarea id="message" name="message" rows="8" required minlength="10" maxlength="2000"
-                            placeholder="Please provide details about your inquiry, project requirements, or specific questions..."></textarea>
+                            placeholder="Please provide details about your inquiry, project requirements, or specific questions..."
+                            aria-describedby="messageError charCount"></textarea>
                         <div class="char-count">
                             <span id="charCount">0</span> / 2000 characters
                         </div>
@@ -229,10 +246,10 @@
                         </label>
 
                         <label class="checkbox">
-                            <input type="checkbox" id="terms" name="terms" required>
+                            <input type="checkbox" id="terms" name="terms" required aria-describedby="termsError">
                             <span>I agree to the <a href="#terms-modal" class="modal-trigger">Terms of Service</a> and
                                 <a href="#privacy-modal" class="modal-trigger">Privacy Policy</a><span class="required"
-                                    aria-hidden="true">*</span></span>
+                                    aria-label="required">*</span></span>
                         </label>
                         <div class="field-error" id="termsError" role="alert" aria-live="polite"></div>
                     </div>
@@ -246,6 +263,7 @@
                     </button>
                     <button type="reset" class="control-btn secondary">Clear Form</button>
                     <button type="button" class="control-btn" id="saveDraft">Save as Draft</button>
+                    <button type="button" class="control-btn outline" id="exportFormData">Export as JSON</button>
                 </div>
 
                 <div class="form-status" id="formStatus" role="alert" aria-live="polite"></div>
@@ -281,7 +299,7 @@
     </main>
 
     <!-- Terms Modal -->
-    <div id="terms-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+    <div id="terms-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terms-title" hidden>
         <div class="modal-content">
             <button class="close-btn" aria-label="Close terms modal">&times;</button>
             <h3 id="terms-title">Terms of Service</h3>
@@ -299,7 +317,7 @@
     </div>
 
     <!-- Privacy Modal -->
-    <div id="privacy-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+    <div id="privacy-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title" hidden>
         <div class="modal-content">
             <button class="close-btn" aria-label="Close privacy modal">&times;</button>
             <h3 id="privacy-title">Privacy Policy</h3>
@@ -329,18 +347,21 @@
         <p class="last-updated">Last updated: <span id="last-modified">Loading...</span></p>
     </footer>
 
-    <!-- JavaScript Module -->
-    <script type="module" src="scripts/contact.js"></script>
-
-    <!-- Inline script for footer updates -->
+    <!-- Add hamburger menu JavaScript -->
     <script>
-        // Update footer dates
+        // Update footer dates and hamburger menu
         document.addEventListener('DOMContentLoaded', function () {
             // Update current year
-            document.getElementById('current-year').textContent = new Date().getFullYear();
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
 
             // Update last modified date
-            document.getElementById('last-modified').textContent = document.lastModified;
+            const lastModifiedElement = document.getElementById('last-modified');
+            if (lastModifiedElement) {
+                lastModifiedElement.textContent = document.lastModified;
+            }
 
             // Character counter for message textarea
             const messageTextarea = document.getElementById('message');
@@ -353,6 +374,37 @@
                 // Update on input
                 messageTextarea.addEventListener('input', function () {
                     charCount.textContent = this.value.length;
+
+                    // Add warning/danger classes based on length
+                    if (this.value.length > 1900) {
+                        charCount.classList.add('danger');
+                        charCount.classList.remove('warning');
+                    } else if (this.value.length > 1500) {
+                        charCount.classList.add('warning');
+                        charCount.classList.remove('danger');
+                    } else {
+                        charCount.classList.remove('warning', 'danger');
+                    }
+                });
+            }
+
+            // Hamburger menu functionality
+            const hamburger = document.getElementById('hamburger');
+            const nav = document.getElementById('main-nav');
+
+            if (hamburger && nav) {
+                hamburger.addEventListener('click', function () {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                    nav.classList.toggle('active');
+                });
+
+                // Close menu when clicking links (mobile)
+                nav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function () {
+                        hamburger.setAttribute('aria-expanded', 'false');
+                        nav.classList.remove('active');
+                    });
                 });
             }
 
@@ -363,6 +415,7 @@
                     const modalId = this.getAttribute('href').substring(1);
                     const modal = document.getElementById(modalId);
                     if (modal) {
+                        modal.removeAttribute('hidden');
                         modal.style.display = 'block';
                     }
                 });
@@ -371,7 +424,9 @@
             // Close modals
             document.querySelectorAll('.modal .close-btn').forEach(btn => {
                 btn.addEventListener('click', function () {
-                    this.closest('.modal').style.display = 'none';
+                    const modal = this.closest('.modal');
+                    modal.style.display = 'none';
+                    modal.setAttribute('hidden', 'true');
                 });
             });
 
@@ -380,11 +435,27 @@
                 modal.addEventListener('click', function (e) {
                     if (e.target === this) {
                         this.style.display = 'none';
+                        this.setAttribute('hidden', 'true');
                     }
                 });
             });
+
+            // Close modals with Escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        if (modal.style.display === 'block') {
+                            modal.style.display = 'none';
+                            modal.setAttribute('hidden', 'true');
+                        }
+                    });
+                }
+            });
         });
     </script>
+
+    <!-- JavaScript Module - Updated to use the fixed contact.js -->
+    <script type="module" src="scripts/contact.js"></script>
 </body>
 
 </html>

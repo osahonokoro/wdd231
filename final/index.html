@@ -8,17 +8,25 @@
   <meta name="theme-color" content="#004080">
   <meta name="author" content="Osahon Okoro">
   <meta name="description"
-    content="Smart Aquaculture Monitoring - Energy-efficient fish farming using IoT and machine learning">
+    content="Smart Aquaculture Monitoring System - Energy-efficient fish farming using IoT sensors and machine learning algorithms to reduce energy consumption by 49%.">
 
   <!-- SEO & Social Sharing -->
   <title>Smart Aquaculture Monitoring | Home</title>
-  <meta property="og:title" content="Smart Aquaculture Monitoring">
-  <meta property="og:description" content="Energy-efficient fish farming using IoT and machine learning">
+  <meta property="og:title" content="Smart Aquaculture Monitoring | IoT & Machine Learning for Fish Farming">
+  <meta property="og:description"
+    content="Energy-efficient fish farming using IoT sensors and machine learning algorithms to reduce energy consumption by 49%.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="images/aquaculture-hero.avif">
-  <meta property="og:url" content="index.html">
   <meta property="og:image" content="https://osahonokoro.github.io/wdd231/final/images/aquaculture-hero.avif">
   <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/index.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Smart Aquaculture Monitoring">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Smart Aquaculture Monitoring | IoT & Machine Learning for Fish Farming">
+  <meta name="twitter:description"
+    content="Energy-efficient fish farming using IoT sensors and machine learning algorithms.">
+  <meta name="twitter:image" content="https://osahonokoro.github.io/wdd231/final/images/aquaculture-hero.avif">
 
   <!-- Favicon -->
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -58,11 +66,13 @@
   </header>
 
   <main id="main-content">
-    <!-- Hero Section -->
+    <!-- Hero Section with background image -->
     <section class="hero" aria-labelledby="hero-title">
-      <h2 id="hero-title">Intelligent Aquaculture Monitoring</h2>
-      <p>Reducing energy consumption by 49% through IoT and machine learning</p>
-      <a href="dashboard.html" class="cta-button">View Live Data</a>
+      <div class="hero-content">
+        <h2 id="hero-title">Intelligent Aquaculture Monitoring</h2>
+        <p>Reducing energy consumption by 49% through IoT and machine learning</p>
+        <a href="dashboard.html" class="cta-button">View Live Data</a>
+      </div>
     </section>
 
     <!-- Featured Data Section -->
@@ -79,17 +89,39 @@
       <h2 id="research-title">Research Impact</h2>
       <div class="cards-container">
         <article class="card" aria-labelledby="energy-efficiency">
+          <div class="card-icon">⚡</div>
           <h3 id="energy-efficiency">Energy Efficiency</h3>
           <p>49% reduction in filtration energy usage through predictive control</p>
         </article>
         <article class="card" aria-labelledby="real-time-monitoring">
+          <div class="card-icon">📊</div>
           <h3 id="real-time-monitoring">Real-time Monitoring</h3>
           <p>Continuous water quality tracking with IoT sensors</p>
         </article>
         <article class="card" aria-labelledby="machine-learning">
+          <div class="card-icon">🤖</div>
           <h3 id="machine-learning">Machine Learning</h3>
           <p>Predictive analytics for proactive water management</p>
         </article>
+      </div>
+    </section>
+
+    <!-- Additional content to add images as suggested by audit -->
+    <section class="technology-showcase" aria-labelledby="technology-title">
+      <h2 id="technology-title">Our Technology</h2>
+      <div class="image-gallery">
+        <div class="image-item">
+          <img src="images/iot-sensor.jpg" alt="IoT sensor monitoring water quality in fish tank" loading="lazy">
+          <p>IoT Water Quality Sensors</p>
+        </div>
+        <div class="image-item">
+          <img src="images/data-dashboard.jpg" alt="Dashboard displaying real-time aquaculture data" loading="lazy">
+          <p>Real-time Data Dashboard</p>
+        </div>
+        <div class="image-item">
+          <img src="images/fish-farm.jpg" alt="Modern aquaculture fish farm facility" loading="lazy">
+          <p>Modern Aquaculture Facility</p>
+        </div>
       </div>
     </section>
   </main>

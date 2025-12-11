@@ -5,61 +5,153 @@
     <!-- Meta Information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#004080">
     <meta name="author" content="Osahon Okoro">
+    <meta name="description" content="Resource attributions for Smart Aquaculture Monitoring project">
+
+    <!-- SEO & Social Sharing -->
+    <title>Attributions | Smart Aquaculture</title>
     <meta property="og:title" content="Attributions | Smart Aquaculture">
     <meta property="og:description" content="Resource attributions for Smart Aquaculture Monitoring project.">
+    <meta property="og:type" content="website">
     <meta property="og:image" content="https://osahonokoro.github.io/wdd231/final/images/aquaculture-hero.avif">
     <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/attributions.html">
 
-    <title>Attributions | Smart Aquaculture</title>
-
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/favicon.ico">
 
-    <!-- Stylesheets -->
+    <!-- Stylesheets - Use only styles.css -->
     <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/small.css">
-    <link rel="stylesheet" href="styles/larger.css">
+
+    <!-- Google Fonts with preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
         <div class="header-content">
             <h1 class="site-title">Smart Aquaculture</h1>
-            <nav class="navigation" aria-label="Main navigation">
+            <!-- Add hamburger button -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
+                aria-controls="main-nav">☰</button>
+            <nav class="navigation" id="main-nav" aria-label="Main navigation">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="dashboard.html">Live Dashboard</a></li>
                     <li><a href="methodology.html">Methodology</a></li>
                     <li><a href="attributions.html" aria-current="page">Attributions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <section class="attributions">
             <h2>Resource Attributions</h2>
             <p>This page acknowledges external resources used in the Smart Aquaculture Monitoring project.</p>
 
-            <ul>
-                <li>BYU–Idaho logo: Provided by course materials.</li>
-                <li>Icons: Unicode emoji characters (🖥️, 📡, 🔌, 🔋, ⚡, 🔬).</li>
-                <li>Fonts: <a href="https://fonts.google.com/specimen/Roboto" target="_blank" rel="noopener">Roboto</a>
-                    from Google Fonts.</li>
-                <li>Images: Aquaculture circuit diagram and dashboard preview created by Osahon Okoro for this project.
-                </li>
-                <li>Dataset: Water quality dataset compiled from PhD research (Okoro, 2025).</li>
-            </ul>
+            <div class="attributions-grid">
+                <article class="attribution-card">
+                    <h3>BYU–Idaho Resources</h3>
+                    <ul>
+                        <li>BYU–Idaho logo: Provided by course materials</li>
+                        <li>WDD 231 Course Content: Web Frontend Development I</li>
+                        <li>Project Requirements and Guidelines</li>
+                    </ul>
+                </article>
 
+                <article class="attribution-card">
+                    <h3>Fonts & Icons</h3>
+                    <ul>
+                        <li><strong>Roboto Font:</strong> <a href="https://fonts.google.com/specimen/Roboto"
+                                target="_blank" rel="noopener">Google Fonts</a></li>
+                        <li><strong>Icons:</strong> Unicode emoji characters (🖥️, 📡, 🔌, 🔋, ⚡, 🔬)</li>
+                        <li><strong>Favicon:</strong> Custom created for this project</li>
+                    </ul>
+                </article>
+
+                <article class="attribution-card">
+                    <h3>Images & Media</h3>
+                    <ul>
+                        <li><strong>Circuit Diagram:</strong> Created with Fritzing software</li>
+                        <li><strong>Dashboard Preview:</strong> Custom screenshot</li>
+                        <li><strong>Hero Image:</strong> Created for this project</li>
+                    </ul>
+                </article>
+
+                <article class="attribution-card">
+                    <h3>Data Sources</h3>
+                    <ul>
+                        <li><strong>Water Quality Dataset:</strong> Compiled from PhD research (Okoro, 2025)</li>
+                        <li><strong>Sensor Data Simulation:</strong> Based on aquaculture monitoring studies</li>
+                        <li><strong>Energy Efficiency Metrics:</strong> Research on predictive control systems</li>
+                    </ul>
+                </article>
+            </div>
+
+            <div class="code-attributions">
+                <h3>Code References</h3>
+                <ul>
+                    <li>MDN Web Docs for HTML, CSS, and JavaScript references</li>
+                    <li>W3Schools for tutorials and examples</li>
+                    <li>JavaScript.info for ES6+ features guidance</li>
+                    <li>CSS-Tricks for advanced CSS techniques</li>
+                </ul>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Smart Aquaculture Monitoring | WDD 231 Project</p>
-        <p><a href="https://youtube.com/youtube_demo_video" target="_blank" rel="noopener">Video Demo</a></p>
+        <p>&copy; <span id="current-year">2025</span> Smart Aquaculture Monitoring | WDD 231 Project | Osahon Okoro</p>
+        <p>
+            <a href="attributions.html" aria-current="page">Attributions</a> |
+            <a href="contact.html">Contact Form</a> |
+            <a href="form-action.html">Form Submission</a> |
+            <!-- Update with your actual video URL -->
+            <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
+                Demonstration</a>
+        </p>
+        <p class="last-updated">Last updated: <span id="last-modified">Loading...</span></p>
     </footer>
+
+    <!-- Add JavaScript for navigation -->
+    <script>
+        // Update footer dates
+        document.addEventListener('DOMContentLoaded', function () {
+            // Update current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Update last modified date
+            document.getElementById('last-modified').textContent = document.lastModified;
+
+            // Hamburger menu functionality
+            const hamburger = document.getElementById('hamburger');
+            const nav = document.getElementById('main-nav');
+
+            if (hamburger && nav) {
+                hamburger.addEventListener('click', function () {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+                    nav.classList.toggle('active');
+                });
+
+                // Close menu when clicking links (mobile)
+                nav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function () {
+                        hamburger.setAttribute('aria-expanded', 'false');
+                        nav.classList.remove('active');
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

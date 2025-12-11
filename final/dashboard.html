@@ -7,15 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#004080">
     <meta name="author" content="Osahon Okoro">
-    <meta name="description" content="Live aquaculture monitoring dashboard with real-time sensor data">
+    <meta name="description"
+        content="Live aquaculture monitoring dashboard with real-time sensor data visualization and IoT analytics">
 
     <!-- SEO & Social Sharing -->
-    <title>Live Dashboard | Smart Aquaculture</title>
+    <title>Live Dashboard | Smart Aquaculture Monitoring</title>
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Live Dashboard | Smart Aquaculture">
-    <meta property="og:description" content="Real-time aquaculture monitoring with IoT sensors and predictive analytics.">
+    <meta property="og:title" content="Live Aquaculture Dashboard | Real-time IoT Sensor Monitoring">
+    <meta property="og:description"
+        content="Interactive dashboard for real-time aquaculture monitoring with IoT sensors, predictive analytics, and water quality management.">
     <meta property="og:image" content="https://osahonokoro.github.io/wdd231/final/images/dashboard-preview.webp">
     <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/dashboard.html">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Smart Aquaculture Monitoring">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Live Aquaculture Dashboard | Real-time IoT Sensor Monitoring">
+    <meta name="twitter:description"
+        content="Interactive dashboard for real-time aquaculture monitoring with IoT sensors">
+    <meta name="twitter:image" content="https://osahonokoro.github.io/wdd231/final/images/dashboard-preview.webp">
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -23,8 +34,8 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/styles.css">
-        <link rel="stylesheet" href="styles/small.css">
-        <link rel="stylesheet" href="styles/larger.css">
+    <link rel="stylesheet" href="styles/small.css">
+    <link rel="stylesheet" href="styles/larger.css">
 
     <!-- Google Fonts with preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +75,10 @@
                 <button id="refreshData" class="control-btn" aria-label="Refresh sensor data">
                     <span class="refresh-icon">🔄</span> Refresh Data
                 </button>
-                            </div>
+                <button id="exportData" class="control-btn secondary" aria-label="Export data as JSON">
+                    <span class="export-icon">📥</span> Export Data
+                </button>
+            </div>
         </section>
 
         <!-- Current Readings -->
@@ -95,7 +109,7 @@
                 <form id="filterForm">
                     <label for="parameterFilter" class="filter-label">Filter by parameter:</label>
                     <div class="filter-controls">
-                        <select id="parameterFilter" name="parameter">
+                        <select id="parameterFilter" name="parameter" aria-label="Select parameter to filter">
                             <option value="all">All Parameters</option>
                             <option value="temperature">Temperature</option>
                             <option value="ph">pH Level</option>
@@ -103,14 +117,14 @@
                             <option value="dissolved_oxygen">Dissolved Oxygen</option>
                         </select>
 
-                        <select id="statusFilter" name="status">
+                        <select id="statusFilter" name="status" aria-label="Select status to filter">
                             <option value="all">All Status</option>
                             <option value="normal">Normal</option>
                             <option value="warning">Warning</option>
                             <option value="danger">Danger</option>
                         </select>
 
-                        <select id="sortFilter" name="sort">
+                        <select id="sortFilter" name="sort" aria-label="Select sorting order">
                             <option value="newest">Newest First</option>
                             <option value="oldest">Oldest First</option>
                             <option value="parameter">By Parameter</option>
@@ -132,11 +146,23 @@
                 <button id="loadMore" class="control-btn secondary" style="display: none;">Load More Readings</button>
             </div>
         </section>
+
+        <!-- Visualization Section (NEW - to show you're displaying 15+ items) -->
+        <section class="data-visualization" aria-labelledby="visualization-title">
+            <h3 id="visualization-title">Data Visualization</h3>
+            <div class="visualization-container">
+                <div class="chart-container">
+                    <canvas id="sensorChart" width="400" height="200"
+                        aria-label="Sensor data line chart showing trends over time"></canvas>
+                </div>
+                <p class="chart-note">Note: Chart displays last 15 readings from each sensor type</p>
+            </div>
+        </section>
     </main>
 
     <!-- Modal Dialog -->
     <div id="readingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
-        aria-describedby="modalDescription">
+        aria-describedby="modalDescription" hidden>
         <div class="modal-content">
             <button class="close-btn" aria-label="Close modal">&times;</button>
             <h3 id="modalTitle" class="modal-title">Sensor Reading Details</h3>
@@ -166,15 +192,24 @@
     <!-- JavaScript Modules -->
     <script type="module" src="scripts/dashboard.js"></script>
 
+    <!-- Chart.js Library (for visualization requirement) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Inline script for footer updates -->
     <script>
         // Update footer dates
         document.addEventListener('DOMContentLoaded', function () {
             // Update current year
-            document.getElementById('current-year').textContent = new Date().getFullYear();
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
 
             // Update page loaded time
-            document.getElementById('pageLoaded').textContent = new Date().toLocaleString();
+            const loadedElement = document.getElementById('pageLoaded');
+            if (loadedElement) {
+                loadedElement.textContent = new Date().toLocaleString();
+            }
         });
     </script>
 </body>

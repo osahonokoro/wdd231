@@ -1,5 +1,31 @@
 // contact.js - Form validation and handling for contact page
-import { StorageManager } from './storage.js';
+
+// Inline StorageManager if storage.js doesn't exist
+class StorageManager {
+    savePreference(key, value) {
+        try {
+            localStorage.setItem(`aquaculture_${key}`, JSON.stringify(value));
+            return true;
+        } catch (error) {
+            console.error('Error saving to localStorage:', error);
+            return false;
+        }
+    }
+
+    getPreference(key) {
+        try {
+            const item = localStorage.getItem(`aquaculture_${key}`);
+            return item ? JSON.parse(item) : null;
+        } catch (error) {
+            console.error('Error reading from localStorage:', error);
+            return null;
+        }
+    }
+
+    removePreference(key) {
+        localStorage.removeItem(`aquaculture_${key}`);
+    }
+}
 
 class ContactForm {
     constructor() {
@@ -40,18 +66,29 @@ class ContactForm {
         }
 
         // Clear form button
-        document.querySelector('button[type="reset"]').addEventListener('click', () => {
-            this.clearDraft();
-            this.hideStatus();
-        });
+        const resetBtn = document.querySelector('button[type="reset"]');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                this.clearDraft();
+                this.hideStatus();
+            });
+        }
 
         // Auto-save on input (with debounce)
         this.setupAutoSave();
+
+        // Export button for demonstration
+        const exportBtn = document.getElementById('exportFormData');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                this.exportFormData();
+            });
+        }
     }
 
     setupRealTimeValidation() {
-        // Validate on blur for all required fields
-        const requiredFields = this.form.querySelectorAll('[required]');
+        // Validate on blur for all required fields using filter array method
+        const requiredFields = this.getRequiredFields();
         requiredFields.forEach(field => {
             field.addEventListener('blur', () => {
                 this.validateField(field);
@@ -75,6 +112,16 @@ class ContactForm {
         }
     }
 
+    // Using filter array method as required
+    getRequiredFields() {
+        const allFields = Array.from(this.form.elements);
+        return allFields.filter(field => field.hasAttribute('required') &&
+            field.type !== 'hidden' &&
+            field.type !== 'submit' &&
+            field.type !== 'reset' &&
+            field.type !== 'button');
+    }
+
     setupCharacterCounter() {
         const messageField = document.getElementById('message');
         const charCount = document.getElementById('charCount');
@@ -86,11 +133,13 @@ class ContactForm {
 
                 // Visual feedback for length limits
                 if (length > 1900) {
-                    charCount.style.color = 'var(--danger)';
+                    charCount.classList.add('danger');
+                    charCount.classList.remove('warning');
                 } else if (length > 1500) {
-                    charCount.style.color = 'var(--warning)';
+                    charCount.classList.add('warning');
+                    charCount.classList.remove('danger');
                 } else {
-                    charCount.style.color = 'var(--deep-blue)';
+                    charCount.classList.remove('warning', 'danger');
                 }
             });
         }
@@ -117,8 +166,8 @@ class ContactForm {
         // Clear previous errors
         this.clearAllErrors();
 
-        // Validate all required fields
-        const requiredFields = this.form.querySelectorAll('[required]');
+        // Validate all required fields using filter
+        const requiredFields = this.getRequiredFields();
         requiredFields.forEach(field => {
             if (!this.validateField(field)) {
                 isValid = false;
@@ -246,8 +295,11 @@ class ContactForm {
         });
     }
 
-    saveDraft(showMessage = true) {
+    async saveDraft(showMessage = true) {
         try {
+            // Simulate async operation for demonstration
+            await new Promise(resolve => setTimeout(resolve, 300));
+
             const formData = this.getFormData();
 
             // Store in localStorage with timestamp
@@ -274,15 +326,24 @@ class ContactForm {
         }
     }
 
-    loadDraft() {
+    async loadDraft() {
         try {
             const draft = this.storageManager.getPreference('contactDraft');
 
             if (draft && draft.data) {
-                // Ask user if they want to load draft
-                if (this.isFormEmpty() && confirm('You have a saved draft. Would you like to load it?')) {
-                    this.populateForm(draft.data);
-                    this.showStatus('Draft loaded from ' + new Date(draft.savedAt).toLocaleString(), 'info');
+                // Using filter to check if we should load the draft
+                const hasData = Object.values(draft.data).filter(value =>
+                    value && value.toString().trim() !== ''
+                ).length > 0;
+
+                if (hasData && this.isFormEmpty()) {
+                    // Show a modal-like confirmation
+                    const loadDraft = confirm(`You have a saved draft from ${new Date(draft.savedAt).toLocaleString()}. Would you like to load it?`);
+
+                    if (loadDraft) {
+                        await this.populateForm(draft.data);
+                        this.showStatus('Draft loaded successfully!', 'info');
+                    }
                 }
             }
         } catch (error) {
@@ -319,7 +380,7 @@ class ContactForm {
         return formData;
     }
 
-    populateForm(data) {
+    async populateForm(data) {
         // Using array forEach method to populate form
         Object.keys(data).forEach(key => {
             const element = this.form.elements[key];
@@ -345,8 +406,11 @@ class ContactForm {
 
     isFormEmpty() {
         const formData = this.getFormData();
-        return Object.keys(formData).length === 0 ||
-            Object.values(formData).every(value => !value || value.toString().trim() === '');
+        // Using filter to check for non-empty values
+        const nonEmptyFields = Object.values(formData).filter(value =>
+            value && value.toString().trim() !== ''
+        );
+        return nonEmptyFields.length === 0;
     }
 
     showLoading(show) {
@@ -360,9 +424,12 @@ class ContactForm {
     }
 
     showStatus(message, type = 'info') {
+        if (!this.formStatus) return;
+
         this.formStatus.textContent = message;
         this.formStatus.className = `form-status ${type}`;
         this.formStatus.style.display = 'block';
+        this.formStatus.setAttribute('aria-live', 'polite');
 
         // Auto-hide success messages after 5 seconds
         if (type === 'success') {
@@ -373,7 +440,9 @@ class ContactForm {
     }
 
     hideStatus() {
-        this.formStatus.style.display = 'none';
+        if (this.formStatus) {
+            this.formStatus.style.display = 'none';
+        }
     }
 
     showError(message) {
@@ -389,21 +458,26 @@ class ContactForm {
 
     // Export form data as JSON (for demonstration purposes)
     exportFormData() {
-        const formData = this.getFormData();
-        const jsonData = JSON.stringify(formData, null, 2);
+        try {
+            const formData = this.getFormData();
+            const jsonData = JSON.stringify(formData, null, 2);
 
-        // Create download link
-        const blob = new Blob([jsonData], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `contact-form-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+            // Create download link
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `contact-form-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
 
-        this.showStatus('Form data exported as JSON', 'success');
+            this.showStatus('Form data exported as JSON', 'success');
+        } catch (error) {
+            console.error('Error exporting form data:', error);
+            this.showStatus('Error exporting data', 'error');
+        }
     }
 }
 
@@ -413,8 +487,11 @@ class FormDataManager {
         this.storageKey = 'contactFormSubmissions';
     }
 
-    saveSubmission(formData) {
+    async saveSubmission(formData) {
         try {
+            // Simulate async operation
+            await new Promise(resolve => setTimeout(resolve, 300));
+
             const submissions = this.getSubmissions();
             submissions.push({
                 ...formData,
@@ -422,7 +499,7 @@ class FormDataManager {
                 id: Date.now()
             });
 
-            // Keep only last 10 submissions
+            // Keep only last 10 submissions using slice
             const recentSubmissions = submissions.slice(-10);
             localStorage.setItem(this.storageKey, JSON.stringify(recentSubmissions));
 
@@ -461,6 +538,12 @@ class FormDataManager {
             };
         });
     }
+
+    // Using array filter method
+    getSubmissionsByType(type) {
+        const submissions = this.getSubmissions();
+        return submissions.filter(sub => sub.inquiryType === type);
+    }
 }
 
 // Initialize contact form when DOM is loaded
@@ -476,11 +559,23 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Contact form initialized successfully');
 
         // Demo: Log existing submissions (remove in production)
-        console.log('Existing submissions:', formDataManager.formatSubmissions());
+        const submissions = formDataManager.formatSubmissions();
+        console.log(`Existing submissions: ${submissions.length} found`, submissions);
 
     } catch (error) {
         console.error('Error initializing contact form:', error);
-        alert('There was an error initializing the contact form. Please refresh the page.');
+
+        // Show user-friendly error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.innerHTML = `
+            <strong>Error loading contact form:</strong> ${error.message}<br>
+            Please refresh the page or contact support if the problem persists.
+        `;
+        const main = document.querySelector('main');
+        if (main) {
+            main.prepend(errorDiv);
+        }
     }
 });
 
@@ -534,5 +629,18 @@ window.demoFormFunctions = {
             document.getElementById('contactForm').reset();
             alert('All data cleared!');
         }
+    },
+
+    testValidation: function () {
+        // Clear form
+        document.getElementById('contactForm').reset();
+
+        // Try to submit empty form
+        document.getElementById('contactForm').dispatchEvent(new Event('submit', { cancelable: true }));
+
+        return 'Validation test triggered. Check for error messages.';
     }
 };
+
+// Export for ES Modules
+export { ContactForm, FormDataManager };

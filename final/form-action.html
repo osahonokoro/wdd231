@@ -7,12 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#004080">
     <meta name="author" content="Osahon Okoro">
-    <meta property="og:title" content="Form Submission | Smart Aquaculture">
-    <meta property="og:description" content="Form submission results for Smart Aquaculture Monitoring project">
+    <meta name="description" content="Form submission confirmation page for Smart Aquaculture Monitoring contact form">
+
+    <!-- SEO & Social Sharing -->
+    <title>Form Submission Confirmation | Smart Aquaculture Monitoring</title>
+    <meta property="og:title" content="Form Submission Received | Smart Aquaculture Monitoring">
+    <meta property="og:description"
+        content="Thank you for contacting Smart Aquaculture Monitoring. Your form submission has been received successfully.">
+    <meta property="og:type" content="website">
     <meta property="og:image" content="https://osahonokoro.github.io/wdd231/final/images/aquaculture-hero.avif">
     <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/form-action.html">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Smart Aquaculture Monitoring">
 
-    <title>Form Submission Confirmation | Smart Aquaculture</title>
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Form Submission Received | Smart Aquaculture Monitoring">
+    <meta name="twitter:description" content="Thank you for contacting Smart Aquaculture Monitoring">
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -22,6 +33,11 @@
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/small.css">
     <link rel="stylesheet" href="styles/larger.css">
+
+    <!-- Google Fonts with preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -31,7 +47,10 @@
     <header>
         <div class="header-content">
             <h1 class="site-title">Smart Aquaculture</h1>
-            <nav class="navigation" aria-label="Main navigation">
+            <!-- Hamburger button for mobile (hidden on desktop) -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
+                aria-controls="main-nav" style="display: none;">☰</button>
+            <nav class="navigation" id="main-nav" aria-label="Main navigation">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="dashboard.html">Live Dashboard</a></li>
@@ -46,12 +65,18 @@
     <main id="main-content">
         <section class="form-results" aria-labelledby="results-title">
             <h2 id="results-title">Form Submission Confirmation</h2>
-            <p class="success-message">✅ Thank you for contacting us! Your message has been received successfully.</p>
+
+            <!-- Success message with improved accessibility -->
+            <div class="success-message" role="alert" aria-live="polite">
+                <span class="success-icon" aria-hidden="true">✅</span>
+                <p>Thank you for contacting us! Your message has been received successfully.</p>
+            </div>
 
             <div class="submission-details">
                 <h3>Your Submission Details</h3>
-                <div class="details-grid" id="formResults">
+                <div class="details-grid" id="formResults" aria-live="polite">
                     <!-- Dynamic content will be inserted here -->
+                    <div class="loading-message">Processing your submission...</div>
                 </div>
             </div>
 
@@ -60,13 +85,20 @@
                 <ul>
                     <li>You will receive a confirmation email within 24 hours</li>
                     <li>Our team will review your inquiry and respond within 2-3 business days</li>
-                    <li>For urgent matters, please call our support line</li>
+                    <li>For urgent matters, please call our support line at <strong>(555) 123-4567</strong></li>
                 </ul>
             </div>
 
             <div class="action-buttons">
                 <a href="index.html" class="cta-button">Return to Home</a>
                 <a href="contact.html" class="cta-button secondary">Send Another Message</a>
+                <a href="dashboard.html" class="cta-button outline">View Live Dashboard</a>
+            </div>
+
+            <!-- Local Storage Demo Section -->
+            <div class="storage-demo" id="storageDemo" style="display: none;">
+                <h4>Local Storage Demo (Recent Submissions)</h4>
+                <div id="recentSubmissions"></div>
             </div>
         </section>
     </main>
@@ -79,6 +111,7 @@
             <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
                 Demonstration</a>
         </p>
+        <p class="last-updated">Page loaded: <span id="pageLoaded">Loading...</span></p>
     </footer>
 
     <!-- JavaScript to display query string values -->
@@ -100,8 +133,48 @@
                 .replace('Ph', 'pH');
         }
 
+        // Function to safely escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Function to display recent submissions from localStorage
+        function displayRecentSubmissions() {
+            try {
+                const submissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+                const container = document.getElementById('recentSubmissions');
+
+                if (submissions.length > 0) {
+                    let html = '<ul>';
+                    submissions.forEach((sub, index) => {
+                        const date = new Date(sub.submittedAt || Date.now());
+                        html += `<li>Submission ${index + 1}: ${sub.name || 'Anonymous'} - ${date.toLocaleDateString()}</li>`;
+                    });
+                    html += '</ul>';
+                    container.innerHTML = html;
+                    document.getElementById('storageDemo').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error displaying recent submissions:', error);
+            }
+        }
+
         // Display all form data dynamically
         document.addEventListener('DOMContentLoaded', function () {
+            // Update page loaded time
+            const pageLoadedElement = document.getElementById('pageLoaded');
+            if (pageLoadedElement) {
+                pageLoadedElement.textContent = new Date().toLocaleString();
+            }
+
+            // Update current year in footer
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+
             const params = new URLSearchParams(window.location.search);
             const resultsContainer = document.getElementById('formResults');
 
@@ -118,7 +191,7 @@
                         html += `
                             <div class="detail-item">
                                 <span class="detail-label">${formatFieldName(field)}:</span>
-                                <span class="detail-value">${value}</span>
+                                <span class="detail-value">${escapeHtml(value)}</span>
                             </div>
                         `;
                     }
@@ -130,7 +203,7 @@
                         html += `
                             <div class="detail-item">
                                 <span class="detail-label">${formatFieldName(key)}:</span>
-                                <span class="detail-value">${decodeURIComponent(value)}</span>
+                                <span class="detail-value">${escapeHtml(decodeURIComponent(value))}</span>
                             </div>
                         `;
                     }
@@ -146,21 +219,8 @@
                         </div>
                     `;
                 }
-            } else {
-                // No query parameters found
-                resultsContainer.innerHTML = `
-                    <div class="no-data">
-                        <p>No form data was found. Please use the <a href="contact.html">contact form</a> to send a message.</p>
-                        <a href="contact.html" class="cta-button">Go to Contact Form</a>
-                    </div>
-                `;
-            }
 
-            // Update current year in footer
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-
-            // Store submission in localStorage for demo purposes
-            if (params.toString()) {
+                // Store submission in localStorage for demo purposes
                 try {
                     const formData = {};
                     for (const [key, value] of params) {
@@ -179,9 +239,24 @@
                     localStorage.setItem('formSubmissions', JSON.stringify(recentSubmissions));
 
                     console.log('Form submission stored in localStorage');
+
+                    // Display recent submissions
+                    displayRecentSubscriptions();
                 } catch (error) {
                     console.error('Error storing form data:', error);
                 }
+
+            } else {
+                // No query parameters found
+                resultsContainer.innerHTML = `
+                    <div class="no-data">
+                        <p>No form data was found. Please use the <a href="contact.html">contact form</a> to send a message.</p>
+                        <a href="contact.html" class="cta-button">Go to Contact Form</a>
+                    </div>
+                `;
+
+                // Still show recent submissions if any exist
+                displayRecentSubmissions();
             }
         });
     </script>

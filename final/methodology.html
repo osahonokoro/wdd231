@@ -7,16 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#004080">
     <meta name="author" content="Osahon Okoro">
-    <meta name="description" content="Technical implementation details of smart aquaculture system">
+    <meta name="description" content="Form submission confirmation page for Smart Aquaculture Monitoring contact form">
 
     <!-- SEO & Social Sharing -->
-    <title>Methodology | Smart Aquaculture</title>
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Methodology | Smart Aquaculture">
+    <title>Form Submission Confirmation | Smart Aquaculture Monitoring</title>
+    <meta property="og:title" content="Form Submission Received | Smart Aquaculture Monitoring">
     <meta property="og:description"
-        content="Technical implementation details of IoT-enabled aquaculture monitoring system.">
-    <meta property="og:image" content="https://osahonokoro.github.io/wdd231/final/images/aquaculture-circuit-diagram.png">
-    <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/methodology.html">
+        content="Thank you for contacting Smart Aquaculture Monitoring. Your form submission has been received successfully.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://osahonokoro.github.io/wdd231/final/images/aquaculture-hero.avif">
+    <meta property="og:url" content="https://osahonokoro.github.io/wdd231/final/form-action.html">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Smart Aquaculture Monitoring">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Form Submission Received | Smart Aquaculture Monitoring">
+    <meta name="twitter:description" content="Thank you for contacting Smart Aquaculture Monitoring">
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -40,13 +47,14 @@
     <header>
         <div class="header-content">
             <h1 class="site-title">Smart Aquaculture</h1>
+            <!-- Hamburger button for mobile (hidden on desktop) -->
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
-                aria-controls="main-nav">☰</button>
+                aria-controls="main-nav" style="display: none;">☰</button>
             <nav class="navigation" id="main-nav" aria-label="Main navigation">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="dashboard.html">Live Dashboard</a></li>
-                    <li><a href="methodology.html" aria-current="page">Methodology</a></li>
+                    <li><a href="methodology.html">Methodology</a></li>
                     <li><a href="attributions.html">Attributions</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -55,300 +63,43 @@
     </header>
 
     <main id="main-content">
-        <!-- Intro -->
-        <section class="methodology-intro" aria-labelledby="intro-title">
-            <h2 id="intro-title">System Architecture & Methodology</h2>
-            <p class="intro-description">Technical implementation of an IoT-enabled aquaculture monitoring system that
-                integrates sensor networks,
-                control automation, and data-driven decision-making.</p>
-            <div class="key-metrics">
-                <div class="metric">
-                    <span class="metric-value">49%</span>
-                    <span class="metric-label">Energy Reduction</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-value">97.1%</span>
-                    <span class="metric-label">Model Accuracy</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-value">&lt;2s</span>
-                    <span class="metric-label">Response Time</span>
+        <section class="form-results" aria-labelledby="results-title">
+            <h2 id="results-title">Form Submission Confirmation</h2>
+
+            <!-- Success message with improved accessibility -->
+            <div class="success-message" role="alert" aria-live="polite">
+                <span class="success-icon" aria-hidden="true">✅</span>
+                <p>Thank you for contacting us! Your message has been received successfully.</p>
+            </div>
+
+            <div class="submission-details">
+                <h3>Your Submission Details</h3>
+                <div class="details-grid" id="formResults" aria-live="polite">
+                    <!-- Dynamic content will be inserted here -->
+                    <div class="loading-message">Processing your submission...</div>
                 </div>
             </div>
-        </section>
 
-        <!-- Circuit Diagram Section -->
-        <section class="circuit-diagram-section" aria-labelledby="circuit-title">
-            <h3 id="circuit-title">System Circuit Architecture</h3>
-            <div class="circuit-container">
-                <figure class="circuit-image">
-                    <img src="images/aquaculture-circuit-diagram.png"
-                        alt="Circuit diagram of an ESP32 sensor network and Raspberry Pi controller with relays for pump and UV sterilization"
-                        loading="lazy" width="800" height="600">
-                    <figcaption class="circuit-caption">Figure 1: Circuit diagram of the smart aquaculture monitoring
-                        and control system.</figcaption>
-                </figure>
-
-                <div class="circuit-explanation">
-                    <h4>Circuit Components Overview</h4>
-                    <div class="circuit-components">
-                        <article class="circuit-component" aria-labelledby="processing-heading">
-                            <h5 id="processing-heading">🖥️ Central Processing</h5>
-                            <ul>
-                                <li><strong>Raspberry Pi 4</strong> — Runs the dashboard and ML models</li>
-                                <li><strong>ESP32 Microcontroller</strong> — Sensor acquisition and preprocessing</li>
-                                <li><strong>Modbus TCP/IP</strong> — Network communication between units</li>
-                                <li><strong>Python Dashboard</strong> — Real-time data visualization</li>
-                            </ul>
-                        </article>
-
-                        <article class="circuit-component" aria-labelledby="sensors-heading">
-                            <h5 id="sensors-heading">📡 Sensor Network</h5>
-                            <ul>
-                                <li><strong>DS18B20</strong> — Digital temperature sensor (±0.5°C accuracy)</li>
-                                <li><strong>DS495 Ammonia Sensor</strong> — UART communication, RS-485 compatible</li>
-                                <li><strong>pH Probe</strong> — Analog voltage input, continuous monitoring</li>
-                                <li><strong>DO Sensor</strong> — Electrochemical probe, galvanic membrane</li>
-                            </ul>
-                        </article>
-
-                        <article class="circuit-component" aria-labelledby="control-heading">
-                            <h5 id="control-heading">🔌 Control & Actuation</h5>
-                            <ul>
-                                <li><strong>4-Channel Relay Module</strong> — GPIO-controlled switching</li>
-                                <li><strong>Channel 1</strong> — Water pump control (0.37 kW, 2200 L/h)</li>
-                                <li><strong>Channel 2</strong> — UV sterilizer control (40W, 99.9% sterilization)</li>
-                                <li><strong>Channel 3/4</strong> — Backup/emergency controls</li>
-                            </ul>
-                        </article>
-
-                        <article class="circuit-component" aria-labelledby="power-heading">
-                            <h5 id="power-heading">🔋 Power Management</h5>
-                            <ul>
-                                <li><strong>3.3V Regulated Supply</strong> — ESP32 and sensors</li>
-                                <li><strong>5V Supply</strong> — Relay coil voltage</li>
-                                <li><strong>Flyback Diodes</strong> — Relay spike protection</li>
-                                <li><strong>Pull-up Resistors</strong> — Signal conditioning</li>
-                            </ul>
-                        </article>
-                    </div>
-                </div>
+            <div class="next-steps">
+                <h3>What Happens Next?</h3>
+                <ul>
+                    <li>You will receive a confirmation email within 24 hours</li>
+                    <li>Our team will review your inquiry and respond within 2-3 business days</li>
+                    <li>For urgent matters, please call our support line at <strong>(555) 123-4567</strong></li>
+                </ul>
             </div>
-        </section>
 
-        <!-- Research Approach -->
-        <section class="methodology-content" aria-labelledby="research-title">
-            <h3 id="research-title">Research Approach</h3>
-            <p class="approach-description">This study integrates hardware design, machine learning, and energy
-                optimization to deliver an
-                intelligent aquaculture monitoring system with predictive capabilities.</p>
-
-            <div class="architecture-grid">
-                <!-- Three-Layer Architecture -->
-                <article class="arch-layer" aria-labelledby="architecture-heading">
-                    <h4 id="architecture-heading">🏗️ Three-Layer System Architecture</h4>
-                    <div class="layer-details">
-                        <div class="layer-item" aria-labelledby="sensor-layer-heading">
-                            <h5 id="sensor-layer-heading">Sensor Layer</h5>
-                            <ul>
-                                <li><strong>DS18B20</strong> — Temperature monitoring (-55°C to +125°C)</li>
-                                <li><strong>DS495 Ammonia</strong> — UART communication, 0-100ppm range</li>
-                                <li><strong>pH Probe</strong> — Acidity/alkalinity measurement (0-14 pH)</li>
-                                <li><strong>DO Sensor</strong> — Dissolved oxygen tracking (0-20 mg/L)</li>
-                            </ul>
-                        </div>
-                        <div class="layer-item" aria-labelledby="processing-layer-heading">
-                            <h5 id="processing-layer-heading">Processing Layer</h5>
-                            <ul>
-                                <li><strong>ESP32</strong> — Data acquisition & preprocessing (dual-core)</li>
-                                <li><strong>Raspberry Pi 4</strong> — ML execution & central control (4GB RAM)</li>
-                                <li><strong>Modbus TCP/IP</strong> — Industrial communication protocol</li>
-                                <li><strong>Real-time Clock</strong> — Time synchronization across sensors</li>
-                            </ul>
-                        </div>
-                        <div class="layer-item" aria-labelledby="decision-layer-heading">
-                            <h5 id="decision-layer-heading">Decision & Visualization Layer</h5>
-                            <ul>
-                                <li><strong>Web Dashboard</strong> — Real-time monitoring (HTML/CSS/JavaScript)</li>
-                                <li><strong>Automated Control</strong> — Filtration/UV activation based on ML
-                                    predictions</li>
-                                <li><strong>Data Logging</strong> — Performance analytics and historical trends</li>
-                                <li><strong>Alert System</strong> — Email/SMS notifications for critical conditions</li>
-                            </ul>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Machine Learning -->
-                <article class="ml-methodology" aria-labelledby="ml-heading">
-                    <h4 id="ml-heading">🤖 Machine Learning Implementation</h4>
-                    <div class="ml-comparison">
-                        <div class="model-card" aria-labelledby="svm-model">
-                            <h5 id="svm-model">Support Vector Machine (SVM)</h5>
-                            <p><strong>96.5% Accuracy</strong><br>RBF kernel for non-linear relationships</p>
-                            <p class="model-detail">C=1.0, gamma='scale'</p>
-                        </div>
-                        <div class="model-card" aria-labelledby="dt-model">
-                            <h5 id="dt-model">Decision Tree Classifier</h5>
-                            <p><strong>95.2% Accuracy</strong><br>High interpretability with Gini impurity</p>
-                            <p class="model-detail">max_depth=10, min_samples_split=5</p>
-                        </div>
-                        <div class="model-card" aria-labelledby="ann-model">
-                            <h5 id="ann-model">Artificial Neural Network (ANN)</h5>
-                            <p><strong>97.1% Accuracy</strong><br>Optimal model with 0.955 F1-score</p>
-                            <p class="model-detail">3 layers, 64 neurons, ReLU activation</p>
-                        </div>
-                    </div>
-                    <div class="training-data">
-                        <p><strong>Training Dataset:</strong> 7,556 water quality measurements (80/20 train–test split)
-                        </p>
-                        <p><strong>Features:</strong> Temperature, pH, Ammonia, Dissolved Oxygen, Time of Day</p>
-                        <p><strong>Target:</strong> Optimal filtration schedule (binary classification)</p>
-                    </div>
-                </article>
-
-                <!-- Energy Optimization -->
-                <article class="energy-optimization" aria-labelledby="energy-heading">
-                    <h4 id="energy-heading">⚡ Energy Optimization Strategy</h4>
-                    <div class="energy-formula">
-                        <p><strong>Energy Calculation Formula:</strong> E = P × D × t</p>
-                        <ul>
-                            <li><strong>E:</strong> Energy consumed (kWh/day)</li>
-                            <li><strong>P:</strong> Power rating (kW)</li>
-                            <li><strong>D:</strong> Duty cycle (fraction of active time)</li>
-                            <li><strong>t:</strong> Total operational time (24 hours)</li>
-                        </ul>
-                    </div>
-                    <div class="energy-scenarios">
-                        <div class="scenario baseline" aria-labelledby="baseline-scenario">
-                            <h5 id="baseline-scenario">Continuous Operation</h5>
-                            <p class="scenario-value">100% Duty Cycle</p>
-                            <p class="energy-consumption">10.0 kWh/day</p>
-                            <p class="scenario-note">Baseline energy consumption</p>
-                        </div>
-                        <div class="scenario optimized" aria-labelledby="optimized-scenario">
-                            <h5 id="optimized-scenario">Predictive Control</h5>
-                            <p class="scenario-value">50% Duty Cycle</p>
-                            <p class="energy-consumption">5.1 kWh/day</p>
-                            <p class="scenario-note"><strong>49% Energy Reduction</strong></p>
-                        </div>
-                        <div class="scenario aggressive" aria-labelledby="aggressive-scenario">
-                            <h5 id="aggressive-scenario">Aggressive Optimization</h5>
-                            <p class="scenario-value">30% Pump + 50% UV Duty</p>
-                            <p class="energy-consumption">3.3 kWh/day</p>
-                            <p class="scenario-note"><strong>67% Energy Reduction</strong></p>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Validation Framework -->
-                <article class="validation-framework" aria-labelledby="validation-heading">
-                    <h4 id="validation-heading">🔬 Validation Framework</h4>
-                    <div class="validation-methods">
-                        <div class="validation-item" aria-labelledby="electrical-validation">
-                            <h5 id="electrical-validation">Electrical Validation</h5>
-                            <p>Digital kWh meter logging across operational scenarios</p>
-                            <p class="validation-metric">±0.5% measurement accuracy</p>
-                        </div>
-                        <div class="validation-item" aria-labelledby="hydraulic-validation">
-                            <h5 id="hydraulic-validation">Hydraulic Validation</h5>
-                            <p>Flowmeter readings and float switch responsiveness testing</p>
-                            <p class="validation-metric">2200 L/h ± 2% flow rate</p>
-                        </div>
-                        <div class="validation-item" aria-labelledby="quality-validation">
-                            <h5 id="quality-validation">Water Quality Validation</h5>
-                            <p>Pre/post-filtration sampling and multiparameter analysis</p>
-                            <p class="validation-metric">99.9% pathogen reduction</p>
-                        </div>
-                        <div class="validation-item" aria-labelledby="response-validation">
-                            <h5 id="response-validation">System Responsiveness</h5>
-                            <p>End-to-end latency testing and dashboard refresh rates</p>
-                            <p class="validation-metric">&lt; 2s latency, &lt; 1s refresh</p>
-                        </div>
-                    </div>
-                </article>
+            <div class="action-buttons">
+                <a href="index.html" class="cta-button">Return to Home</a>
+                <a href="contact.html" class="cta-button secondary">Send Another Message</a>
+                <a href="dashboard.html" class="cta-button outline">View Live Dashboard</a>
             </div>
-        </section>
 
-        <!-- System Components (Dynamic) -->
-        <section class="system-components" aria-labelledby="components-title">
-            <h3 id="components-title">Hardware Components</h3>
-                <div id="hardwareList" class="components-list" aria-live="polite" aria-busy="true">
-                <!-- Loading state will be replaced by JavaScript -->
-                <div class="loading-message">Loading hardware components...</div>
+            <!-- Local Storage Demo Section -->
+            <div class="storage-demo" id="storageDemo" style="display: none;">
+                <h4>Local Storage Demo (Recent Submissions)</h4>
+                <div id="recentSubmissions"></div>
             </div>
-            <div class="components-summary" id="componentsSummary" aria-live="polite">
-                <!-- Summary will be updated by JavaScript -->
-            </div>
-        </section>
-
-        <!-- Contact Form -->
-        <section class="contact-form" aria-labelledby="contact-title">
-            <h3 id="contact-title">Request More Information</h3>
-            <p>Interested in implementing this system or collaborating on research? Please fill out the form below.</p>
-
-            <form id="contactForm" action="form-action.html" method="get" novalidate>
-                <div class="form-group">
-                    <label for="name">Full Name<span class="required" aria-hidden="true">*</span>:</label>
-                    <input type="text" id="name" name="name" required autocomplete="name" minlength="2" maxlength="100">
-                    <div class="field-error" id="nameError" role="alert" aria-live="polite"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address<span class="required" aria-hidden="true">*</span>:</label>
-                    <input type="email" id="email" name="email" required autocomplete="email">
-                    <div class="field-error" id="emailError" role="alert" aria-live="polite"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="organization">Organization:</label>
-                    <input type="text" id="organization" name="organization" autocomplete="organization">
-                </div>
-
-                <div class="form-group">
-                    <label for="interest">Area of Interest:</label>
-                    <select id="interest" name="interest">
-                        <option value="">Select an option</option>
-                        <option value="research">Research Collaboration</option>
-                        <option value="implementation">System Implementation</option>
-                        <option value="education">Educational Purpose</option>
-                        <option value="commercial">Commercial Application</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="budget">Project Budget Range:</label>
-                    <select id="budget" name="budget">
-                        <option value="">Select budget range</option>
-                        <option value="under_1k">Under $1,000</option>
-                        <option value="1k_5k">$1,000 - $5,000</option>
-                        <option value="5k_10k">$5,000 - $10,000</option>
-                        <option value="over_10k">Over $10,000</option>
-                        <option value="not_sure">Not sure / Planning phase</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" rows="6"
-                        placeholder="Please provide details about your project or research interests..." minlength="10"
-                        maxlength="1000"></textarea>
-                    <div class="char-count">
-                        <span id="charCount">0</span> / 1000 characters
-                    </div>
-                </div>
-
-                <div class="form-group checkbox">
-                    <input type="checkbox" id="newsletter" name="newsletter">
-                    <label for="newsletter">Subscribe to our research newsletter for updates</label>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">Send Request</button>
-                    <button type="reset" class="control-btn secondary">Clear Form</button>
-                </div>
-            </form>
         </section>
     </main>
 
@@ -357,38 +108,159 @@
         <p>
             <a href="attributions.html">Attributions</a> |
             <a href="contact.html">Contact Form</a> |
-            <a href="form-action.html">Form Submission</a> |
-            <!-- Update with your actual video URL -->
             <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
                 Demonstration</a>
         </p>
-        <p class="last-updated">Documentation last updated: <span id="last-modified">Loading...</span></p>
+        <p class="last-updated">Page loaded: <span id="pageLoaded">Loading...</span></p>
     </footer>
 
-    <!-- JavaScript Module -->
-    <script type="module" src="scripts/methodology.js"></script>
-
-    <!-- Inline script for footer updates -->
+    <!-- JavaScript to display query string values -->
     <script>
-        // Update footer dates
+        // Function to safely decode URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(window.location.search);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Function to format field names for display
+        function formatFieldName(field) {
+            return field.replace(/_/g, ' ')
+                .replace(/\b\w/g, l => l.toUpperCase())
+                .replace('Ph', 'pH');
+        }
+
+        // Function to safely escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Function to display recent submissions from localStorage
+        function displayRecentSubmissions() {
+            try {
+                const submissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+                const container = document.getElementById('recentSubmissions');
+
+                if (submissions.length > 0) {
+                    let html = '<ul>';
+                    submissions.forEach((sub, index) => {
+                        const date = new Date(sub.submittedAt || Date.now());
+                        html += `<li>Submission ${index + 1}: ${sub.name || 'Anonymous'} - ${date.toLocaleDateString()}</li>`;
+                    });
+                    html += '</ul>';
+                    container.innerHTML = html;
+                    document.getElementById('storageDemo').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error displaying recent submissions:', error);
+            }
+        }
+
+        // Display all form data dynamically
         document.addEventListener('DOMContentLoaded', function () {
-            // Update current year
-            document.getElementById('current-year').textContent = new Date().getFullYear();
+            // Update page loaded time
+            const pageLoadedElement = document.getElementById('pageLoaded');
+            if (pageLoadedElement) {
+                pageLoadedElement.textContent = new Date().toLocaleString();
+            }
 
-            // Update last modified date
-            document.getElementById('last-modified').textContent = new Date().toLocaleString();
+            // Update current year in footer
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
 
-            // Character counter for message textarea
-            const messageTextarea = document.getElementById('message');
-            const charCount = document.getElementById('charCount');
+            const params = new URLSearchParams(window.location.search);
+            const resultsContainer = document.getElementById('formResults');
 
-            if (messageTextarea && charCount) {
-                messageTextarea.addEventListener('input', function () {
-                    charCount.textContent = this.value.length;
+            if (params.toString()) {
+                let html = '';
+
+                // Create a display order for common fields
+                const fieldOrder = ['name', 'email', 'interest', 'subject', 'message'];
+
+                // First show fields in our preferred order
+                fieldOrder.forEach(field => {
+                    const value = getUrlParameter(field);
+                    if (value) {
+                        html += `
+                            <div class="detail-item">
+                                <span class="detail-label">${formatFieldName(field)}:</span>
+                                <span class="detail-value">${escapeHtml(value)}</span>
+                            </div>
+                        `;
+                    }
                 });
+
+                // Then show any other fields not in our preferred order
+                for (const [key, value] of params) {
+                    if (!fieldOrder.includes(key)) {
+                        html += `
+                            <div class="detail-item">
+                                <span class="detail-label">${formatFieldName(key)}:</span>
+                                <span class="detail-value">${escapeHtml(decodeURIComponent(value))}</span>
+                            </div>
+                        `;
+                    }
+                }
+
+                resultsContainer.innerHTML = html;
+
+                // If no form data found, show a message
+                if (!html) {
+                    resultsContainer.innerHTML = `
+                        <div class="no-data">
+                            <p>No form data was submitted. Please use the <a href="contact.html">contact form</a> to send a message.</p>
+                        </div>
+                    `;
+                }
+
+                // Store submission in localStorage for demo purposes
+                try {
+                    const formData = {};
+                    for (const [key, value] of params) {
+                        formData[key] = value;
+                    }
+
+                    // Add timestamp
+                    formData.submittedAt = new Date().toISOString();
+
+                    // Get existing submissions or create new array
+                    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+                    existingSubmissions.push(formData);
+
+                    // Keep only last 5 submissions
+                    const recentSubmissions = existingSubmissions.slice(-5);
+                    localStorage.setItem('formSubmissions', JSON.stringify(recentSubmissions));
+
+                    console.log('Form submission stored in localStorage');
+
+                    // Display recent submissions
+                    displayRecentSubscriptions();
+                } catch (error) {
+                    console.error('Error storing form data:', error);
+                }
+
+            } else {
+                // No query parameters found
+                resultsContainer.innerHTML = `
+                    <div class="no-data">
+                        <p>No form data was found. Please use the <a href="contact.html">contact form</a> to send a message.</p>
+                        <a href="contact.html" class="cta-button">Go to Contact Form</a>
+                    </div>
+                `;
+
+                // Still show recent submissions if any exist
+                displayRecentSubmissions();
             }
         });
     </script>
+
 </body>
 
 </html>
