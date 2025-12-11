@@ -48,7 +48,6 @@ header {
 /* Navigation */
 .navigation {
     display: none;
-    /* hidden by default on small screens */
     flex-direction: column;
     gap: 8px;
     background-color: var(--nav-bg);
@@ -57,11 +56,9 @@ header {
     margin-bottom: 20px;
 }
 
-.navigation.active {
+.navigation.open {
     display: flex;
-    /* toggled by hamburger */
 }
-
 .navigation a {
     color: var(--nav-link);
     text-decoration: none;

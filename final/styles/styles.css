@@ -2250,21 +2250,21 @@ footer a:focus {
         justify-content: center;
     }
 
-    .navigation {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: var(--navy-blue);
-        padding: 1.5rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-    }
+   /* Mobile default: hide nav */
+   .navigation {
+       display: none;
+       flex-direction: column;
+       gap: 8px;
+       background-color: var(--navy-blue);
+       padding: 10px;
+       border-radius: 6px;
+       margin-top: 1rem;
+   }
 
-    .navigation.active {
-        display: block;
-    }
+   /* Show nav when hamburger toggles it */
+   .navigation.open {
+       display: flex;
+   }
 
     .navigation ul {
         flex-direction: column;
