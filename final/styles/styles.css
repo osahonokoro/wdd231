@@ -2705,6 +2705,23 @@ footer a:focus {
     }
 }
 
+/* Desktop - above 768px */
+@media (min-width: 769px) {
+    .navigation {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .navigation ul {
+        flex-direction: row;
+    }
+
+    .hamburger {
+        display: none;
+    }
+}
+
 /* ==================== */
 /* ACCESSIBILITY        */
 /* ==================== */

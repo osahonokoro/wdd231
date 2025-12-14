@@ -115,151 +115,158 @@
     </footer>
 
     <!-- JavaScript to display query string values -->
-    <script>
-        // Function to safely decode URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-            const results = regex.exec(window.location.search);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
+ script>
+    // Function to safely decode URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[
 
-        // Function to format field names for display
-        function formatFieldName(field) {
-            return field.replace(/_/g, ' ')
-                .replace(/\b\w/g, l => l.toUpperCase())
-                .replace('Ph', 'pH');
-        }
+            \[\]
 
-        // Function to safely escape HTML
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+]/g, '\\$&');
+        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+        const results = regex.exec(window.location.search);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
 
-        // Function to display recent submissions from localStorage
-        function displayRecentSubmissions() {
-            try {
-                const submissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
-                const container = document.getElementById('recentSubmissions');
+    // Function to format field names for display
+    function formatFieldName(field) {
+        return field.replace(/_/g, ' ')
+            .replace(/\b\w/g, l => l.toUpperCase())
+            .replace('Ph', 'pH');
+    }
 
-                if (submissions.length > 0) {
-                    let html = '<ul>';
-                    submissions.forEach((sub, index) => {
-                        const date = new Date(sub.submittedAt || Date.now());
-                        html += `<li>Submission ${index + 1}: ${sub.name || 'Anonymous'} - ${date.toLocaleDateString()}</li>`;
-                    });
-                    html += '</ul>';
-                    container.innerHTML = html;
-                    document.getElementById('storageDemo').style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Error displaying recent submissions:', error);
-            }
-        }
+    // Function to safely escape HTML
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
 
-        // Display all form data dynamically
-        document.addEventListener('DOMContentLoaded', function () {
-            // Update page loaded time
-            const pageLoadedElement = document.getElementById('pageLoaded');
-            if (pageLoadedElement) {
-                pageLoadedElement.textContent = new Date().toLocaleString();
-            }
+    // Function to display recent submissions from localStorage
+    function displayRecentSubmissions() {
+        try {
+            const submissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+            const container = document.getElementById('recentSubmissions');
 
-            // Update current year in footer
-            const yearElement = document.getElementById('current-year');
-            if (yearElement) {
-                yearElement.textContent = new Date().getFullYear();
-            }
-
-            const params = new URLSearchParams(window.location.search);
-            const resultsContainer = document.getElementById('formResults');
-
-            if (params.toString()) {
-                let html = '';
-
-                // Create a display order for common fields
-                const fieldOrder = ['name', 'email', 'interest', 'subject', 'message'];
-
-                // First show fields in our preferred order
-                fieldOrder.forEach(field => {
-                    const value = getUrlParameter(field);
-                    if (value) {
-                        html += `
-                            <div class="detail-item">
-                                <span class="detail-label">${formatFieldName(field)}:</span>
-                                <span class="detail-value">${escapeHtml(value)}</span>
-                            </div>
-                        `;
-                    }
+            if (submissions.length > 0) {
+                let html = '<ul>';
+                submissions.forEach((sub, index) => {
+                    const date = new Date(sub.submittedAt || Date.now());
+                    html += `<li>Submission ${index + 1}: ${sub.name || 'Anonymous'} - ${date.toLocaleDateString()}</li>`;
                 });
+                html += '</ul>';
+                container.innerHTML = html;
+                document.getElementById('storageDemo').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error displaying recent submissions:', error);
+        }
+    }
 
-                // Then show any other fields not in our preferred order
-                for (const [key, value] of params) {
-                    if (!fieldOrder.includes(key)) {
-                        html += `
-                            <div class="detail-item">
-                                <span class="detail-label">${formatFieldName(key)}:</span>
-                                <span class="detail-value">${escapeHtml(decodeURIComponent(value))}</span>
-                            </div>
-                        `;
-                    }
-                }
+    // Display all form data dynamically
+    document.addEventListener('DOMContentLoaded', function () {
+        // Update page loaded time
+        const pageLoadedElement = document.getElementById('pageLoaded');
+        if (pageLoadedElement) {
+            pageLoadedElement.textContent = new Date().toLocaleString();
+        }
 
-                resultsContainer.innerHTML = html;
+        // Update current year in footer
+        const yearElement = document.getElementById('current-year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
 
-                // If no form data found, show a message
-                if (!html) {
-                    resultsContainer.innerHTML = `
-                        <div class="no-data">
-                            <p>No form data was submitted. Please use the <a href="contact.html">contact form</a> to send a message.</p>
+        const params = new URLSearchParams(window.location.search);
+        const resultsContainer = document.getElementById('formResults');
+
+        if (params.toString()) {
+            let html = '';
+
+            // Create a display order for common fields
+            const fieldOrder = ['name', 'email', 'interest', 'subject', 'message'];
+
+            // First show fields in our preferred order
+            fieldOrder.forEach(field => {
+                const value = getUrlParameter(field);
+                if (value) {
+                    html += `
+                        <div class="detail-item">
+                            <span class="detail-label">${formatFieldName(field)}:</span>
+                            <span class="detail-value">${escapeHtml(value)}</span>
                         </div>
                     `;
                 }
+            });
 
-                // Store submission in localStorage for demo purposes
-                try {
-                    const formData = {};
-                    for (const [key, value] of params) {
-                        formData[key] = value;
-                    }
-
-                    // Add timestamp
-                    formData.submittedAt = new Date().toISOString();
-
-                    // Get existing submissions or create new array
-                    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
-                    existingSubmissions.push(formData);
-
-                    // Keep only last 5 submissions
-                    const recentSubmissions = existingSubmissions.slice(-5);
-                    localStorage.setItem('formSubmissions', JSON.stringify(recentSubmissions));
-
-                    console.log('Form submission stored in localStorage');
-
-                    // Display recent submissions
-                    displayRecentSubscriptions();
-                } catch (error) {
-                    console.error('Error storing form data:', error);
+            // Then show any other fields not in our preferred order
+            for (const [key, value] of params) {
+                if (!fieldOrder.includes(key)) {
+                    html += `
+                        <div class="detail-item">
+                            <span class="detail-label">${formatFieldName(key)}:</span>
+                            <span class="detail-value">${escapeHtml(decodeURIComponent(value))}</span>
+                        </div>
+                    `;
                 }
+            }
 
-            } else {
-                // No query parameters found
+            resultsContainer.innerHTML = html;
+
+            // If no form data found, show a message
+            if (!html) {
                 resultsContainer.innerHTML = `
                     <div class="no-data">
-                        <p>No form data was found. Please use the <a href="contact.html">contact form</a> to send a message.</p>
-                        <a href="contact.html" class="cta-button">Go to Contact Form</a>
+                        <p>No form data was submitted. Please use the <a href="contact.html">contact form</a> to send a message.</p>
                     </div>
                 `;
-
-                // Still show recent submissions if any exist
-                displayRecentSubmissions();
             }
-        });
-    </script>
+
+            // Store submission in localStorage for demo purposes
+            try {
+                const formData = {};
+                for (const [key, value] of params) {
+                    formData[key] = value;
+                }
+
+                // Add timestamp
+                formData.submittedAt = new Date().toISOString();
+
+                // Get existing submissions or create new array
+                const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
+                existingSubmissions.push(formData);
+
+                // Keep only last 5 submissions
+                const recentSubmissions = existingSubmissions.slice(-5);
+                localStorage.setItem('formSubmissions', JSON.stringify(recentSubmissions));
+
+                console.log('Form submission stored in localStorage');
+
+                // Display recent submissions
+                displayRecentSubmissions();
+            } catch (error) {
+                console.error('Error storing form data:', error);
+            }
+
+        } else {
+            // No query parameters found
+            resultsContainer.innerHTML = `
+                <div class="no-data">
+                    <p>No form data was found. Please use the <a href="contact.html">contact form</a> to send a message.</p>
+                    <a href="contact.html" class="cta-button">Go to Contact Form</a>
+                </div>
+            `;
+
+            // Still show recent submissions if any exist
+            displayRecentSubmissions();
+        }
+    });
+</script>
+
+<!-- Shared navigation script -->
+<script type="module" src="scripts/homepage.js"></script>
 
 </body>
 

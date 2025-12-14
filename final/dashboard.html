@@ -173,42 +173,70 @@
         </div>
     </div>
 
-    <footer>
-        <p>&copy; <span id="current-year">2025</span> Smart Aquaculture Monitoring | WDD 231 Project | Osahon Okoro</p>
-        <p>
-            <a href="attributions.html">Attributions</a> |
-            <a href="contact.html">Contact Form</a> |
-            <a href="form-action.html">Form Submission</a> |
-            <!-- Update with your actual video URL -->
-            <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
-                Demonstration</a>
-        </p>
-        <p class="last-updated">Page loaded: <span id="pageLoaded">Loading...</span></p>
-    </footer>
+    <p>&copy; <span id="current-year">2025</span> Smart Aquaculture Monitoring | WDD 231 Project | Osahon Okoro</p>
+    <p>
+        <a href="attributions.html">Attributions</a> |
+        <a href="contact.html">Contact Form</a> |
+        <a href="form-action.html">Form Submission</a> |
+        <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
+            Demonstration</a>
+    </p>
+    <p class="last-updated">Page loaded: <span id="pageLoaded">Loading...</span></p>
+</footer>
 
-    <!-- JavaScript Modules -->
-    <script type="module" src="scripts/dashboard.js"></script>
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Chart.js Library (for visualization requirement) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Inline script for footer updates -->
-    <script>
+<!-- Dashboard Chart Initialization -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
         // Update footer dates
-        document.addEventListener('DOMContentLoaded', function () {
-            // Update current year
-            const yearElement = document.getElementById('current-year');
-            if (yearElement) {
-                yearElement.textContent = new Date().getFullYear();
-            }
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        document.getElementById('pageLoaded').textContent = new Date().toLocaleString();
 
-            // Update page loaded time
-            const loadedElement = document.getElementById('pageLoaded');
-            if (loadedElement) {
-                loadedElement.textContent = new Date().toLocaleString();
+        // Initialize Chart.js
+        const ctx = document.getElementById('sensorChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({ length: 15 }, (_, i) => `Reading ${i + 1}`),
+                datasets: [
+                    {
+                        label: 'Temperature (°C)',
+                        data: [22, 23, 24, 25, 24, 23, 22, 21, 22, 23, 24, 25, 26, 25, 24],
+                        borderColor: '#00b3b3',
+                        backgroundColor: 'rgba(0,179,179,0.2)',
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'pH Level',
+                        data: [7.2, 7.3, 7.1, 7.4, 7.3, 7.2, 7.1, 7.0, 7.2, 7.3, 7.4, 7.3, 7.2, 7.1, 7.0],
+                        borderColor: '#78247C',
+                        backgroundColor: 'rgba(120,36,124,0.2)',
+                        fill: true,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Sensor Readings Over Time' }
+                },
+                scales: {
+                    y: { beginAtZero: false }
+                }
             }
         });
-    </script>
+    });
+</script>
+
+<!-- Shared navigation script (hamburger toggle) -->
+<script type="module" src="scripts/homepage.js"></script>
+
+
 </body>
 
 </html>

@@ -118,7 +118,11 @@
     <script>
         // Function to safely decode URL parameters
         function getUrlParameter(name) {
-            name = name.replace(/[\[\]]/g, '\\$&');
+            name = name.replace(/[
+
+                \[\]
+    
+    ]/g, '\\$&');
             const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
             const results = regex.exec(window.location.search);
             if (!results) return null;
@@ -241,7 +245,7 @@
                     console.log('Form submission stored in localStorage');
 
                     // Display recent submissions
-                    displayRecentSubscriptions();
+                    displayRecentSubmissions();
                 } catch (error) {
                     console.error('Error storing form data:', error);
                 }
@@ -260,6 +264,9 @@
             }
         });
     </script>
+    
+    <!-- Shared navigation script -->
+    <script type="module" src="scripts/homepage.js"></script>
 
 </body>
 

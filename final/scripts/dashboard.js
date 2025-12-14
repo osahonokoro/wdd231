@@ -11,12 +11,12 @@ class Dashboard {
         await this.loadData();
         this.setupEventListeners();
         this.applyTheme();
-        this.displayReadings();
+        this.displayReadings(true); // explicitly simulate
 
         // Auto-refresh every 5 seconds to simulate live updates
         setInterval(() => {
-            this.updateCurrentReadings(true);
-            this.displayReadings(true);
+            this.updateCurrentReadings(true); // explicitly simulate
+            this.displayReadings(true);       // explicitly simulate
             this.updateLastUpdated();
         }, 5000);
     }
@@ -25,6 +25,7 @@ class Dashboard {
         try {
             await this.dataHandler.fetchSensorData();
             this.updateCurrentReadings(true);
+            this.displayReadings(true);
             this.updateLastUpdated();
         } catch (error) {
             this.showError(error.message);

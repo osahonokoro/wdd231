@@ -21,10 +21,12 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/favicon.ico">
 
-    <!-- Stylesheets - Use only styles.css -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/small.css">
+    <link rel="stylesheet" href="styles/larger.css">
 
-    <!-- Google Fonts with preconnect -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -37,7 +39,6 @@
     <header>
         <div class="header-content">
             <h1 class="site-title">Smart Aquaculture</h1>
-            <!-- Add hamburger button -->
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
                 aria-controls="main-nav">☰</button>
             <nav class="navigation" id="main-nav" aria-label="Main navigation">
@@ -114,44 +115,14 @@
             <a href="attributions.html" aria-current="page">Attributions</a> |
             <a href="contact.html">Contact Form</a> |
             <a href="form-action.html">Form Submission</a> |
-            <!-- Update with your actual video URL -->
             <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
                 Demonstration</a>
         </p>
         <p class="last-updated">Last updated: <span id="last-modified">Loading...</span></p>
     </footer>
 
-    <!-- Add JavaScript for navigation -->
-    <script>
-        // Update footer dates
-        document.addEventListener('DOMContentLoaded', function () {
-            // Update current year
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-
-            // Update last modified date
-            document.getElementById('last-modified').textContent = document.lastModified;
-
-            // Hamburger menu functionality
-            const hamburger = document.getElementById('hamburger');
-            const nav = document.getElementById('main-nav');
-
-            if (hamburger && nav) {
-                hamburger.addEventListener('click', function () {
-                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                    this.setAttribute('aria-expanded', !isExpanded);
-                    nav.classList.toggle('active');
-                });
-
-                // Close menu when clicking links (mobile)
-                nav.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', function () {
-                        hamburger.setAttribute('aria-expanded', 'false');
-                        nav.classList.remove('active');
-                    });
-                });
-            }
-        });
-    </script>
+    <!-- JavaScript for navigation -->
+    <script type="module" src="scripts/homepage.js"></script>
 </body>
 
 </html>
