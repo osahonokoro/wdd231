@@ -142,6 +142,21 @@ header {
     outline: none;
 }
 
+/* Desktop navigation */
+@media (min-width: 769px) {
+    .navigation {
+        display: flex;
+        align-items: center;
+    }
+
+    .navigation ul {
+        flex-direction: row;
+    }
+
+    .hamburger {
+        display: none;
+    }
+}
 /* FIX: Color contrast issue for text on navy-blue background */
 .last-updated,
 .last-updated span {
