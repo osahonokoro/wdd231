@@ -123,20 +123,18 @@ class Homepage {
         }
     }
 
-    // ✅ New method for hamburger menu
+    // ✅ New method for hamburger menu  
     setupHamburgerMenu() {
         const hamburger = document.getElementById('hamburger');
         const nav = document.getElementById('main-nav');
 
-        if (hamburger && nav) {
-            hamburger.addEventListener('click', () => {
-                const expanded = hamburger.getAttribute('aria-expanded') === 'true';
-                hamburger.setAttribute('aria-expanded', !expanded);
-                nav.classList.toggle('open');
+        hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
             });
+
         }
     }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     new Homepage();
