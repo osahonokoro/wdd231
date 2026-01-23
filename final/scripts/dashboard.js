@@ -63,7 +63,7 @@ class Dashboard {
     }
 
     showReadingDetails(readingId) {
-        const reading = this.dataHandler.getReadings(15, true).find(r => r.id === readingId);
+        const reading = this.dataHandler.processReadings(true).find(r => r.id === readingId);
         if (!reading) return;
 
         const modal = document.getElementById('readingModal');
@@ -76,7 +76,7 @@ class Dashboard {
         <p><strong>Location:</strong> ${reading.location}</p>
         <p><strong>Temperature:</strong> ${reading.temperature}°C</p>
         <p><strong>pH Level:</strong> ${reading.ph}</p>
-        <p><strong>Ammonia:</strong> ${reading.ammonia} mg/L</p>
+        <p><strong>Ammonia Concentration:</strong> ${reading.ammonia} mg/L</p>
         <p><strong>Dissolved Oxygen:</strong> ${reading.dissolved_oxygen} mg/L</p>
         <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
         <p><strong>Timestamp:</strong> ${reading.formattedTime}</p>
@@ -84,7 +84,7 @@ class Dashboard {
     `;
 
         modal.style.display = 'block';
-        modal.focus(); // accessibility improvement
+        modal.focus();
 
         const closeBtn = modal.querySelector('.close-btn');
         closeBtn.onclick = () => modal.style.display = 'none';
