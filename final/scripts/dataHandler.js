@@ -94,10 +94,14 @@ export class DataHandler {
     processReadings(simulate = false) {
         return this.sensorData.map((reading, index) => {
             const simulatedTime = simulate
-                ? new Date(Date.now() - index * 60000).toISOString() // each reading 1 min apart
+                ? new Date(Date.now() - index * 60000).toISOString()
                 : reading.timestamp;
+
             return {
                 ...reading,
+                temperature: simulate ? (reading.temperature + (Math.random() - 0.5)).toFixed(1) : reading.temperature,
+                ph: simulate ? (reading.ph + (Math.random() - 0.05)).toFixed(2) : reading.ph,
+                dissolved_oxygen: simulate ? (reading.dissolved_oxygen + (Math.random() - 0.2)).toFixed(2) : reading.dissolved_oxygen,
                 formattedTime: new Date(simulatedTime).toLocaleTimeString(),
                 statusLabel: reading.status.toUpperCase(),
                 isCritical: reading.status === 'danger'
