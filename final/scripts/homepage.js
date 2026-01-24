@@ -12,7 +12,7 @@ class Homepage {
     this.setupModal();
     this.setupHamburgerMenu();
 
-    // Auto-refresh every 5 seconds
+    // Auto-refresh every 5 seconds to simulate live updates
     setInterval(() => {
       this.displayFeaturedReadings(this.dataHandler.getReadings(6, true));
     }, 5000);
@@ -65,7 +65,6 @@ class Homepage {
       modal.setAttribute('role', 'dialog');
       modal.setAttribute('aria-modal', 'true');
       modal.setAttribute('aria-labelledby', 'modalBody');
-
       modal.innerHTML = `
         <div class="modal-content">
           <button class="close-btn" aria-label="Close details modal">&times;</button>
@@ -108,7 +107,6 @@ class Homepage {
         </div>
       `;
       modal.style.display = 'block';
-      modal.focus(); // accessibility improvement
     }
   }
 
@@ -124,16 +122,58 @@ class Homepage {
     }
   }
 
+  // ✅ Fixed hamburger menu with fade-in animation
   setupHamburgerMenu() {
     const hamburger = document.getElementById('hamburger');
     const nav = document.getElementById('main-nav');
+    const navLinks = nav ? nav.querySelectorAll("a") : [];
 
     if (hamburger && nav) {
       hamburger.addEventListener("click", () => {
         hamburger.classList.toggle("active");
         nav.classList.toggle("active");
+
+        // Fade-in animation for nav links
+        if (nav.classList.contains("active")) {
+          navLinks.forEach((link, index) => {
+            link.style.opacity = "0";
+            link.style.animation = `fadeIn 0.4s ease forwards ${index * 0.1 + 0.2}s`;
+          });
+        } else {
+          navLinks.forEach((link) => {
+            link.style.opacity = "";
+            link.style.animation = "";
+          });
+        }
       });
     }
+
+    // Ensure nav is visible on desktop
+    const handleResize = () => {
+      if (window.innerWidth >= 769) {
+        nav.classList.remove("active");
+        nav.style.display = "flex";
+        navLinks.forEach((link) => {
+          link.style.opacity = "";
+          link.style.animation = "";
+        });
+      } else {
+        nav.style.display = "";
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Inject fadeIn keyframes
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
   }
 }
 
