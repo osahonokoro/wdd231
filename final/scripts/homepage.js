@@ -128,12 +128,12 @@ class Homepage {
     const hamburger = document.getElementById('hamburger');
     const nav = document.getElementById('main-nav');
 
-    
+    if (hamburger && nav) {
       hamburger.addEventListener("click", () => {
         hamburger.classList.toggle("active");
         nav.classList.toggle("active");
       });
-    
+    }
   }
 }
 

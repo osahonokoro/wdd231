@@ -142,6 +142,31 @@ header {
     outline: none;
 }
 
+/* Mobile navigation default: hidden */
+.navigation {
+    display: none;
+    flex-direction: column;
+    background-color: var(--navy-blue);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    z-index: 1000;
+
+    /* animation setup */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+/* Show navigation when active */
+.navigation.active {
+    display: flex;
+    max-height: 500px;
+    /* enough to show menu */
+}
+
 /* Desktop navigation */
 @media (min-width: 769px) {
     .navigation {
