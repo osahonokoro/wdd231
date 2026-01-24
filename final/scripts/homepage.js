@@ -1,3 +1,5 @@
+// homepage.js
+
 import { DataHandler } from './dataHandler.js';
 
 class Homepage {
