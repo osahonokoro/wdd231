@@ -90,127 +90,23 @@
         <p>
             <a href="attributions.html">Attributions</a> |
             <a href="contact.html">Contact Form</a> |
-            <a href="form-action.html">Form Submission</a> |
+            <a href="form-action.html" aria-current="page">Form Submission</a> |
             <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
                 Demonstration</a>
         </p>
         <p class="last-updated">Page loaded: <span id="pageLoaded">Loading...</span></p>
     </footer>
 
-    <!-- JavaScript to display query string values -->
-    <script>
-        function getUrlParameter(name) {
-            name = name.replace(/[\
-
-                \[\\]
-
-]/g, '\\$&');
-            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-            const results = regex.exec(window.location.search);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
-        function formatFieldName(field) {
-            return field.replace(/_/g, ' ')
-                .replace(/\b\w/g, l => l.toUpperCase())
-                .replace('Ph', 'pH');
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function displayRecentSubmissions() {
-            try {
-                const submissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
-                const container = document.getElementById('recentSubmissions');
-                if (submissions.length > 0) {
-                    let html = '<ul>';
-                    submissions.forEach((sub, index) => {
-                        const date = new Date(sub.submittedAt || Date.now());
-                        html += `<li>Submission ${index + 1}: ${sub.firstName || 'Anonymous'} ${sub.lastName || ''} - ${date.toLocaleDateString()}</li>`;
-                    });
-                    html += '</ul>';
-                    container.innerHTML = html;
-                    document.getElementById('storageDemo').style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Error displaying recent submissions:', error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('pageLoaded').textContent = new Date().toLocaleString();
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-
-            const params = new URLSearchParams(window.location.search);
-            const resultsContainer = document.getElementById('formResults');
-
-            if (params.toString()) {
-                let html = '';
-                const fieldOrder = ['firstName', 'lastName', 'email', 'phone', 'organization', 'inquiryType', 'projectScope', 'budget', 'priority', 'subject', 'message'];
-
-                fieldOrder.forEach(field => {
-                    const value = getUrlParameter(field);
-                    if (value) {
-                        html += `
-              <div class="detail-item">
-                <span class="detail-label">${formatFieldName(field)}:</span>
-                <span class="detail-value">${escapeHtml(value)}</span>
-              </div>
-            `;
-                    }
-                });
-
-                for (const [key, value] of params) {
-                    if (!fieldOrder.includes(key)) {
-                        html += `
-              <div class="detail-item">
-                <span class="detail-label">${formatFieldName(key)}:</span>
-                <span class="detail-value">${escapeHtml(decodeURIComponent(value))}</span>
-              </div>
-            `;
-                    }
-                }
-
-                resultsContainer.innerHTML = html || `<div class="no-data"><p>No form data was submitted. Please use the <a href="contact.html">contact form</a>.</p></div>`;
-
-                try {
-                    const formData = {};
-                    for (const [key, value] of params) {
-                        formData[key] = value;
-                    }
-                    formData.submittedAt = new Date().toISOString();
-
-                    const existingSubmissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
-                    existingSubmissions.push(formData);
-                    const recentSubmissions = existingSubmissions.slice(-5);
-                    localStorage.setItem('formSubmissions', JSON.stringify(recentSubmissions));
-
-                    displayRecentSubmissions();
-                } catch (error) {
-                    console.error('Error storing form data:', error);
-                }
-            } else {
-                resultsContainer.innerHTML = `
-          <div class="no-data">
-            <p>No form data was found. Please use the <a href="contact.html">contact form</a>.</p>
-            <a href="contact.html" class="cta-button">Go to Contact Form</a>
-          </div>
-        `;
-                displayRecentSubmissions();
-            }
-        });
-    </script>
-
     <!-- Scripts -->
     <script type="module" src="scripts/form-action.js"></script>
     <script type="module" src="scripts/homepage.js"></script>
-
+    <script>
+        // Footer dynamic values
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            document.getElementById('pageLoaded').textContent = new Date().toLocaleString();
+        });
+    </script>
 </body>
 
 </html>

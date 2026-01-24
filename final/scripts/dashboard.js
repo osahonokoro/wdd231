@@ -4,6 +4,7 @@ class Dashboard {
     constructor() {
         this.dataHandler = new DataHandler();
         this.currentTheme = localStorage.getItem('aquaculture_theme') || 'light';
+        this.chart = null; // Chart.js instance
         this.init();
     }
 
@@ -12,11 +13,13 @@ class Dashboard {
         this.setupEventListeners();
         this.applyTheme();
         this.displayReadings(true);
+        this.renderChart();
 
         // Auto-refresh every 5 seconds
         setInterval(() => {
             this.updateCurrentReadings(true);
             this.displayReadings(true);
+            this.renderChart();
             this.updateLastUpdated();
         }, 5000);
     }
@@ -26,6 +29,7 @@ class Dashboard {
             await this.dataHandler.fetchSensorData();
             this.updateCurrentReadings(true);
             this.displayReadings(true);
+            this.renderChart();
             this.updateLastUpdated();
         } catch (error) {
             this.showError('Unable to load sensor data: ' + error.message);
@@ -81,6 +85,7 @@ class Dashboard {
         <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
         <p><strong>Timestamp:</strong> ${reading.formattedTime}</p>
       </div>
+      <p id="modalDescription">Detailed sensor information including temperature, pH, ammonia, and oxygen levels.</p>
     `;
 
         modal.style.display = 'block';
@@ -91,6 +96,13 @@ class Dashboard {
 
         modal.onclick = (e) => {
             if (e.target === modal) modal.style.display = 'none';
+        };
+
+        // Accessibility: close with Esc key
+        modal.onkeydown = (e) => {
+            if (e.key === 'Escape') {
+                modal.style.display = 'none';
+            }
         };
     }
 
@@ -141,6 +153,52 @@ class Dashboard {
         const filterValue = document.getElementById('parameterFilter').value;
         this.dataHandler.filterData(filterValue === 'all' ? 'all' : filterValue, filterValue);
         this.displayReadings(true);
+        this.renderChart();
+    }
+
+    renderChart() {
+        const ctx = document.getElementById('sensorChart');
+        if (!ctx) return;
+
+        const readings = this.dataHandler.getReadings(10, true);
+
+        if (this.chart) {
+            this.chart.destroy(); // refresh chart
+        }
+
+        this.chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: readings.map(r => r.formattedTime),
+                datasets: [
+                    {
+                        label: 'Temperature (°C)',
+                        data: readings.map(r => r.temperature),
+                        borderColor: 'red',
+                        fill: false
+                    },
+                    {
+                        label: 'pH',
+                        data: readings.map(r => r.ph),
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Dissolved Oxygen (mg/L)',
+                        data: readings.map(r => r.dissolved_oxygen),
+                        borderColor: 'green',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Sensor Trends (Last 10 Readings)' }
+                }
+            }
+        });
     }
 
     showError(message) {

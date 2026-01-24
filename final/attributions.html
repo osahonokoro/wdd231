@@ -54,8 +54,8 @@
     </header>
 
     <main id="main-content">
-        <section class="attributions">
-            <h2>Resource Attributions</h2>
+        <section class="attributions" aria-labelledby="attributions-title">
+            <h2 id="attributions-title">Resource Attributions</h2>
             <p>This page acknowledges external resources used in the Smart Aquaculture Monitoring project.</p>
 
             <div class="attributions-grid">
@@ -121,8 +121,15 @@
         <p class="last-updated">Last updated: <span id="last-modified">Loading...</span></p>
     </footer>
 
-    <!-- JavaScript for navigation -->
+    <!-- Shared navigation script -->
     <script type="module" src="scripts/homepage.js"></script>
+    <script>
+        // Footer dynamic values
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            document.getElementById('last-modified').textContent = new Date(document.lastModified).toLocaleString();
+        });
+    </script>
 </body>
 
 </html>

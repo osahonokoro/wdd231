@@ -8,9 +8,9 @@
     <meta name="theme-color" content="#004080" />
     <meta name="author" content="Osahon Okoro" />
     <meta name="description"
-        content="Contact form for Smart Aquaculture Monitoring project inquiries, research collaboration, dataset access, and system implementation" />
+        content="Methodology of Smart Aquaculture Monitoring system including mathematical model and algorithmic implementation." />
 
-    <title>Contact Us | Smart Aquaculture Monitoring</title>
+    <title>Methodology | Smart Aquaculture Monitoring</title>
 
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
@@ -39,125 +39,74 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="dashboard.html">Live Dashboard</a></li>
-                    <li><a href="methodology.html">Methodology</a></li>
+                    <li><a href="methodology.html" aria-current="page">Methodology</a></li>
                     <li><a href="attributions.html">Attributions</a></li>
-                    <li><a href="contact.html" aria-current="page">Contact</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main id="main-content">
-        <!-- Contact Intro -->
-        <section class="contact-intro" aria-labelledby="contact-title">
-            <h2 id="contact-title">Contact Us</h2>
-            <p class="contact-description">
-                Do you have questions about our smart aquaculture monitoring system? Are you interested in research
-                collaboration, requesting access to our simulation dataset, or exploring system implementation? I would
-                love to hear from you.
+        <!-- Introduction -->
+        <section aria-labelledby="methodology-title">
+            <h2 id="methodology-title">Methodology</h2>
+            <p>
+                The methodology integrates IoT sensors, machine learning models, and control logic to create
+                an intelligent aquaculture filtration system. Sensor data is collected, processed, and analyzed
+                to predict water quality states, which then guide energy-efficient control of filtration and UV
+                sterilization.
             </p>
-
-            <div class="contact-info">
-                <div class="info-card">
-                    <h3>📧 Email</h3>
-                    <p><a href="mailto:osahonokoro@gmail.com">osahonokoro@gmail.com</a></p>
-                    <p class="info-note">Response within 24 hours</p>
-                </div>
-                <div class="info-card">
-                    <h3>📞 Phone</h3>
-                    <p><a href="tel:+2348069006291">+234-806-900-6291</a></p>
-                    <p class="info-note">Mon-Fri, 9AM-5PM</p>
-                </div>
-                <div class="info-card">
-                    <h3>📍 Location</h3>
-                    <p>Information Science Department, Faculty of Computing, University of Calabar</p>
-                    <p class="info-note">Calabar, Cross River State</p>
-                </div>
-            </div>
         </section>
 
-        <!-- Contact Form -->
-        <section class="contact-form-section" aria-labelledby="form-title">
-            <h3 id="form-title">Send Us a Message</h3>
-            <p class="form-instructions">Please fill out the form below. Fields marked with <span
-                    class="required">*</span> are required.</p>
-
-            <form id="contactForm" action="form-action.html" method="get" novalidate>
-                <!-- Personal Information -->
-                <fieldset class="form-section">
-                    <legend>Personal Information</legend>
-                    <!-- First/Last Name, Email, Phone, Organization -->
-                    <!-- (unchanged from your original) -->
-                </fieldset>
-
-                <!-- Inquiry Details -->
-                <fieldset class="form-section">
-                    <legend>Inquiry Details</legend>
-                    <div class="form-group">
-                        <label for="inquiryType">Type of Inquiry<span class="required">*</span>:</label>
-                        <select id="inquiryType" name="inquiryType" required>
-                            <option value="">Select an option</option>
-                            <option value="research">Research Collaboration</option>
-                            <option value="implementation">System Implementation</option>
-                            <option value="education">Educational Purpose</option>
-                            <option value="technical">Technical Support</option>
-                            <option value="dataset">Dataset Access Request</option>
-                            <option value="feedback">Website Feedback</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <!-- Project Scope, Budget, Priority (unchanged) -->
-                </fieldset>
-
-                <!-- Message -->
-                <fieldset class="form-section">
-                    <legend>Your Message</legend>
-                    <!-- Subject, Message, Attachment (unchanged) -->
-                </fieldset>
-
-                <!-- Preferences -->
-                <fieldset class="form-section">
-                    <legend>Communication Preferences</legend>
-                    <!-- Newsletter, Marketing, Terms (unchanged) -->
-                </fieldset>
-
-                <!-- Form Actions -->
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">Send Message</button>
-                    <button type="reset" class="control-btn secondary">Clear Form</button>
-                </div>
-            </form>
+        <!-- Mathematical Model -->
+        <section aria-labelledby="math-model-title">
+            <h2 id="math-model-title">Mathematical Model</h2>
+            <p>The predictive function is expressed as:</p>
+            <pre>y = f(T, pH, NH₃, DO)</pre>
+            <p>
+                where <em>T</em> is temperature, <em>pH</em> is acidity, <em>NH₃</em> is ammonia concentration,
+                and <em>DO</em> is dissolved oxygen. The output <em>y</em> represents the predicted water quality state.
+            </p>
+            <p>Energy consumption is modeled as:</p>
+            <pre>E = αF + βU</pre>
+            <p>
+                where <em>F</em> is the filtration duty cycle, <em>U</em> is the UV sterilization duty cycle,
+                and α, β are scaling coefficients. The optimization objective is to minimize total energy use
+                while keeping water quality within safe thresholds.
+            </p>
         </section>
 
-        <!-- FAQ Section -->
-        <section class="faq-section" aria-labelledby="faq-title">
-            <h3 id="faq-title">Frequently Asked Questions</h3>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h4>What response time can I expect?</h4>
-                    <p>We typically respond within 24 hours during business days. For urgent matters, please indicate
-                        "High Priority".</p>
-                </div>
-                <div class="faq-item">
-                    <h4>Do you provide implementation support?</h4>
-                    <p>Yes, we offer technical support for system implementation. Please provide details about your
-                        project scope in the inquiry form.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>Is this system suitable for educational purposes?</h4>
-                    <p>Absolutely! Our system is ideal for research projects, student labs, and educational
-                        demonstrations.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>Can I customize the system for my specific needs?</h4>
-                    <p>Yes, we can customize sensors and control logic based on your aquaculture requirements.</p>
-                </div>
-                <div class="faq-item">
-                    <h4>Can I access the simulation dataset?</h4>
-                    <p>Yes, you can request access via the contact form. The dataset is provided for academic and
-                        research purposes only.</p>
-                </div>
-            </div>
+        <!-- Algorithmic Implementation -->
+        <section aria-labelledby="algorithm-title">
+            <h2 id="algorithm-title">Algorithmic Implementation</h2>
+            <p>The mathematical model was translated into a step-by-step algorithm implemented in Python on a Raspberry
+                Pi 4. The algorithm performs the following:</p>
+            <ol>
+                <li>Initialize system and load trained ML model.</li>
+                <li>Acquire sensor readings (temperature, pH, ammonia, DO).</li>
+                <li>Preprocess data (normalize, filter noise).</li>
+                <li>Predict water quality state using ML model.</li>
+                <li>Apply decision logic:
+                    <ul>
+                        <li>Safe → minimal filtration, UV off.</li>
+                        <li>Moderate → medium filtration, partial UV.</li>
+                        <li>Hazardous → full filtration and UV sterilization.</li>
+                    </ul>
+                </li>
+                <li>Adjust duty cycles proportionally using fuzzy logic.</li>
+                <li>Log data and control actions to the web dashboard.</li>
+            </ol>
+            <p>This ensures proportional responses rather than binary ON/OFF control, improving both efficiency and
+                stability.</p>
+        </section>
+
+        <!-- System Flow Diagram -->
+        <section aria-labelledby="system-flow-title">
+            <h2 id="system-flow-title">System Flow</h2>
+            <p>Sensors → Machine Learning Model → Prediction → Control Logic → Filtration/UV → Web Dashboard</p>
+            <img src="images/system-flow.png"
+                alt="System flow diagram showing sensors, ML model, control, and dashboard" loading="lazy" />
         </section>
     </main>
 
@@ -165,7 +114,7 @@
         <p>&copy; <span id="current-year">2025</span> Smart Aquaculture Monitoring | WDD 231 Project | Osahon Okoro</p>
         <p>
             <a href="attributions.html">Attributions</a> |
-            <a href="contact.html" aria-current="page">Contact Form</a> |
+            <a href="contact.html">Contact Form</a> |
             <a href="form-action.html">Form Submission</a> |
             <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
                 Demonstration</a>
@@ -173,9 +122,15 @@
         <p class="last-updated">Last updated: <span id="last-modified">Loading...</span></p>
     </footer>
 
-    <!-- Scripts -->
-    <script type="module" src="scripts/contact.js"></script>
-
+    <!-- Shared navigation script -->
+    <script type="module" src="scripts/homepage.js"></script>
+    <script>
+        // Footer dynamic values
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            document.getElementById('last-modified').textContent = new Date(document.lastModified).toLocaleString();
+        });
+    </script>
 </body>
 
 </html>

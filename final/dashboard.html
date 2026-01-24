@@ -9,7 +9,6 @@
   <meta name="author" content="Osahon Okoro" />
   <meta name="description"
     content="Live aquaculture monitoring dashboard with simulated sensor data, ML predictions, and energy optimization analytics." />
-
   <title>Live Dashboard | Smart Aquaculture Monitoring</title>
 
   <!-- Icons -->
@@ -57,10 +56,12 @@
         filtration and UV sterilization cycles.
       </p>
       <div class="controls">
-        <button id="themeToggle" class="control-btn" aria-label="Toggle dark/light theme"><span
-            class="theme-icon">🌙</span> Toggle Theme</button>
-        <button id="refreshData" class="control-btn" aria-label="Refresh sensor data"><span
-            class="refresh-icon">🔄</span> Refresh Data</button>
+        <button id="themeToggle" class="control-btn" aria-label="Toggle dark/light theme">
+          <span class="theme-icon">🌙</span> Toggle Theme
+        </button>
+        <button id="refreshData" class="control-btn" aria-label="Refresh sensor data">
+          <span class="refresh-icon">🔄</span> Refresh Data
+        </button>
       </div>
     </section>
 
@@ -112,149 +113,12 @@
   </footer>
 
   <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
   <!-- Dashboard Logic -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Footer timestamps
-      document.getElementById('current-year').textContent = new Date().getFullYear();
-      document.getElementById('pageLoaded').textContent = new Date().toLocaleString();
+  <script type="module" src="scripts/dashboard.js"></script>
 
-      // Theme toggle
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        document.body.classList.toggle('dark');
-      });
-
-      // Refresh button (updates timestamp only)
-      document.getElementById('refreshData').addEventListener('click', () => {
-        const ts = document.querySelector('#lastUpdated span');
-        if (ts) ts.textContent = new Date().toLocaleString();
-      });
-
-      // Predict state (simple rule-based placeholder)
-      function predictState(r) {
-        const safe =
-          r.temperature >= 20 && r.temperature <= 28 &&
-          r.ph >= 6.8 && r.ph <= 8.0 &&
-          r.ammonia <= 0.2 &&
-          r.dissolved_oxygen >= 5.0;
-
-        const moderate =
-          (r.ammonia > 0.2 && r.ammonia <= 0.5) ||
-          r.ph < 6.8 || r.ph > 8.0 ||
-          (r.dissolved_oxygen < 5.0 && r.dissolved_oxygen >= 4.0);
-
-        if (safe) return 'Safe';
-        if (moderate) return 'Moderate';
-        return 'Hazardous';
-      }
-
-      // Load dataset
-      fetch('data/sensor-data.json')
-        .then(res => res.json())
-        .then(data => {
-          const readings = Array.isArray(data.sensorReadings) ? data.sensorReadings.filter(r =>
-            r.temperature !== undefined &&
-            r.ph !== undefined &&
-            r.ammonia !== undefined &&
-            r.dissolved_oxygen !== undefined
-          ) : [];
-
-          if (!readings.length) {
-            document.getElementById('currentValues').innerHTML = '<p class="error">No sensor readings found.</p>';
-            return;
-          }
-
-          // Latest reading
-          const latest = readings[readings.length - 1];
-
-          // Current cards
-          document.getElementById('currentValues').innerHTML = `
-            <div class="reading-card"><h4>Temperature</h4><p><strong>${latest.temperature} °C</strong></p></div>
-            <div class="reading-card"><h4>pH</h4><p><strong>${latest.ph}</strong></p></div>
-            <div class="reading-card"><h4>Ammonia</h4><p><strong>${latest.ammonia} mg/L</strong></p></div>
-            <div class="reading-card"><h4>Dissolved Oxygen</h4><p><strong>${latest.dissolved_oxygen} mg/L</strong></p></div>
-          `;
-          document.getElementById('lastUpdated').innerHTML =
-            `Last updated: <span>${latest.timestamp ? new Date(latest.timestamp).toLocaleString() : 'N/A'}</span>`;
-
-          // Predicted state + status summary
-          const state = predictState(latest);
-          document.getElementById('predictedState').textContent = state;
-          document.getElementById('statusSummary').textContent =
-            `System status: ${state} — filtration/UV duty cycles adjusted accordingly.`;
-
-          // Chart data
-          const labels = readings.map(r =>
-            r.timestamp ? new Date(r.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
-          );
-          const tempData = readings.map(r => r.temperature);
-          const phData = readings.map(r => r.ph);
-          const nh3Data = readings.map(r => r.ammonia);
-          const doData = readings.map(r => r.dissolved_oxygen);
-
-          const ctx = document.getElementById('sensorChart').getContext('2d');
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels,
-              datasets: [
-                {
-                  label: 'Temperature (°C)',
-                  data: tempData,
-                  borderColor: '#00b3b3',
-                  backgroundColor: 'rgba(0,179,179,0.2)',
-                  fill: true,
-                  tension: 0.3
-                },
-                {
-                  label: 'pH Level',
-                  data: phData,
-                  borderColor: '#78247C',
-                  backgroundColor: 'rgba(120,36,124,0.2)',
-                  fill: true,
-                  tension: 0.3
-                },
-                {
-                  label: 'Ammonia (mg/L)',
-                  data: nh3Data,
-                  borderColor: '#e67e22',
-                  backgroundColor: 'rgba(230,126,34,0.2)',
-                  fill: true,
-                  tension: 0.3
-                },
-                {
-                  label: 'Dissolved Oxygen (mg/L)',
-                  data: doData,
-                  borderColor: '#2ecc71',
-                  backgroundColor: 'rgba(46,204,113,0.2)',
-                  fill: true,
-                  tension: 0.3
-                }
-              ]
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: { position: 'top' },
-                title: { display: true, text: 'Sensor Readings Over Time' }
-              },
-              scales: {
-                x: { title: { display: true, text: 'Time' } },
-                y: { beginAtZero: false, title: { display: true, text: 'Value' } }
-              }
-            }
-          });
-        })
-        .catch(err => {
-          console.error('Error loading sensor-data.json:', err);
-          document.getElementById('currentValues').innerHTML = '<p class="error">Failed to load sensor data.</p>';
-        });
-    });
-  </script>
-
-  <!-- Shared navigation script (hamburger toggle) -->
+  <!-- Shared navigation script -->
   <script type="module" src="scripts/homepage.js"></script>
 </body>
 

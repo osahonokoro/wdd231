@@ -49,8 +49,8 @@
 
     <main id="main-content">
         <!-- Introduction -->
-        <section>
-            <h2>Methodology</h2>
+        <section aria-labelledby="methodology-title">
+            <h2 id="methodology-title">Methodology</h2>
             <p>
                 The methodology integrates IoT sensors, machine learning models, and control logic to create
                 an intelligent aquaculture filtration system. Sensor data is collected, processed, and analyzed
@@ -60,8 +60,8 @@
         </section>
 
         <!-- Mathematical Model -->
-        <section>
-            <h2>Mathematical Model</h2>
+        <section aria-labelledby="math-model-title">
+            <h2 id="math-model-title">Mathematical Model</h2>
             <p>The predictive function is expressed as:</p>
             <pre>y = f(T, pH, NH₃, DO)</pre>
             <p>
@@ -78,8 +78,8 @@
         </section>
 
         <!-- Algorithmic Implementation -->
-        <section>
-            <h2>Algorithmic Implementation</h2>
+        <section aria-labelledby="algorithm-title">
+            <h2 id="algorithm-title">Algorithmic Implementation</h2>
             <p>The mathematical model was translated into a step-by-step algorithm implemented in Python on a Raspberry
                 Pi 4. The algorithm performs the following:</p>
             <ol>
@@ -102,8 +102,8 @@
         </section>
 
         <!-- System Flow Diagram -->
-        <section>
-            <h2>System Flow</h2>
+        <section aria-labelledby="system-flow-title">
+            <h2 id="system-flow-title">System Flow</h2>
             <p>Sensors → Machine Learning Model → Prediction → Control Logic → Filtration/UV → Web Dashboard</p>
             <img src="images/system-flow.png"
                 alt="System flow diagram showing sensors, ML model, control, and dashboard" loading="lazy" />
@@ -122,10 +122,15 @@
         <p class="last-updated">Last updated: <span id="last-modified">Loading...</span></p>
     </footer>
 
-    <!-- Scripts -->
-    <script type="module" src="scripts/contact.js"></script>
+    <!-- Shared navigation script -->
     <script type="module" src="scripts/homepage.js"></script>
-
+    <script>
+        // Footer dynamic values
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            document.getElementById('last-modified').textContent = new Date(document.lastModified).toLocaleString();
+        });
+    </script>
 </body>
 
 </html>

@@ -32,12 +32,12 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="images/favicon.ico">
 
-  <!-- Stylesheets - Consolidated to one file -->
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="stylesheet" href="styles/mobile_styles/small.css">
   <link rel="stylesheet" href="styles/mobile_styles/larger.css">
 
-  <!-- Google Fonts with preconnect for performance -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -47,26 +47,25 @@
   <!-- Skip link for accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<header>
-  <div class="header-content">
-    <h1 class="site-title">Smart Aquaculture</h1>
-    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
-      aria-controls="main-nav">☰</button>
-    <nav class="navigation" id="main-nav" aria-label="Main navigation">
-      <ul>
-        <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="dashboard.html">Live Dashboard</a></li>
-        <li><a href="methodology.html">Methodology</a></li>
-        <li><a href="attributions.html">Attributions</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
+  <header>
+    <div class="header-content">
+      <h1 class="site-title">Smart Aquaculture</h1>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false"
+        aria-controls="main-nav">☰</button>
+      <nav class="navigation" id="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="dashboard.html">Live Dashboard</a></li>
+          <li><a href="methodology.html">Methodology</a></li>
+          <li><a href="attributions.html">Attributions</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
   <main id="main-content">
-    <!-- Hero Section with background image -->
+    <!-- Hero Section -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-content">
         <h2 id="hero-title">Smart Aquaculture Filtration System</h2>
@@ -79,7 +78,6 @@
     <section class="featured-data" aria-labelledby="featured-data-title">
       <h2 id="featured-data-title">Recent Sensor Readings</h2>
       <div id="featuredReadings" class="readings-container" aria-live="polite" aria-busy="true">
-        <!-- Loading state - will be replaced by JavaScript -->
         <div class="loading-message">Loading sensor data...</div>
       </div>
     </section>
@@ -93,16 +91,19 @@
           <h3 id="prediction">Water Quality Prediction</h3>
           <p>Machine learning models forecast water quality states (Safe, Moderate, Hazardous).</p>
         </article>
+
         <article class="card" aria-labelledby="energy">
           <div class="card-icon">⚡</div>
           <h3 id="energy">Energy Optimization</h3>
           <p>Filtration and UV duty cycles adjusted dynamically to reduce energy consumption.</p>
         </article>
+
         <article class="card" aria-labelledby="monitoring">
           <div class="card-icon">📊</div>
           <h3 id="monitoring">Real-time Monitoring</h3>
           <p>IoT sensors and dashboard provide continuous water quality tracking.</p>
         </article>
+
         <article class="card" aria-labelledby="scalability">
           <div class="card-icon">🌍</div>
           <h3 id="scalability">Scalable Deployment</h3>
@@ -111,7 +112,7 @@
       </div>
     </section>
 
-    <!-- Additional content to add images as suggested by audit -->
+    <!-- Technology Showcase -->
     <section class="technology-showcase" aria-labelledby="technology-title">
       <h2 id="technology-title">Our Technology</h2>
       <div class="image-item">
@@ -125,7 +126,7 @@
       <div class="image-item">
         <img src="images/fish-farm.jpg" alt="Modern aquaculture fish farm facility" loading="lazy">
         <p>Prototype Target Environment</p>
-      </div>     
+      </div>
     </section>
   </main>
 
@@ -135,17 +136,21 @@
       <a href="attributions.html">Attributions</a> |
       <a href="contact.html">Contact Form</a> |
       <a href="form-action.html">Form Submission</a> |
-      <!-- Update this with your actual video URL -->
       <a href="https://youtube.com/your-actual-video-id" target="_blank" rel="noopener noreferrer">Video
         Demonstration</a>
     </p>
     <p class="last-updated">Last Updated: <span id="last-modified">Loading...</span></p>
   </footer>
 
-  <!-- JavaScript Modules - Only need homepage.js -->
+  <!-- Scripts -->
   <script type="module" src="scripts/homepage.js"></script>
-  
-
+  <script>
+    // Footer dynamic values
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      document.getElementById('last-modified').textContent = new Date(document.lastModified).toLocaleString();
+    });
+  </script>
 </body>
 
 </html>
