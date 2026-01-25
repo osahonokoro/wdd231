@@ -123,25 +123,66 @@ class Homepage {
     }
   }
 
-  // ✅ New method for hamburger menu  
+  // ✅ Fixed hamburger menu method  
   setupHamburgerMenu() {
     const hamburger = document.getElementById('hamburger');
     const nav = document.getElementById('main-nav');
 
     if (hamburger && nav) {
-      hamburger.addEventListener("click", () => {
+      // Add click event
+      hamburger.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevent event bubbling
         hamburger.classList.toggle("active");
         nav.classList.toggle("active");
-        console.log("Nav toggled:", nav.classList); // ✅ debug
+
+        // Add accessibility attributes
+        const isExpanded = nav.classList.contains('active');
+        hamburger.setAttribute('aria-expanded', isExpanded);
+        nav.setAttribute('aria-hidden', !isExpanded);
+
+        console.log("Hamburger toggled. Nav has 'active':", nav.classList.contains('active'));
       });
+
+      // Close menu when clicking outside on mobile
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && nav.classList.contains('active')) {
+          if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+            hamburger.classList.remove("active");
+            nav.classList.remove("active");
+            hamburger.setAttribute('aria-expanded', 'false');
+            nav.setAttribute('aria-hidden', 'true');
+          }
+        }
+      });
+
+      // Close menu when pressing Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && nav.classList.contains('active')) {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          hamburger.setAttribute('aria-expanded', 'false');
+          nav.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      // Initialize aria attributes
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-controls', 'main-nav');
+      hamburger.setAttribute('aria-label', 'Toggle navigation menu');
+      nav.setAttribute('aria-hidden', 'true');
+
+      // Debug log
+      console.log("Hamburger menu setup complete. Hamburger found:", !!hamburger, "Nav found:", !!nav);
+    } else {
+      console.error("Hamburger or navigation element not found!");
+      console.log("Looking for #hamburger and #main-nav...");
+      console.log("Found hamburger:", document.getElementById('hamburger'));
+      console.log("Found main-nav:", document.getElementById('main-nav'));
     }
   }
-
 }
 
+// Initialize on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   new Homepage();
 });
-
-
-
