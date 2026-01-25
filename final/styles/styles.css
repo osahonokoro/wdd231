@@ -151,7 +151,7 @@ header {
 /* Mobile navigation default: hidden */
 .navigation,
 #main-nav {
-    display: none;
+    display: flex;
     flex-direction: column;
     background-color: var(--navy-blue);
     position: absolute;
