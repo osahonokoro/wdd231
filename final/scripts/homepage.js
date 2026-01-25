@@ -130,7 +130,7 @@ class Homepage {
     const nav = document.getElementById('main-nav');
     const navLinks = nav ? nav.querySelectorAll("a") : [];
 
-    if (hamburger || nav) {
+    if (hamburger && nav) {
       hamburger.addEventListener("click", () => {
         hamburger.classList.toggle("active");
         nav.classList.toggle("active");

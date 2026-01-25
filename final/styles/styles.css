@@ -182,7 +182,7 @@ header {
 
     .navigation,
     #main-nav {
-        display: flex;
+        display: flex !important;
         align-items: center;
     }
 
