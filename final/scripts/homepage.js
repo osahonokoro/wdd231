@@ -124,7 +124,7 @@ class Homepage {
   }
 
   // ✅ New method for hamburger menu  
-    setupHamburgerMenu() {
+  setupHamburgerMenu() {
     const hamburger = document.getElementById('hamburger');
     const nav = document.getElementById('main-nav');
 
@@ -132,9 +132,11 @@ class Homepage {
       hamburger.addEventListener("click", () => {
         hamburger.classList.toggle("active");
         nav.classList.toggle("active");
+        console.log("Nav toggled:", nav.classList); // ✅ debug
       });
     }
   }
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
