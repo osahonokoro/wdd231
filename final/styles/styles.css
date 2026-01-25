@@ -145,6 +145,49 @@ header {
 /* Mobile navigation default: hidden */
 .navigation,
 #main-nav {
+  display: none;
+  flex-direction: column;
+  background-color: var(--navy-blue);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  z-index: 1000;
+
+  /* animation setup */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+/* Show navigation when active */
+.navigation.active,
+#main-nav.active {
+  display: flex;
+  max-height: 500px; /* enough to show menu */
+}
+
+/* Desktop navigation */
+@media (min-width: 769px) {
+  .navigation,
+  #main-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .navigation ul,
+  #main-nav ul {
+    flex-direction: row;
+  }
+
+  .hamburger {
+    display: none;
+  }
+}
+
+/* Mobile navigation default: hidden */
+.navigation {
     display: none;
     flex-direction: column;
     background-color: var(--navy-blue);
@@ -162,8 +205,7 @@ header {
 }
 
 /* Show navigation when active */
-.navigation.active,
-#main-nav.active {
+.navigation.active {
     display: flex;
     max-height: 500px;
     /* enough to show menu */
@@ -171,15 +213,12 @@ header {
 
 /* Desktop navigation */
 @media (min-width: 769px) {
-
-    .navigation,
-    #main-nav {
+    .navigation {
         display: flex;
         align-items: center;
     }
 
-    .navigation ul,
-    #main-nav ul {
+    .navigation ul {
         flex-direction: row;
     }
 
@@ -187,7 +226,6 @@ header {
         display: none;
     }
 }
-
 /* FIX: Color contrast issue for text on navy-blue background */
 .last-updated,
 .last-updated span {
