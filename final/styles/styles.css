@@ -155,7 +155,7 @@ header {
     flex-direction: column;
     background-color: var(--navy-blue);
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
     width: 100%;
     padding: 1rem;
