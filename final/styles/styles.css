@@ -143,7 +143,8 @@ header {
 }
 
 /* Mobile navigation default: hidden */
-.navigation {
+.navigation,
+#main-nav {
     display: none;
     flex-direction: column;
     background-color: var(--navy-blue);
@@ -161,7 +162,8 @@ header {
 }
 
 /* Show navigation when active */
-.navigation.active {
+.navigation.active,
+#main-nav.active {
     display: flex;
     max-height: 500px;
     /* enough to show menu */
@@ -169,12 +171,15 @@ header {
 
 /* Desktop navigation */
 @media (min-width: 769px) {
-    .navigation {
+
+    .navigation,
+    #main-nav {
         display: flex;
         align-items: center;
     }
 
-    .navigation ul {
+    .navigation ul,
+    #main-nav ul {
         flex-direction: row;
     }
 
@@ -182,6 +187,7 @@ header {
         display: none;
     }
 }
+
 /* FIX: Color contrast issue for text on navy-blue background */
 .last-updated,
 .last-updated span {
