@@ -13,6 +13,7 @@ class Homepage {
     await this.loadFeaturedReadings();
     this.setupModal();
     this.setupHamburgerMenu();
+    this.setupAnimations();
 
     // Auto-refresh every 5 seconds to simulate live updates
     setInterval(() => {
@@ -124,37 +125,20 @@ class Homepage {
     }
   }
 
-  // ✅ Fixed hamburger menu with fade-in animation
+  // ✅ Hamburger menu toggle
   setupHamburgerMenu() {
-    // Select elements
     const hamburger = document.getElementById("hamburger");
     const nav = document.getElementById("main-nav");
 
-    // Basic toggle
-    hamburger.addEventListener("click", () => {
-      nav.classList.toggle("active");
-    });
-
+    if (hamburger && nav) {
+      hamburger.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    }
   }
 
-
-    // Ensure nav is visible on desktop
-    const handleResize = () => {
-      if (window.innerWidth >= 769) {
-        nav.classList.remove("active");
-        nav.style.display = "flex";
-        navLinks.forEach((link) => {
-          link.style.opacity = "";
-          link.style.animation = "";
-        });
-      } else {
-        nav.style.display = "";
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
+  // ✅ Animations + resize handling
+  setupAnimations() {
     // Inject fadeIn keyframes
     const style = document.createElement("style");
     style.textContent = `
@@ -164,6 +148,14 @@ class Homepage {
       }
     `;
     document.head.appendChild(style);
+
+    // Reset nav state on desktop resize
+    window.addEventListener("resize", () => {
+      const nav = document.getElementById("main-nav");
+      if (window.innerWidth >= 769) {
+        nav.classList.remove("active");
+      }
+    });
   }
 }
 
