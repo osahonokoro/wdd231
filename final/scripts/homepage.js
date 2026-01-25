@@ -126,28 +126,16 @@ class Homepage {
 
   // ✅ Fixed hamburger menu with fade-in animation
   setupHamburgerMenu() {
-    const hamburger = document.getElementById('hamburger');
-    const nav = document.getElementById('main-nav');
-    const navLinks = nav ? nav.querySelectorAll("a") : [];
+    // Select elements
+    const hamburger = document.getElementById("hamburger");
+    const nav = document.getElementById("main-nav");
 
+    // Basic toggle
     hamburger.addEventListener("click", () => {
-      hamburger.classList.toggle("active");
       nav.classList.toggle("active");
-
-      // Fade-in animation for nav links
-      if (nav.classList.contains("active")) {
-        navLinks.forEach((link, index) => {
-          link.style.opacity = "0";
-          link.style.animation = `fadeIn 0.4s ease forwards ${index * 0.1 + 0.2}s`;
-        });
-      } else {
-        navLinks.forEach((link) => {
-          link.style.opacity = "";
-          link.style.animation = "";
-        });
-      }
     });
 
+  }
 
 
     // Ensure nav is visible on desktop
