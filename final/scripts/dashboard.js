@@ -1,279 +1,627 @@
-// dataHandler.js - Complete updated version
-class DataHandler {
-    static instance = null;
-    static sharedData = [];
-    static lastFetchTime = 0;
-    static CACHE_DURATION = 5000; // 5 seconds cache
-    static BASE_API_URL = 'http://localhost:3000/sensor-data';
+// dashboard.js - Updated with proper error handling
+import { DataHandler } from './dataHandler.js';
 
+class Dashboard {
     constructor() {
-        if (DataHandler.instance) {
-            return DataHandler.instance;
-        }
-        DataHandler.instance = this;
-        this.filteredData = [];
-        this.currentFilter = 'all';
+        this.dataHandler = new DataHandler();
+        this.currentTheme = localStorage.getItem('aquaculture_theme') || 'light';
+        this.chart = null;
+        this.init();
     }
 
-    async fetchSensorData() {
-        const now = Date.now();
+    async init() {
+        try {
+            this.setupEventListeners();
+            this.applyTheme();
+            this.setupHamburgerMenu();
 
-        // Return cached data if still fresh
-        if (DataHandler.sharedData.length > 0 &&
-            (now - DataHandler.lastFetchTime) < DataHandler.CACHE_DURATION) {
-            return DataHandler.sharedData;
+            // Show loading state
+            this.showLoadingState();
+
+            // Initial data load
+            await this.loadData();
+
+            // Setup auto-refresh (every 5 seconds)
+            this.setupAutoRefresh();
+
+        } catch (error) {
+            console.error('Dashboard initialization failed:', error);
+            this.showError('Failed to initialize dashboard. Please refresh the page.');
+        }
+    }
+
+    async loadData() {
+        try {
+            console.log('Loading dashboard data...');
+
+            // Fetch data
+            await this.dataHandler.fetchSensorData();
+
+            // Update all dashboard components
+            this.updateCurrentReadings();
+            this.displayReadings();
+            this.updateStats();
+            this.updateStatusSummary();
+            this.renderChart();
+            this.updateLastUpdated();
+
+            // Hide loading state
+            this.hideLoadingState();
+
+            console.log('Dashboard data loaded successfully');
+
+        } catch (error) {
+            console.error('Error loading dashboard data:', error);
+            this.showError('Unable to load sensor data. Showing simulated data instead.');
+
+            // Try to show simulated data as fallback
+            this.showSimulatedData();
+        }
+    }
+
+    showLoadingState() {
+        const readingsContainer = document.getElementById('sensorReadings');
+        const currentValues = document.getElementById('currentValues');
+
+        if (readingsContainer) {
+            readingsContainer.innerHTML = `
+                <div class="loading-message" style="text-align: center; padding: 3rem;">
+                    <p>Loading sensor data...</p>
+                    <div class="spinner"></div>
+                </div>
+            `;
+        }
+
+        if (currentValues) {
+            currentValues.innerHTML = `
+                <div class="loading-message" style="text-align: center;">
+                    <p>Loading current values...</p>
+                </div>
+            `;
+        }
+    }
+
+    hideLoadingState() {
+        // Remove any loading messages
+        const loadingMessages = document.querySelectorAll('.loading-message');
+        loadingMessages.forEach(msg => msg.remove());
+    }
+
+    showSimulatedData() {
+        console.log('Showing simulated data as fallback');
+
+        // Generate and display simulated data
+        const simulatedData = this.dataHandler.processReadings(true);
+        this.dataHandler.sharedData = simulatedData;
+
+        this.updateCurrentReadings();
+        this.displayReadings();
+        this.updateStats();
+        this.updateStatusSummary();
+        this.renderChart();
+        this.updateLastUpdated();
+
+        // Show notification about simulated data
+        this.showNotification('Using simulated data. Real-time data unavailable.', 'warning');
+    }
+
+    displayReadings() {
+        const container = document.getElementById('sensorReadings');
+        if (!container) {
+            console.error('sensorReadings container not found');
+            return;
         }
 
         try {
-            console.log('Fetching fresh sensor data...');
-            const response = await fetch(DataHandler.BASE_API_URL);
+            // Get readings (use simulated if real data not available)
+            const readings = this.dataHandler.getReadings(15);
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (readings.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <p>No sensor readings available.</p>
+                        <button id="retryLoad" class="control-btn">Retry Loading</button>
+                    </div>
+                `;
+
+                document.getElementById('retryLoad')?.addEventListener('click', () => {
+                    this.loadData();
+                });
+                return;
             }
 
-            const rawData = await response.json();
-            DataHandler.sharedData = this.processData(rawData);
-            DataHandler.lastFetchTime = now;
+            const html = readings.map(reading => `
+                <article class="sensor-reading" data-id="${reading.id}" data-status="${reading.status}">
+                    <h4>${reading.location}</h4>
+                    <div class="reading-details">
+                        <p><strong>Sensor ID:</strong> ${reading.sensor_id}</p>
+                        <p><strong>Temperature:</strong> <span class="value">${reading.temperature}°C</span></p>
+                        <p><strong>pH Level:</strong> <span class="value">${reading.ph}</span></p>
+                        <p><strong>Ammonia:</strong> <span class="value">${reading.ammonia} mg/L</span></p>
+                        <p><strong>Oxygen:</strong> <span class="value">${reading.dissolved_oxygen} mg/L</span></p>
+                        <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
+                        <p><strong>Time:</strong> ${reading.formattedTime || new Date(reading.timestamp).toLocaleTimeString()}</p>
+                    </div>
+                    <button class="details-btn" data-id="${reading.id}" aria-label="View details for ${reading.location}">
+                        View Details
+                    </button>
+                </article>
+            `).join('');
 
-            console.log(`Fetched ${DataHandler.sharedData.length} sensor readings`);
-            return DataHandler.sharedData;
+            container.innerHTML = html;
+            this.setupDetailButtons();
+
         } catch (error) {
-            console.error('Error fetching sensor data:', error);
+            console.error('Error displaying readings:', error);
+            container.innerHTML = `
+                <div class="error-message">
+                    <p>Error displaying sensor readings: ${error.message}</p>
+                    <button id="retryDisplay" class="control-btn">Try Again</button>
+                </div>
+            `;
 
-            // If we have cached data, return it even if stale
-            if (DataHandler.sharedData.length > 0) {
-                console.log('Returning cached data due to fetch error');
-                return DataHandler.sharedData;
-            }
-
-            // If no cached data and fetch failed, return simulated data
-            console.log('Generating simulated data');
-            return this.generateSimulatedData();
+            document.getElementById('retryDisplay')?.addEventListener('click', () => {
+                this.displayReadings();
+            });
         }
     }
 
-    processData(rawData) {
-        return rawData.map((item, index) => ({
-            id: item.id || index + 1,
-            sensor_id: item.sensor_id || `SENSOR_${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`,
-            location: item.location || this.getRandomLocation(),
-            temperature: parseFloat(item.temperature) || this.getRandomValue(20, 30, 1),
-            ph: parseFloat(item.ph) || this.getRandomValue(6.5, 8.5, 1),
-            ammonia: parseFloat(item.ammonia) || this.getRandomValue(0, 2, 2),
-            dissolved_oxygen: parseFloat(item.dissolved_oxygen) || this.getRandomValue(4, 10, 1),
-            timestamp: item.timestamp || new Date().toISOString(),
-            formattedTime: item.formattedTime || new Date().toLocaleTimeString(),
-            status: item.status || this.calculateStatus({
-                temperature: parseFloat(item.temperature) || this.getRandomValue(20, 30, 1),
-                ph: parseFloat(item.ph) || this.getRandomValue(6.5, 8.5, 1),
-                dissolved_oxygen: parseFloat(item.dissolved_oxygen) || this.getRandomValue(4, 10, 1)
-            })
-        }));
+    setupDetailButtons() {
+        document.querySelectorAll('.details-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const readingId = parseInt(e.target.dataset.id);
+                this.showReadingDetails(readingId);
+            });
+        });
     }
 
-    generateSimulatedData() {
-        const locations = ['Main Tank', 'Nursery Pond', 'Grow-out Pond', 'Feeding Area', 'Filtration Unit'];
-        const data = [];
+    showReadingDetails(readingId) {
+        const readings = this.dataHandler.getAllReadings();
+        const reading = readings.find(r => r.id === readingId);
 
-        // Generate data for each location (last 24 hours)
-        for (let i = 0; i < 50; i++) {
-            const location = locations[Math.floor(Math.random() * locations.length)];
-            const temperature = this.getRandomValue(20, 30, 1);
-            const ph = this.getRandomValue(6.5, 8.5, 1);
-            const ammonia = this.getRandomValue(0, 2, 2);
-            const dissolved_oxygen = this.getRandomValue(4, 10, 1);
+        if (!reading) {
+            this.showNotification('Reading details not found', 'error');
+            return;
+        }
 
-            // Create timestamp (last 24 hours)
-            const timestamp = new Date();
-            timestamp.setHours(timestamp.getHours() - Math.random() * 24);
+        // Create or get modal
+        let modal = document.getElementById('readingModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'readingModal';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="close-btn" aria-label="Close modal">&times;</button>
+                    <div id="modalBody"></div>
+                </div>
+            `;
+            document.body.appendChild(modal);
 
-            data.push({
-                id: i + 1,
-                sensor_id: `SENSOR_${(i % 5 + 1).toString().padStart(3, '0')}`,
-                location: location,
-                temperature: temperature,
-                ph: ph,
-                ammonia: ammonia,
-                dissolved_oxygen: dissolved_oxygen,
-                timestamp: timestamp.toISOString(),
-                formattedTime: timestamp.toLocaleTimeString(),
-                status: this.calculateStatus({ temperature, ph, dissolved_oxygen })
+            // Setup modal close functionality
+            modal.querySelector('.close-btn').addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
             });
         }
 
-        // Sort by timestamp (newest first)
-        data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        // Populate modal content
+        const modalBody = document.getElementById('modalBody');
+        modalBody.innerHTML = `
+            <h3 id="modalTitle">${reading.location} - Detailed Reading</h3>
+            <div class="modal-details">
+                <p><strong>Sensor ID:</strong> ${reading.sensor_id}</p>
+                <p><strong>Location:</strong> ${reading.location}</p>
+                <p><strong>Temperature:</strong> ${reading.temperature}°C</p>
+                <p><strong>pH Level:</strong> ${reading.ph}</p>
+                <p><strong>Ammonia:</strong> ${reading.ammonia} mg/L</p>
+                <p><strong>Dissolved Oxygen:</strong> ${reading.dissolved_oxygen} mg/L</p>
+                <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
+                <p><strong>Timestamp:</strong> ${reading.formattedTime || new Date(reading.timestamp).toLocaleString()}</p>
+            </div>
+        `;
 
-        return data;
+        modal.style.display = 'block';
     }
 
-    getRandomLocation() {
-        const locations = ['Main Tank', 'Nursery Pond', 'Grow-out Pond', 'Feeding Area', 'Filtration Unit'];
-        return locations[Math.floor(Math.random() * locations.length)];
-    }
+    updateCurrentReadings() {
+        const container = document.getElementById('currentValues');
+        if (!container) return;
 
-    getRandomValue(min, max, decimals = 1) {
-        const factor = Math.pow(10, decimals);
-        return Math.round((Math.random() * (max - min) + min) * factor) / factor;
-    }
+        try {
+            const currentReadings = this.dataHandler.getCurrentReadings();
 
-    calculateStatus(reading) {
-        if (reading.ph < 6.5 || reading.ph > 8.5) {
-            return 'danger';
-        }
-        if (reading.dissolved_oxygen < 5 || reading.temperature > 28) {
-            return 'warning';
-        }
-        return 'normal';
-    }
-
-    // Get readings with optional count and shuffle
-    getReadings(count = null, shuffle = false) {
-        let readings = [...DataHandler.sharedData];
-
-        if (shuffle) {
-            readings = readings.sort(() => Math.random() - 0.5);
-        }
-
-        if (count && count > 0) {
-            return readings.slice(0, count);
-        }
-
-        return readings;
-    }
-
-    // Get the most recent reading
-    getLatestReading() {
-        if (DataHandler.sharedData.length === 0) return null;
-
-        // Return the first item (should be newest since we sort by timestamp)
-        return DataHandler.sharedData[0];
-    }
-
-    // Get current readings (most recent for each sensor/location)
-    getCurrentReadings() {
-        if (DataHandler.sharedData.length === 0) return [];
-
-        const latestByLocation = new Map();
-
-        DataHandler.sharedData.forEach(reading => {
-            const location = reading.location || reading.sensor_id;
-
-            if (!latestByLocation.has(location) ||
-                new Date(reading.timestamp) > new Date(latestByLocation.get(location).timestamp)) {
-                latestByLocation.set(location, reading);
+            if (currentReadings.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <p>No current readings available.</p>
+                    </div>
+                `;
+                return;
             }
-        });
 
-        return Array.from(latestByLocation.values());
-    }
+            // Show first 6 current readings
+            const readingsToShow = currentReadings.slice(0, 6);
 
-    // Get all readings (unfiltered)
-    getAllReadings() {
-        return DataHandler.sharedData;
-    }
+            const html = readingsToShow.map(reading => `
+                <div class="current-value">
+                    <span class="location">${reading.location}</span>
+                    <div class="values">
+                        <div class="value-row">
+                            <span class="label">Temp:</span>
+                            <span class="value">${reading.temperature}°C</span>
+                        </div>
+                        <div class="value-row">
+                            <span class="label">pH:</span>
+                            <span class="value">${reading.ph}</span>
+                        </div>
+                        <div class="value-row">
+                            <span class="label">O₂:</span>
+                            <span class="value">${reading.dissolved_oxygen} mg/L</span>
+                        </div>
+                        <div class="status-indicator status-${reading.status}">
+                            ${reading.status.toUpperCase()}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
 
-    // Process readings for display
-    processReadings(simulate = false) {
-        if (simulate || DataHandler.sharedData.length === 0) {
-            return this.generateSimulatedData();
+            container.innerHTML = html;
+
+        } catch (error) {
+            console.error('Error updating current readings:', error);
+            container.innerHTML = `
+                <div class="error-message">
+                    <p>Unable to update current values.</p>
+                </div>
+            `;
         }
-        return DataHandler.sharedData;
     }
 
-    // Filter data by parameter
-    filterData(filterType = 'all', value = null) {
-        this.currentFilter = filterType;
+    updateStats() {
+        try {
+            const stats = this.dataHandler.getStats();
 
-        if (filterType === 'all') {
-            this.filteredData = [...DataHandler.sharedData];
-            return this.filteredData;
+            // Update stats display if elements exist
+            const updateElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = value;
+            };
+
+            updateElement('normalCount', stats.normal);
+            updateElement('warningCount', stats.warning);
+            updateElement('dangerCount', stats.danger);
+            updateElement('totalReadings', stats.total);
+
+        } catch (error) {
+            console.error('Error updating stats:', error);
+        }
+    }
+
+    updateStatusSummary() {
+        const container = document.getElementById('statusSummary');
+        if (!container) return;
+
+        try {
+            const stats = this.dataHandler.getStats();
+
+            const html = `
+                <div class="status-item normal">
+                    <span class="status-dot"></span>
+                    <span>Normal: ${stats.normal}</span>
+                </div>
+                <div class="status-item warning">
+                    <span class="status-dot"></span>
+                    <span>Warning: ${stats.warning}</span>
+                </div>
+                <div class="status-item danger">
+                    <span class="status-dot"></span>
+                    <span>Danger: ${stats.danger}</span>
+                </div>
+            `;
+
+            container.innerHTML = html;
+
+        } catch (error) {
+            console.error('Error updating status summary:', error);
+        }
+    }
+
+    updateLastUpdated() {
+        const container = document.getElementById('lastUpdated');
+        if (container) {
+            container.textContent = `Last Updated: ${new Date().toLocaleTimeString()}`;
+        }
+    }
+
+    setupEventListeners() {
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => this.toggleTheme());
         }
 
-        this.filteredData = DataHandler.sharedData.filter(reading => {
-            switch (filterType) {
-                case 'temperature':
-                    return value === 'high' ? reading.temperature > 28 : reading.temperature < 20;
-                case 'ph':
-                    return value === 'high' ? reading.ph > 8.5 : reading.ph < 6.5;
-                case 'oxygen':
-                    return reading.dissolved_oxygen < 5;
-                case 'status':
-                    return reading.status === value;
-                case 'location':
-                    return reading.location === value;
-                default:
-                    return true;
-            }
-        });
+        // Refresh button
+        const refreshBtn = document.getElementById('refreshData');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.loadData();
+                this.showNotification('Refreshing data...', 'info');
+            });
+        }
 
-        return this.filteredData;
+        // Filter form
+        const filterForm = document.getElementById('filterForm');
+        if (filterForm) {
+            filterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.applyFilter();
+            });
+        }
+
+        // Parameter filter
+        const paramFilter = document.getElementById('parameterFilter');
+        if (paramFilter) {
+            paramFilter.addEventListener('change', () => this.applyFilter());
+        }
     }
 
-    // Get filtered readings
-    getFilteredReadings() {
-        return this.filteredData.length > 0 ? this.filteredData : DataHandler.sharedData;
+    setupAutoRefresh() {
+        // Clear any existing interval
+        if (this.refreshInterval) {
+            clearInterval(this.refreshInterval);
+        }
+
+        // Set up new interval (every 5 seconds)
+        this.refreshInterval = setInterval(() => {
+            this.refreshData();
+        }, 5000);
     }
 
-    // Force refresh data (ignore cache)
     async refreshData() {
-        DataHandler.lastFetchTime = 0;
-        return await this.fetchSensorData();
+        try {
+            console.log('Auto-refreshing dashboard data...');
+
+            // Refresh data but don't show loading state
+            await this.dataHandler.refreshData();
+
+            // Update displays
+            this.updateCurrentReadings();
+            this.displayReadings();
+            this.updateStats();
+            this.updateStatusSummary();
+            this.renderChart();
+            this.updateLastUpdated();
+
+        } catch (error) {
+            console.error('Error during auto-refresh:', error);
+            // Don't show error for auto-refresh failures
+        }
     }
 
-    // Get stats summary
-    getStats() {
-        const normal = DataHandler.sharedData.filter(r => r.status === 'normal').length;
-        const warning = DataHandler.sharedData.filter(r => r.status === 'warning').length;
-        const danger = DataHandler.sharedData.filter(r => r.status === 'danger').length;
-
-        return {
-            normal,
-            warning,
-            danger,
-            total: DataHandler.sharedData.length,
-            normalPercentage: DataHandler.sharedData.length > 0 ?
-                Math.round((normal / DataHandler.sharedData.length) * 100) : 0
-        };
+    toggleTheme() {
+        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('aquaculture_theme', this.currentTheme);
+        this.applyTheme();
+        this.showNotification(`Theme changed to ${this.currentTheme}`, 'info');
     }
 
-    // Get chart data
-    getChartData(limit = 10) {
-        const readings = this.getReadings(limit);
+    applyTheme() {
+        document.body.setAttribute('data-theme', this.currentTheme);
+    }
 
-        return {
-            labels: readings.map(r => r.formattedTime),
-            datasets: [
-                {
-                    label: 'Temperature (°C)',
-                    data: readings.map(r => r.temperature),
-                    borderColor: '#f44336',
-                    backgroundColor: 'rgba(244, 67, 54, 0.1)',
-                    tension: 0.4
-                },
-                {
-                    label: 'pH Level',
-                    data: readings.map(r => r.ph),
-                    borderColor: '#2196F3',
-                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
-                    tension: 0.4
-                },
-                {
-                    label: 'Oxygen (mg/L)',
-                    data: readings.map(r => r.dissolved_oxygen),
-                    borderColor: '#4CAF50',
-                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                    tension: 0.4
+    applyFilter() {
+        try {
+            const filterValue = document.getElementById('parameterFilter')?.value || 'all';
+            this.dataHandler.filterData(filterValue === 'all' ? 'all' : 'temperature', filterValue);
+            this.displayReadings();
+            this.renderChart();
+            this.showNotification(`Filter applied: ${filterValue}`, 'info');
+        } catch (error) {
+            console.error('Error applying filter:', error);
+            this.showNotification('Error applying filter', 'error');
+        }
+    }
+
+    renderChart() {
+        const ctx = document.getElementById('sensorChart');
+        if (!ctx) return;
+
+        try {
+            const chartData = this.dataHandler.getChartData(10);
+
+            // Destroy existing chart if it exists
+            if (this.chart) {
+                this.chart.destroy();
+            }
+
+            this.chart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: getComputedStyle(document.body).getPropertyValue('--dark-gray'),
+                                font: {
+                                    family: "'Roboto', sans-serif"
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Sensor Trends (Last 10 Readings)',
+                            color: getComputedStyle(document.body).getPropertyValue('--deep-blue'),
+                            font: {
+                                family: "'Roboto', sans-serif",
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            },
+                            ticks: {
+                                color: getComputedStyle(document.body).getPropertyValue('--dark-gray'),
+                                maxRotation: 45
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            },
+                            ticks: {
+                                color: getComputedStyle(document.body).getPropertyValue('--dark-gray')
+                            }
+                        }
+                    }
                 }
-            ]
-        };
+            });
+
+        } catch (error) {
+            console.error('Error rendering chart:', error);
+            ctx.innerHTML = `
+                <div class="error-message">
+                    <p>Unable to load chart: ${error.message}</p>
+                </div>
+            `;
+        }
+    }
+
+    showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.innerHTML = `
+            <p>${message}</p>
+            <button onclick="this.parentElement.remove()" class="control-btn">Dismiss</button>
+        `;
+
+        const main = document.querySelector('main');
+        if (main) {
+            main.prepend(errorDiv);
+            setTimeout(() => {
+                if (errorDiv.parentElement) {
+                    errorDiv.remove();
+                }
+            }, 10000);
+        }
+    }
+
+    showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <span>${message}</span>
+            <button class="close-notification">&times;</button>
+        `;
+
+        // Add styles if not already present
+        if (!document.querySelector('#notification-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'notification-styles';
+            styles.textContent = `
+                .notification {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    color: white;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 500;
+                    z-index: 9999;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    min-width: 300px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    animation: slideIn 0.3s ease;
+                }
+                .notification-info { background-color: var(--deep-blue); }
+                .notification-success { background-color: var(--green); }
+                .notification-warning { background-color: var(--warning); }
+                .notification-error { background-color: var(--danger); }
+                .close-notification {
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    margin-left: 1rem;
+                    padding: 0;
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+
+        document.body.appendChild(notification);
+
+        // Setup close button
+        notification.querySelector('.close-notification').addEventListener('click', () => {
+            notification.remove();
+        });
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 5000);
+    }
+
+    setupHamburgerMenu() {
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('main-nav');
+
+        if (hamburger && nav) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                nav.classList.toggle('active');
+            });
+        }
+    }
+
+    // Cleanup method
+    destroy() {
+        if (this.refreshInterval) {
+            clearInterval(this.refreshInterval);
+        }
+        if (this.chart) {
+            this.chart.destroy();
+        }
     }
 }
 
-// Export for ES6 modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { DataHandler };
-}
+// Initialize dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const dashboard = new Dashboard();
 
-export { DataHandler };
+    // Make dashboard accessible for debugging
+    window.dashboard = dashboard;
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        dashboard.destroy();
+    });
+});
