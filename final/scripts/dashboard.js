@@ -1,4 +1,4 @@
-// dashboard.js - Updated with proper error handling
+// scripts/dashboard.js
 import { DataHandler } from './dataHandler.js';
 
 class Dashboard {
@@ -67,7 +67,6 @@ class Dashboard {
             readingsContainer.innerHTML = `
                 <div class="loading-message" style="text-align: center; padding: 3rem;">
                     <p>Loading sensor data...</p>
-                    <div class="spinner"></div>
                 </div>
             `;
         }
@@ -82,17 +81,12 @@ class Dashboard {
     }
 
     hideLoadingState() {
-        // Remove any loading messages
         const loadingMessages = document.querySelectorAll('.loading-message');
         loadingMessages.forEach(msg => msg.remove());
     }
 
     showSimulatedData() {
         console.log('Showing simulated data as fallback');
-
-        // Generate and display simulated data
-        const simulatedData = this.dataHandler.processReadings(true);
-        this.dataHandler.sharedData = simulatedData;
 
         this.updateCurrentReadings();
         this.displayReadings();
@@ -101,7 +95,6 @@ class Dashboard {
         this.renderChart();
         this.updateLastUpdated();
 
-        // Show notification about simulated data
         this.showNotification('Using simulated data. Real-time data unavailable.', 'warning');
     }
 
@@ -113,7 +106,6 @@ class Dashboard {
         }
 
         try {
-            // Get readings (use simulated if real data not available)
             const readings = this.dataHandler.getReadings(15);
 
             if (readings.length === 0) {
@@ -140,7 +132,7 @@ class Dashboard {
                         <p><strong>Ammonia:</strong> <span class="value">${reading.ammonia} mg/L</span></p>
                         <p><strong>Oxygen:</strong> <span class="value">${reading.dissolved_oxygen} mg/L</span></p>
                         <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
-                        <p><strong>Time:</strong> ${reading.formattedTime || new Date(reading.timestamp).toLocaleTimeString()}</p>
+                        <p><strong>Time:</strong> ${reading.formattedTime}</p>
                     </div>
                     <button class="details-btn" data-id="${reading.id}" aria-label="View details for ${reading.location}">
                         View Details
@@ -155,7 +147,7 @@ class Dashboard {
             console.error('Error displaying readings:', error);
             container.innerHTML = `
                 <div class="error-message">
-                    <p>Error displaying sensor readings: ${error.message}</p>
+                    <p>Error displaying sensor readings</p>
                     <button id="retryDisplay" class="control-btn">Try Again</button>
                 </div>
             `;
@@ -184,7 +176,6 @@ class Dashboard {
             return;
         }
 
-        // Create or get modal
         let modal = document.getElementById('readingModal');
         if (!modal) {
             modal = document.createElement('div');
@@ -198,7 +189,6 @@ class Dashboard {
             `;
             document.body.appendChild(modal);
 
-            // Setup modal close functionality
             modal.querySelector('.close-btn').addEventListener('click', () => {
                 modal.style.display = 'none';
             });
@@ -210,7 +200,6 @@ class Dashboard {
             });
         }
 
-        // Populate modal content
         const modalBody = document.getElementById('modalBody');
         modalBody.innerHTML = `
             <h3 id="modalTitle">${reading.location} - Detailed Reading</h3>
@@ -222,7 +211,7 @@ class Dashboard {
                 <p><strong>Ammonia:</strong> ${reading.ammonia} mg/L</p>
                 <p><strong>Dissolved Oxygen:</strong> ${reading.dissolved_oxygen} mg/L</p>
                 <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
-                <p><strong>Timestamp:</strong> ${reading.formattedTime || new Date(reading.timestamp).toLocaleString()}</p>
+                <p><strong>Timestamp:</strong> ${reading.formattedTime}</p>
             </div>
         `;
 
@@ -245,7 +234,6 @@ class Dashboard {
                 return;
             }
 
-            // Show first 6 current readings
             const readingsToShow = currentReadings.slice(0, 6);
 
             const html = readingsToShow.map(reading => `
@@ -287,7 +275,6 @@ class Dashboard {
         try {
             const stats = this.dataHandler.getStats();
 
-            // Update stats display if elements exist
             const updateElement = (id, value) => {
                 const element = document.getElementById(id);
                 if (element) element.textContent = value;
@@ -340,13 +327,11 @@ class Dashboard {
     }
 
     setupEventListeners() {
-        // Theme toggle
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             themeToggle.addEventListener('click', () => this.toggleTheme());
         }
 
-        // Refresh button
         const refreshBtn = document.getElementById('refreshData');
         if (refreshBtn) {
             refreshBtn.addEventListener('click', () => {
@@ -355,7 +340,6 @@ class Dashboard {
             });
         }
 
-        // Filter form
         const filterForm = document.getElementById('filterForm');
         if (filterForm) {
             filterForm.addEventListener('submit', (e) => {
@@ -364,7 +348,6 @@ class Dashboard {
             });
         }
 
-        // Parameter filter
         const paramFilter = document.getElementById('parameterFilter');
         if (paramFilter) {
             paramFilter.addEventListener('change', () => this.applyFilter());
@@ -372,12 +355,10 @@ class Dashboard {
     }
 
     setupAutoRefresh() {
-        // Clear any existing interval
         if (this.refreshInterval) {
             clearInterval(this.refreshInterval);
         }
 
-        // Set up new interval (every 5 seconds)
         this.refreshInterval = setInterval(() => {
             this.refreshData();
         }, 5000);
@@ -387,10 +368,8 @@ class Dashboard {
         try {
             console.log('Auto-refreshing dashboard data...');
 
-            // Refresh data but don't show loading state
             await this.dataHandler.refreshData();
 
-            // Update displays
             this.updateCurrentReadings();
             this.displayReadings();
             this.updateStats();
@@ -400,7 +379,6 @@ class Dashboard {
 
         } catch (error) {
             console.error('Error during auto-refresh:', error);
-            // Don't show error for auto-refresh failures
         }
     }
 
@@ -435,7 +413,6 @@ class Dashboard {
         try {
             const chartData = this.dataHandler.getChartData(10);
 
-            // Destroy existing chart if it exists
             if (this.chart) {
                 this.chart.destroy();
             }
@@ -466,36 +443,12 @@ class Dashboard {
                                 weight: 'bold'
                             }
                         }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            },
-                            ticks: {
-                                color: getComputedStyle(document.body).getPropertyValue('--dark-gray'),
-                                maxRotation: 45
-                            }
-                        },
-                        y: {
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            },
-                            ticks: {
-                                color: getComputedStyle(document.body).getPropertyValue('--dark-gray')
-                            }
-                        }
                     }
                 }
             });
 
         } catch (error) {
             console.error('Error rendering chart:', error);
-            ctx.innerHTML = `
-                <div class="error-message">
-                    <p>Unable to load chart: ${error.message}</p>
-                </div>
-            `;
         }
     }
 
@@ -519,7 +472,6 @@ class Dashboard {
     }
 
     showNotification(message, type = 'info') {
-        // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         notification.innerHTML = `
@@ -527,62 +479,12 @@ class Dashboard {
             <button class="close-notification">&times;</button>
         `;
 
-        // Add styles if not already present
-        if (!document.querySelector('#notification-styles')) {
-            const styles = document.createElement('style');
-            styles.id = 'notification-styles';
-            styles.textContent = `
-                .notification {
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    padding: 1rem 1.5rem;
-                    border-radius: 8px;
-                    color: white;
-                    font-family: 'Roboto', sans-serif;
-                    font-weight: 500;
-                    z-index: 9999;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    min-width: 300px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                    animation: slideIn 0.3s ease;
-                }
-                .notification-info { background-color: var(--deep-blue); }
-                .notification-success { background-color: var(--green); }
-                .notification-warning { background-color: var(--warning); }
-                .notification-error { background-color: var(--danger); }
-                .close-notification {
-                    background: none;
-                    border: none;
-                    color: white;
-                    font-size: 1.5rem;
-                    cursor: pointer;
-                    margin-left: 1rem;
-                    padding: 0;
-                    width: 24px;
-                    height: 24px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-            `;
-            document.head.appendChild(styles);
-        }
-
         document.body.appendChild(notification);
 
-        // Setup close button
         notification.querySelector('.close-notification').addEventListener('click', () => {
             notification.remove();
         });
 
-        // Auto-remove after 5 seconds
         setTimeout(() => {
             if (notification.parentElement) {
                 notification.remove();
@@ -602,7 +504,6 @@ class Dashboard {
         }
     }
 
-    // Cleanup method
     destroy() {
         if (this.refreshInterval) {
             clearInterval(this.refreshInterval);
@@ -613,14 +514,11 @@ class Dashboard {
     }
 }
 
-// Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     const dashboard = new Dashboard();
 
-    // Make dashboard accessible for debugging
     window.dashboard = dashboard;
 
-    // Cleanup on page unload
     window.addEventListener('beforeunload', () => {
         dashboard.destroy();
     });

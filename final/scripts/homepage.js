@@ -1,3 +1,4 @@
+// scripts/homepage.js
 import { DataHandler } from './dataHandler.js';
 
 class Homepage {
@@ -12,20 +13,25 @@ class Homepage {
     this.setupModal();
     this.setupHamburgerMenu();
 
-    // Auto-refresh every 5 seconds to simulate live updates
+    // Auto-refresh every 5 seconds
     setInterval(() => {
-      this.displayFeaturedReadings(this.dataHandler.getReadings(6, true));
+      this.refreshFeaturedReadings();
     }, 5000);
   }
 
   async loadFeaturedReadings() {
     try {
-      this.readings = await this.dataHandler.fetchSensorData();
-      this.displayFeaturedReadings(this.dataHandler.getReadings(6, true));
+      await this.dataHandler.fetchSensorData();
+      this.refreshFeaturedReadings();
     } catch (error) {
       console.error('Error loading featured readings:', error);
       this.showError('Unable to load sensor data. Please try again later.');
     }
+  }
+
+  refreshFeaturedReadings() {
+    const currentReadings = this.dataHandler.getCurrentReadings();
+    this.displayFeaturedReadings(currentReadings.slice(0, 6));
   }
 
   displayFeaturedReadings(readings) {
@@ -92,7 +98,8 @@ class Homepage {
   showReadingDetails(readingId) {
     const modal = document.getElementById('detailsModal');
     const modalBody = document.getElementById('modalBody');
-    const reading = this.readings.find(r => r.id === readingId);
+    const allReadings = this.dataHandler.getAllReadings();
+    const reading = allReadings.find(r => r.id === readingId);
 
     if (reading) {
       modalBody.innerHTML = `
@@ -123,66 +130,19 @@ class Homepage {
     }
   }
 
-  // ✅ Fixed hamburger menu method  
   setupHamburgerMenu() {
     const hamburger = document.getElementById('hamburger');
     const nav = document.getElementById('main-nav');
 
     if (hamburger && nav) {
-      // Add click event
-      hamburger.addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevent event bubbling
+      hamburger.addEventListener("click", () => {
         hamburger.classList.toggle("active");
         nav.classList.toggle("active");
-
-        // Add accessibility attributes
-        const isExpanded = nav.classList.contains('active');
-        hamburger.setAttribute('aria-expanded', isExpanded);
-        nav.setAttribute('aria-hidden', !isExpanded);
-
-        console.log("Hamburger toggled. Nav has 'active':", nav.classList.contains('active'));
       });
-
-      // Close menu when clicking outside on mobile
-      document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && nav.classList.contains('active')) {
-          if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-            hamburger.classList.remove("active");
-            nav.classList.remove("active");
-            hamburger.setAttribute('aria-expanded', 'false');
-            nav.setAttribute('aria-hidden', 'true');
-          }
-        }
-      });
-
-      // Close menu when pressing Escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && nav.classList.contains('active')) {
-          hamburger.classList.remove("active");
-          nav.classList.remove("active");
-          hamburger.setAttribute('aria-expanded', 'false');
-          nav.setAttribute('aria-hidden', 'true');
-        }
-      });
-
-      // Initialize aria attributes
-      hamburger.setAttribute('aria-expanded', 'false');
-      hamburger.setAttribute('aria-controls', 'main-nav');
-      hamburger.setAttribute('aria-label', 'Toggle navigation menu');
-      nav.setAttribute('aria-hidden', 'true');
-
-      // Debug log
-      console.log("Hamburger menu setup complete. Hamburger found:", !!hamburger, "Nav found:", !!nav);
-    } else {
-      console.error("Hamburger or navigation element not found!");
-      console.log("Looking for #hamburger and #main-nav...");
-      console.log("Found hamburger:", document.getElementById('hamburger'));
-      console.log("Found main-nav:", document.getElementById('main-nav'));
     }
   }
 }
 
-// Initialize on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   new Homepage();
 });
