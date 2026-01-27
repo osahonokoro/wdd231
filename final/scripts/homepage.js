@@ -13,25 +13,20 @@ class Homepage {
     this.setupModal();
     this.setupHamburgerMenu();
 
-    // Auto-refresh every 5 seconds
-    setInterval(() => {
-      this.refreshFeaturedReadings();
+    // ✅ Auto-refresh every 5 seconds
+    setInterval(async () => {
+      await this.loadFeaturedReadings(true);
     }, 5000);
   }
 
-  async loadFeaturedReadings() {
+  async loadFeaturedReadings(forceRefresh = false) {
     try {
-      await this.dataHandler.fetchSensorData();
-      this.refreshFeaturedReadings();
+      this.readings = await this.dataHandler.fetchSensorData(forceRefresh);
+      this.displayFeaturedReadings(this.dataHandler.getReadings(6, true));
     } catch (error) {
       console.error('Error loading featured readings:', error);
       this.showError('Unable to load sensor data. Please try again later.');
     }
-  }
-
-  refreshFeaturedReadings() {
-    const currentReadings = this.dataHandler.getCurrentReadings();
-    this.displayFeaturedReadings(currentReadings.slice(0, 6));
   }
 
   displayFeaturedReadings(readings) {
@@ -39,16 +34,16 @@ class Homepage {
     if (!container) return;
 
     const html = readings.map(reading => `
-            <article class="sensor-reading featured" aria-label="Sensor reading for ${reading.location}">
-                <h4>${reading.location}</h4>
-                <p><strong>Temp:</strong> <span class="value">${reading.temperature}°C</span></p>
-                <p><strong>pH:</strong> <span class="value">${reading.ph}</span></p>
-                <p><strong>Oxygen:</strong> <span class="value">${reading.dissolved_oxygen} mg/L</span></p>
-                <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status}</span></p>
-                <p><strong>Time:</strong> ${reading.formattedTime}</p>
-                <button class="details-btn" data-id="${reading.id}" aria-label="View details for ${reading.location}">Details</button>
-            </article>
-        `).join('');
+      <article class="sensor-reading featured" aria-label="Sensor reading for ${reading.location}">
+        <h4>${reading.location}</h4>
+        <p><strong>Temp:</strong> <span class="value">${reading.temperature}°C</span></p>
+        <p><strong>pH:</strong> <span class="value">${reading.ph}</span></p>
+        <p><strong>Oxygen:</strong> <span class="value">${reading.dissolved_oxygen} mg/L</span></p>
+        <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status}</span></p>
+        <p><strong>Time:</strong> ${reading.formattedTime}</p>
+        <button class="details-btn" data-id="${reading.id}" aria-label="View details for ${reading.location}">Details</button>
+      </article>
+    `).join('');
 
     container.innerHTML = html;
     this.setupDetailButtons();
@@ -71,13 +66,12 @@ class Homepage {
       modal.setAttribute('role', 'dialog');
       modal.setAttribute('aria-modal', 'true');
       modal.setAttribute('aria-labelledby', 'modalBody');
-
       modal.innerHTML = `
-                <div class="modal-content">
-                    <button class="close-btn" aria-label="Close details modal">&times;</button>
-                    <div id="modalBody"></div>
-                </div>
-            `;
+        <div class="modal-content">
+          <button class="close-btn" aria-label="Close details modal">&times;</button>
+          <div id="modalBody"></div>
+        </div>
+      `;
       document.body.appendChild(modal);
     }
 
@@ -98,22 +92,21 @@ class Homepage {
   showReadingDetails(readingId) {
     const modal = document.getElementById('detailsModal');
     const modalBody = document.getElementById('modalBody');
-    const allReadings = this.dataHandler.getAllReadings();
-    const reading = allReadings.find(r => r.id === readingId);
+    const reading = this.readings.find(r => r.id === readingId);
 
     if (reading) {
       modalBody.innerHTML = `
-                <h3>${reading.location} - Sensor Details</h3>
-                <div class="modal-details">
-                    <p><strong>Sensor ID:</strong> ${reading.sensor_id}</p>
-                    <p><strong>Temperature:</strong> ${reading.temperature}°C</p>
-                    <p><strong>pH Level:</strong> ${reading.ph}</p>
-                    <p><strong>Ammonia:</strong> ${reading.ammonia} mg/L</p>
-                    <p><strong>Dissolved Oxygen:</strong> ${reading.dissolved_oxygen} mg/L</p>
-                    <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
-                    <p><strong>Time:</strong> ${reading.formattedTime}</p>
-                </div>
-            `;
+        <h3>${reading.location} - Sensor Details</h3>
+        <div class="modal-details">
+          <p><strong>Sensor ID:</strong> ${reading.sensor_id}</p>
+          <p><strong>Temperature:</strong> ${reading.temperature}°C</p>
+          <p><strong>pH Level:</strong> ${reading.ph}</p>
+          <p><strong>Ammonia:</strong> ${reading.ammonia} mg/L</p>
+          <p><strong>Dissolved Oxygen:</strong> ${reading.dissolved_oxygen} mg/L</p>
+          <p><strong>Status:</strong> <span class="status-${reading.status}">${reading.status.toUpperCase()}</span></p>
+          <p><strong>Time:</strong> ${reading.formattedTime}</p>
+        </div>
+      `;
       modal.style.display = 'block';
     }
   }
@@ -122,11 +115,11 @@ class Homepage {
     const container = document.getElementById('featuredReadings');
     if (container) {
       container.innerHTML = `
-                <div class="error-message" role="alert">
-                    <p>${message}</p>
-                    <button onclick="location.reload()">Retry</button>
-                </div>
-            `;
+        <div class="error-message" role="alert">
+          <p>${message}</p>
+          <button onclick="location.reload()">Retry</button>
+        </div>
+      `;
     }
   }
 
